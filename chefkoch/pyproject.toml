@@ -6,6 +6,8 @@ authors = ["Sebastian Fellner <fellnerseb@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.7"
+beautifulsoup4 = "^4.8"
+requests = "^2.22"
 
 [tool.poetry.dev-dependencies]
 
