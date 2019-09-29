@@ -1,7 +1,6 @@
 import json
-import multiprocessing
-from functools import partial
 
+from joblib import Parallel, delayed
 from tqdm import tqdm
 
 from api import ChefkochApi
@@ -34,8 +33,9 @@ def process_batch(chefkoch_api: ChefkochApi, file_store: FileStore, offset: int 
     json_result = chefkoch_api.search_recipe(query="*", offset=offset, limit=BATCH_SIZE)
     recipes = json_result["results"]
 
-    pool = multiprocessing.Pool(12)
-    recipes = list(pool.map(partial(load_recipe, chefkoch_api=chefkoch_api), recipes))
+    recipes = Parallel(n_jobs=12)(
+        delayed(load_recipe)(i, chefkoch_api) for i in recipes
+    )
 
     file_store.save_recipes(recipes, offset)
     update_status(offset + len(recipes))
@@ -79,5 +79,5 @@ def continue_crawling_recipies():
 
 
 if __name__ == "__main__":
-    restart_crawling_recipes()
-    # continue_crawling_recipies()
+    # restart_crawling_recipes()
+    continue_crawling_recipies()
