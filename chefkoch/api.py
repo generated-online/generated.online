@@ -22,7 +22,7 @@ class OrderBy(Enum):
 
 
 class LogConfig:
-    LOG_FILE = "log.txt"
+    LOG_FILE = "data/log.txt"
     NUMBER_OF_RECIPIES = "number_of_recipies"
     OFFSET = "offset"
 
