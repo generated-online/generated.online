@@ -1,7 +1,10 @@
 import json
 
+from tqdm import tqdm
+
 from chefkoch.api import ChefkochApi
 from chefkoch.api import LogConfig
+from firebase.fire_store import FireStore
 
 BATCH_SIZE = 100
 
@@ -25,36 +28,40 @@ def read_status():
     return data[LogConfig.NUMBER_OF_RECIPIES], data[LogConfig.OFFSET]
 
 
-def get_batch(chefkoch_api: ChefkochApi, offset: int = 0):
+def process_batch(chefkoch_api: ChefkochApi, fire_store: FireStore, offset: int = 0):
     json_result = chefkoch_api.search_recipe(query="*", offset=offset, limit=BATCH_SIZE)
     recipes = json_result["results"]
-    upload_recipes_to_fire_base(recipes)
+    fire_store.upload_recipes(recipes)
     update_status(offset + len(recipes))
     return len(recipes)
 
 
-def upload_recipes_to_fire_base(recipes: list):
-    pass
-
-
 def restart_crawling_recipes():
+    fire_store = FireStore()
     c = ChefkochApi()
     j = c.search_recipe(query="*", limit=10e10)
     number_of_recipes = j["count"]
     write_log_file(number_of_recipes)
 
     current_offset = 0
+    progress = tqdm(total=number_of_recipes)
     while current_offset < number_of_recipes:
-        get_batch(c, offset=BATCH_SIZE)
-        current_offset += 100
+        diff = current_offset
+        current_offset += process_batch(c, fire_store, offset=BATCH_SIZE)
+        progress.update(current_offset - diff)
 
 
 def continue_crawling_recipies():
+    fire_store = FireStore()
     c = ChefkochApi()
-    number_of_recipes, current_offset = read_status()
+    number_of_recipes, start_offset = read_status()
 
+    progress = tqdm(total=number_of_recipes - start_offset)
+    current_offset = start_offset
     while current_offset < number_of_recipes:
-        current_offset += get_batch(c, offset=current_offset)
+        diff = current_offset
+        current_offset += process_batch(c, fire_store, offset=current_offset)
+        progress.update(current_offset - start_offset - diff)
 
 
 if __name__ == "__main__":
