@@ -1,9 +1,10 @@
-import requests
-from enum import Enum
-from bs4 import BeautifulSoup
 import re
+from enum import Enum
 
-"""With courtesy of https://raw.githubusercontent.com/florianschmidt1994/chefkoch-api/master/chefkoch.py"""
+import requests
+from bs4 import BeautifulSoup
+
+"""With courtesy of https://raw.githubusercontent.com/florianschmidt1994/chefkoch-api/master/chefkoch.py"""  # noqa: E501
 
 
 class RecipeNotFoundError(Exception):
@@ -38,7 +39,7 @@ class ChefkochApi:
         """Returns a recipe as a dict for a given recipe_id"""
         url = "https://api.chefkoch.de/v2/recipes/%s" % recipe_id
         res = self.session.get(url)
-        if res.status_code is not 200:
+        if res.status_code != 200:
             raise RecipeNotFoundError(recipe_id)
         else:
             return res.json()
@@ -66,7 +67,7 @@ class ChefkochApi:
             "order": order,
         }
         res = self.session.get("https://api.chefkoch.de/v2/recipes", params=payload)
-        if res.status_code is not 200:
+        if res.status_code != 200:
             raise ConnectionError("Response is not 200")
         else:
             return res.json()

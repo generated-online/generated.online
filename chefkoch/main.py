@@ -1,6 +1,7 @@
 import json
 
-from joblib import Parallel, delayed
+from joblib import delayed
+from joblib import Parallel
 from tqdm import tqdm
 
 from api import ChefkochApi
