@@ -8,6 +8,7 @@ from chefkoch.file_store import FileStore
 
 class Crawler:
     BATCH_SIZE = 100
+    RECIPE_TEXT = "text"
 
     def __init__(self, file_store: FileStore, ck_api: ChefkochAPI):
         self.file_store = file_store
@@ -32,34 +33,33 @@ class Crawler:
             progress_bar = tqdm(total=self.number_of_recipes - self.start_offset)
             current_offset = self.start_offset
             while current_offset < self.number_of_recipes:
-                current_offset += self._crawl_batch(progress_bar, current_offset)
+                delta = self._process_batch(current_offset)
+                progress_bar.update(delta)
+                current_offset += delta
         except KeyboardInterrupt:
             pass
 
-    def _crawl_batch(self, progress: tqdm, offset: int):
-        diff = self.process_batch(self.ck_api, self.file_store, offset=offset)
-        progress.update(diff)
-        return diff
+    def _process_batch(self, offset: int = 0):
+        """Downloads a batch of recipes."""
 
-    def process_batch(
-        self, chefkoch_api: ChefkochAPI, file_store: FileStore, offset: int = 0
-    ):
-        json_result = chefkoch_api.search_recipe(
+        json_result = self.ck_api.search_recipe(
             query="*", offset=offset, limit=self.BATCH_SIZE
         )
         recipes = json_result["results"]
 
         recipes = Parallel(n_jobs=12)(
-            delayed(self.load_recipe)(i, chefkoch_api) for i in recipes
+            delayed(self._load_recipe_text)(i) for i in recipes
         )
 
-        file_store.save_recipes(recipes, offset)
-        file_store.update_status(offset + len(recipes))
+        self.file_store.save_recipes(recipes, offset)
+        self.file_store.update_status(offset + len(recipes))
         return len(recipes)
 
-    def load_recipe(self, meta_recipe: dict, chefkoch_api: ChefkochAPI):
+    def _load_recipe_text(self, meta_recipe: dict):
+        """Downloads the instructions for one recipe."""
+
         id = meta_recipe["recipe"]["id"]
-        recipe_text = chefkoch_api.get_recipe(id)
+        recipe_text = self.ck_api.get_recipe(id)
         meta_recipe["recipe"]["score"] = meta_recipe["score"]
-        meta_recipe["recipe"]["text"] = recipe_text
+        meta_recipe["recipe"][self.RECIPE_TEXT] = recipe_text
         return meta_recipe["recipe"]
