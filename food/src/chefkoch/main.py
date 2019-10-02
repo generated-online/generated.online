@@ -4,9 +4,9 @@ from joblib import delayed
 from joblib import Parallel
 from tqdm import tqdm
 
-from api import ChefkochApi
-from api import LogConfig
-from file_store import FileStore
+from chefkoch.api import ChefkochApi
+from chefkoch.api import LogConfig
+from chefkoch.file_store import FileStore
 
 BATCH_SIZE = 100
 
