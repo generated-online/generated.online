@@ -10,7 +10,7 @@ class FileStore:
 
     def __init__(self, folder: str = None):
         if folder is None:
-            folder = os.path.join(os.path.dirname(__file__), "../data")
+            folder = os.path.join(os.path.dirname(__file__), "../data/recipes")
         self.folder = folder
 
         if not os.path.exists(folder):

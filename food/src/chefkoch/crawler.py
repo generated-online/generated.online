@@ -10,21 +10,21 @@ class Crawler:
     BATCH_SIZE = 100
     RECIPE_TEXT = "text"
 
-    def __init__(self, file_store: FileStore, ck_api: ChefkochAPI):
-        self.file_store = file_store
-        self.ck_api = ck_api
+    def __init__(self):
+        self.file_store = FileStore()
+        self.ck_api = ChefkochAPI()
 
         # if there is already a log file continue work by reading the total number of
         # recipes and the offset
         if self.file_store.log_file_exists:
-            self.number_of_recipes, self.start_offset = file_store.read_status()
+            self.number_of_recipes, self.start_offset = self.file_store.read_status()
         else:
             # if there was no log file get the total number of recipes from the website
             # and set the offset to 0
             number_of_recipes = self.ck_api.search_recipe(query="*", limit=10e10)[
                 "count"
             ]
-            self.number_of_recipes, self.start_offset = file_store.create_log_file(
+            self.number_of_recipes, self.start_offset = self.file_store.create_log_file(
                 number_of_recipes
             )
 
