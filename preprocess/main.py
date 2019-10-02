@@ -4,6 +4,7 @@ import os
 import pickle
 import sys
 from json import JSONDecodeError
+from typing import List
 
 from matplotlib import pyplot as plt
 from tqdm import tqdm
@@ -30,40 +31,70 @@ def concatenate_data_files(
         pickle.dump(concatenated_list, f)
 
 
-def read_data(data_file: str = "data.pkl"):
+def read_data(data_file: str = "data.pkl") -> List[dict]:
     with open(data_file, "rb") as f:
         return pickle.load(f)
 
 
-def read_small_data():
+def read_small_data() -> List[dict]:
     filename = os.path.join(MODULE_NAME, "../chefkoch/data/data_000100.json")
     with open(filename, "r") as f:
         return json.load(f)
 
 
-def draw_hist_views(data=read_small_data()):
+def filter_none_ratings(data: List[dict]) -> List[dict]:
+    """Remove data points that contain no rating."""
+
+    filtered_data = list(filter(lambda x: x["rating"], data))
+    recipes_lost = len(data) - len(filtered_data)
+    print(
+        f"Lost {recipes_lost} data points! ({recipes_lost/len(data)*100}%)",
+        file=sys.stderr,
+    )
+    return filtered_data
+
+
+def draw_hist(log: bool, data, title: str, xlabel: str, ylabel: str):
+    plt.hist(data, log=log, bins=100)
+    plt.title(title)
+    plt.xlabel(xlabel)
+    plt.ylabel(ylabel)
+    plt.show()
+
+
+def draw_hist_views(data=None, log: bool = True):
+    if data is None:
+        data = read_small_data()
 
     views = list(map(lambda x: x["text"]["viewCount"], data))
 
-    plt.hist(views, log=True, bins=100)
-    plt.show()
-
-
-def draw_hist_ratings(data=read_small_data()):
-
-    ratings = list(
-        map(lambda x: x["rating"]["rating"], filter(lambda x: x["rating"], data))
+    draw_hist(
+        log,
+        views,
+        f"Chefkoch-recipes views histogram{' (logarithmic scale)' if log else ''}",
+        "number of views",
+        "Number of recipes",
     )
 
-    print(f"Lost {len(data)-len(ratings)} data points!", file=sys.stderr)
 
-    plt.hist(ratings, log=True, bins=100)
-    plt.title("Chefkoch-recipes rating histogram")
-    plt.xlabel("rating in stars")
-    plt.ylabel("Number of recipes")
-    plt.show()
+def draw_hist_ratings(data=None, log: bool = True):
+    if data is None:
+        data = filter_none_ratings(read_small_data())
+
+    ratings = list(map(lambda x: x["rating"]["rating"] if x["rating"] else -1, data))
+
+    draw_hist(
+        log,
+        ratings,
+        f"Chefkoch-recipes rating histogram{' (logarithmic scale)' if log else ''}",
+        "rating in stars",
+        "Number of recipes",
+    )
 
 
 if __name__ == "__main__":
-    draw_hist_ratings(data=read_data())
     # draw_hist_ratings()
+    draw_hist_ratings(data=filter_none_ratings(read_data()))
+
+    # draw_hist_views()
+    # draw_hist_views(data=read_data())
