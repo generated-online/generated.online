@@ -15,6 +15,8 @@ class DataHandler:
         self.recipes_folder = data_folder / "recipes"
         self.concatenated_file = data_folder / "all_recipes.pkl"
 
+        self.loaded_data = None
+
     def concatenate_data_files(self):
         if not self.recipes_folder.exists():
             raise FileNotFoundError(
@@ -38,8 +40,10 @@ class DataHandler:
     def read_data(self, data_file: Path = None) -> List[dict]:
         if not data_file:
             data_file = self.concatenated_file
-        with open(data_file, "rb") as f:
-            return pickle.load(f)
+        if not self.loaded_data:
+            with open(data_file, "rb") as f:
+                self.loaded_data = pickle.load(f)
+        return self.loaded_data
 
     def read_small_data(self) -> List[dict]:
         if not self.recipes_folder.exists():
