@@ -17,4 +17,4 @@ repos:
     rev: v1.7.0
     hooks:
     -   id: reorder-python-imports
-        args: [--application-directories=./chefkoch:./firebase]
+        args: [--application-directories=./chefkoch:./firebase:./preprocess]
