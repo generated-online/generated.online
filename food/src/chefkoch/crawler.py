@@ -28,7 +28,7 @@ class Crawler:
                 number_of_recipes
             )
 
-    def start_crawling(self):
+    def crawl(self):
         try:
             progress_bar = tqdm(total=self.number_of_recipes - self.start_offset)
             current_offset = self.start_offset
@@ -37,11 +37,12 @@ class Crawler:
                 progress_bar.update(delta)
                 current_offset += delta
         except KeyboardInterrupt:
+            # could to interrupt handling like pulling the last batch or wait at
+            # at most 10s
             pass
 
-    def _process_batch(self, offset: int = 0):
+    def _process_batch(self, offset: int = 0) -> int:
         """Downloads a batch of recipes."""
-
         json_result = self.ck_api.search_recipe(
             query="*", offset=offset, limit=self.BATCH_SIZE
         )
@@ -52,12 +53,11 @@ class Crawler:
         )
 
         self.file_store.save_recipes(recipes, offset)
-        self.file_store.update_status(offset + len(recipes))
+        self.file_store.update_log_file(offset + len(recipes))
         return len(recipes)
 
-    def _load_recipe_text(self, meta_recipe: dict):
+    def _load_recipe_text(self, meta_recipe: dict) -> dict:
         """Downloads the instructions for one recipe."""
-
         id = meta_recipe["recipe"]["id"]
         recipe_text = self.ck_api.get_recipe(id)
         meta_recipe["recipe"]["score"] = meta_recipe["score"]

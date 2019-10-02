@@ -38,7 +38,7 @@ class FileStore:
 
         return number_of_recipes, 0
 
-    def update_status(self, offset: int):
+    def update_log_file(self, offset: int):
         """Update current offset in log file"""
         with open(self.log_file, "r") as log_file:
             data = json.load(log_file)
