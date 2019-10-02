@@ -122,12 +122,68 @@ def draw_hist_views_cummulative(data=None):
     plt.show()
 
 
+def draw_views_vs_ratings(data=None):
+    if data is None:
+        data = read_small_data()
+
+    views = list(map(lambda x: x["text"]["viewCount"], data))
+    ratings = list(map(lambda x: x["rating"]["rating"] if x["rating"] else -1, data))
+    sorted_views_and_ratings = sorted(zip(views, ratings), key=lambda x: x[0])
+    views, ratings = zip(*sorted_views_and_ratings)
+    plt.plot(views, ratings)
+
+    plt.title("Views vs Rating")
+    plt.xlabel("Number of Views")
+    plt.ylabel("Rating")
+    plt.show()
+
+
+def draw_number_of_votes_vs_ratings(data=None):
+    if data is None:
+        data = read_small_data()
+
+    number_of_votes = list(
+        map(lambda x: x["rating"]["numVotes"] if x["rating"] else -1, data)
+    )
+    ratings = list(map(lambda x: x["rating"]["rating"] if x["rating"] else -1, data))
+    sorted_views_and_ratings = sorted(zip(number_of_votes, ratings), key=lambda x: x[0])
+    views, ratings = zip(*sorted_views_and_ratings)
+    plt.plot(views, ratings)
+
+    plt.title("Number of Votes vs Rating")
+    plt.xlabel("Number of Votes")
+    plt.ylabel("Rating")
+    plt.show()
+
+
+def draw_number_of_votes_vs_views(data=None):
+    if data is None:
+        data = read_small_data()
+
+    number_of_votes = list(
+        map(lambda x: x["rating"]["numVotes"] if x["rating"] else -1, data)
+    )
+    views = list(map(lambda x: x["text"]["viewCount"], data))
+    sorted_views_and_ratings = sorted(zip(views, number_of_votes), key=lambda x: x[0])
+    views, ratings = zip(*sorted_views_and_ratings)
+    plt.plot(views, ratings)
+
+    plt.title("Views vs Rating")
+    plt.xlabel("Views")
+    plt.ylabel("number_of_votes")
+    plt.show()
+
+
 if __name__ == "__main__":
     data = read_data()
     # data = read_small_data()
+    #
+    # draw_hist_ratings(data=filter_none_ratings(data))
+    #
+    # draw_hist_views(data=data)
+    #
+    # draw_hist_views_cummulative(data=data)
 
-    draw_hist_ratings(data=filter_none_ratings(data))
-
-    draw_hist_views(data=data)
-
-    draw_hist_views_cummulative(data=data)
+    draw_views_vs_ratings(data=filter_none_ratings(data))
+    draw_number_of_votes_vs_ratings(data=filter_none_ratings(data))
+    draw_number_of_votes_vs_views(data=filter_none_ratings(data))
