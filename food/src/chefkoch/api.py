@@ -22,13 +22,7 @@ class OrderBy(Enum):
     daily_shuffle = 8
 
 
-class LogConfig:
-    LOG_FILE = "data/log.txt"
-    NUMBER_OF_RECIPIES = "number_of_recipies"
-    OFFSET = "offset"
-
-
-class ChefkochApi:
+class ChefkochAPI:
     """An API Wrapper for www.chefkoch.com"""
 
     def __init__(self):
