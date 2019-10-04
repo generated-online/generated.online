@@ -1,3 +1,4 @@
 .idea/*
-/chefkoch/data
-/firebase/generatedonline-a1cb0-firebase-adminsdk.json
+food/src/chefkoch/data
+*.zip
+*.pkl
