@@ -15,6 +15,12 @@ npm run serve
 npm run build
 ```
 
+### Serve for firebase
+Make sure to install ```firebase-cli``` tools and run ```firebase init```
+```
+firebase deploy
+```
+
 ### Run your tests
 ```
 npm run test
