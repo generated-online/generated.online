@@ -54,20 +54,24 @@ class DataHandler:
         with open(self.recipes_folder / "data_000100.json", "r") as f:
             return json.load(f)
 
-    def get_filtered_data(self, filters: List[LambdaType]):
-        if not self.loaded_data:
-            self.read_data()
+    def get_filtered_data(self, filters: List[LambdaType], data=None):
+        if data is None:
+            if not self.loaded_data:
+                self.read_data()
+            data_to_filter = self.loaded_data
+        else:
+            data_to_filter = data
 
-        data_to_filter = self.loaded_data
+        innitial_numer_of_recipes = len(data_to_filter)
 
         for filter_ in filters:
             data_to_filter = filter(filter_, data_to_filter)
 
         filtered_data = list(data_to_filter)
-        recipes_lost = len(self.loaded_data) - len(filtered_data)
+        recipes_lost = innitial_numer_of_recipes - len(filtered_data)
         print(
             f"Lost {recipes_lost} data points! "
-            f"({recipes_lost/len(self.loaded_data)*100:.2f}%)\n"
+            f"({recipes_lost/innitial_numer_of_recipes*100:.2f}%)\n"
             f"{len(filtered_data)} are recipes left."
         )
 
