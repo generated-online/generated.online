@@ -47,12 +47,19 @@ def select_interesting_stuff(item: dict):
 
 
 def get_concatenated_text(data):
-    return " ".join(map(lambda x: x["text"]["instructions"], data))
+    # pattern = re.compile(r"\b(" + "|".join(stopwords) + ")\\W", re.I)
+    words = " ".join(map(lambda x: x["text"]["instructions"], data))
+
+    print("done doing words.")
+    # words = pattern.sub("", words) # too slow
+    return words
 
 
-if __name__ == "__main__":
+def do_word_cloud():
     d = DataHandler()
-    data = d.read_data()
+    data = d.get_filtered_data(
+        [lambda x: x["rating"], lambda x: x["rating"]["numVotes"] >= 10]
+    )
 
     text = get_concatenated_text(data)
     wordcloud = WordCloud(width=1920, height=1080, contour_color="white").generate(text)
@@ -60,3 +67,14 @@ if __name__ == "__main__":
     plt.imshow(wordcloud, interpolation="bilinear")
     plt.axis("off")
     plt.show()
+
+
+def do_filtering():
+    d = DataHandler()
+    d.get_filtered_data(
+        [lambda x: x["rating"], lambda x: x["rating"]["numVotes"] >= 10]
+    )
+
+
+if __name__ == "__main__":
+    do_filtering()
