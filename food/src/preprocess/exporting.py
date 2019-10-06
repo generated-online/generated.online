@@ -38,7 +38,7 @@ class Exporter:
         recipe += "\n"
 
         # instructions
-        recipe += "Instructions:\n"
+        recipe += "Instructions:\n\n"
         recipe += recipe_dict["text"]["instructions"] + "\n"
         return recipe
 
