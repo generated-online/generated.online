@@ -14,6 +14,7 @@ grpcio = "^1.24"
 joblib = "^0.13.2"
 numpy = "^1.17"
 matplotlib = "^3.1"
+wordcloud = "^1.5"
 
 [tool.poetry.dev-dependencies]
 
