@@ -15,6 +15,8 @@ matplotlib = "^3.1"
 wordcloud = "^1.5"
 transformers = "^2.1.0"
 torch = "^1.2.0"
+tensorboard = "^2.0.0"
+tensorboardX = "^1.9"
 
 [tool.poetry.dev-dependencies]
 
