@@ -8,13 +8,13 @@ authors = ["Sebastian Fellner <fellnerseb@gmail.com>"]
 python = "^3.7"
 beautifulsoup4 = "^4.8"
 requests = "^2.22"
-firebase-admin = "^3.0"
 tqdm = "^4.36"
-grpcio = "^1.24"
 joblib = "^0.13.2"
 numpy = "^1.17"
 matplotlib = "^3.1"
 wordcloud = "^1.5"
+transformers = "^2.1.0"
+torch = "^1.2.0"
 
 [tool.poetry.dev-dependencies]
 

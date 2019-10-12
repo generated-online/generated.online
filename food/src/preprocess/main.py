@@ -11,9 +11,10 @@ def do_filtering(data=None):
 
 def export_data(data):
     exporter = Exporter(data)
-    with open("text.txt", "w") as f:
+    with open("text_small.txt", "w") as f:
         f.write(exporter.get_formatted_text())
 
 
 if __name__ == "__main__":
-    export_data(do_filtering())
+    d = DataHandler()
+    export_data(d.read_data())
