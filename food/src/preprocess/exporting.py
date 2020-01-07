@@ -7,7 +7,18 @@ class Exporter:
 
     def _reicpe_to_text(self, recipe_dict: dict):
         recipe = ""
-        # title
+        # headline filtering
+
+        def clean_text(text: string):
+            abbreviations = open("german_abbreviations.txt", "r").read()
+
+            for word in text.split():
+                if "." in abbreviations:
+                    if word not in abbreviations:
+
+
+        #def filter_headline(headline: string):
+
         recipe += "= " + recipe_dict["title"] + " =" + "\n"
 
         # ingredients
@@ -45,3 +56,5 @@ class Exporter:
     def get_formatted_text(self):
         formatted_text = f"\n".join(map(self._reicpe_to_text, self.data))
         return formatted_text
+
+filter_text("asas")
