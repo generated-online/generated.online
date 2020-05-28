@@ -17,4 +17,8 @@ def export_data(data):
 
 if __name__ == "__main__":
     d = DataHandler()
-    export_data(d.read_data())
+    try:
+        export_data(d.read_data())
+    except FileNotFoundError:
+        d.concatenate_data_files()
+        export_data(d.read_data())
