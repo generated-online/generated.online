@@ -1,29 +1,98 @@
 <template>
     <v-app id="app">
-<!--        <v-navigation-drawer app>
-            &lt;!&ndash; &ndash;&gt;
-        </v-navigation-drawer>-->
+        <v-card class="overflow-hidden">
+            <v-app-bar
+                    color="error darken-2"
+                    dark
+                    scroll-target="#scrolling-sheet"
+                    src="https://picsum.photos/1920/1080?random"
+            >
+                <template v-slot:img="{ props }">
+                    <v-img
+                            v-bind="props"
+                            gradient="to top right, rgba(19,84,122,.5), rgba(128,208,199,.8)"
+                    ></v-img>
+                </template>
 
-<!--        <v-app-bar app>
-            &lt;!&ndash; &ndash;&gt;
-        </v-app-bar>-->
+                <v-toolbar-title class="pl-12">Generated Recipes by artificial intelligence</v-toolbar-title>
 
-        <!-- Sizes your content based upon application components -->
-        <v-content >
-            <!-- Provides the application the proper gutter -->
-            <v-container fluid >
-                <!-- If using vue-router -->
-                <router-view></router-view>
-            </v-container>
-        </v-content>
+                <v-spacer></v-spacer>
 
-<!--        <v-footer app>
-            &lt;!&ndash; &ndash;&gt;
-        </v-footer>-->
+                <v-btn icon>
+                    <v-icon>mdi-magnify</v-icon>
+                </v-btn>
+
+                <v-btn icon>
+                    <v-icon>mdi-heart</v-icon>
+                </v-btn>
+
+                <v-btn icon>
+                    <v-icon>face</v-icon>
+                </v-btn>
+            </v-app-bar>
+
+            <v-sheet
+                    id="scrolling-sheet"
+                    class="overflow-y-auto"
+            >
+                <!-- Sizes your content based upon application components -->
+                <v-content>
+                    <!-- Provides the application the proper gutter -->
+                    <v-container fluid>
+                        <!-- If using vue-router -->
+                        <router-view></router-view>
+                    </v-container>
+                </v-content>
+            </v-sheet>
+        </v-card>
+
+        <v-footer
+                v-bind="localAttrs"
+                :padless="padless"
+                width="100%"
+                class="red lighten-1 text-center"
+        >
+            <v-card
+                    flat
+                    tile
+                    width="100%"
+                    class="red lighten-1 text-center"
+            >
+                <v-card-text class="footer">
+                    <a href="https://github.com/generated-online" style="vertical-align:top" class="pa-4" ><img src="/github.png" alt="github" width="44"></a>
+                    <span class="pa-4 pr-12"><a href="https://github.com/generated-online"><strong>Github</strong></a></span>
+
+                    <a href="" class="pa-4 pr-12" ><v-icon color="white" size="33">security</v-icon></a>
+                    <span class="pa-4"><a href=""><strong>Privacy Policy</strong></a></span>
+                </v-card-text>
+                <v-divider/>
+                <v-card-text class="white--text small-font">
+                    {{ new Date().getFullYear() }} — generated.online
+                </v-card-text>
+            </v-card>
+        </v-footer>
     </v-app>
 </template>
 
 <style>
+.footer li {
+    display: inline-block;
+}
+.footer {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    width: 100%;
+    color: white;
+    text-align: center;
+    color: white;
+}
+.footer a:link {
+    text-decoration: none;
+}
+.footer a {
+    color: white !important;
+}
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -41,6 +110,10 @@
 
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+.menu-bar {
+    height: 67px !important;
+    background-color: white !important;
 }
 .small-font {
     font-size: 0.8em  !important;
@@ -69,5 +142,4 @@
 .center-text {
     text-align: center !important;
 }
-
 </style>

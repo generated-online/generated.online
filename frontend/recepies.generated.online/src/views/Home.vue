@@ -1,10 +1,8 @@
 <template>
   <v-content>
     <div class="home" color="primary">
-      <h1 class="red darken-2">EAT AI FOOD</h1>
       <!-- RECIPE CONTAINER-->
       <v-container>
-
         <v-card v-for="recipe in recipes" :key="recipes.id" class="pa-5 ma-5" color="error--text">
           <v-card-title class="large-font text-center justify-center">
             {{recipe.title}}
@@ -15,7 +13,7 @@
               <v-col cols="12">
                 <v-row align="center" justify="center">
                   <v-content key="1" class="half">
-                    <v-img src="https://picsum.photos/510/300?random" align="center" justify="center"></v-img>
+                    <v-img src="https://picsum.photos/510/300?food" align="center" justify="center"></v-img>
                   </v-content>
                   <v-content key="0" class="half">
                     <v-list class="list">
@@ -45,19 +43,8 @@
               <v-icon size="35" class="red-highlight">thumb_down</v-icon>
             </v-btn>
           </v-container>
-
-
         </v-card>
-
-
       </v-container>
-
-      <div class="footer">
-        <ul>
-          <li>About</li>
-          <li><a href="https://github.com/generated-online"><img src="/github.png" alt="" >GitHub</a></li>
-        </ul>
-      </div>
     </div>
   </v-content>
 </template>
@@ -115,22 +102,6 @@ export default {
     .half {
     width: 50%;
     }
-  }
-
-  .footer li {
-    display: inline-block;
-    margin-left: 1em;
-  }
-  .footer {
-    background: #2c3e50;
-    position: fixed;
-    padding-top: 30px;
-    padding-bottom: 30px;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    color: white;
-    text-align: center;
   }
   .item {
     align-content: ;
