@@ -37,13 +37,13 @@ export default {
       if (this.agreed) {
         firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(
           () => {
-            const user = firebase.auth().currentUser
+            const user = firebase.auth().currentUser;
             if (user.emailVerified === true) {
               this.$router.replace('dashboard')
             } else {
               // Send verification email
-              user.sendEmailVerification()
-              this.status = 'Please check your email to activate your account.'
+              user.sendEmailVerification();
+              this.status = 'Please check your email to activate your account.';
               // TODO SEND PROP
               this.$router.replace('verify')
             }
