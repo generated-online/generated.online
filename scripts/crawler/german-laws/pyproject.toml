@@ -8,6 +8,7 @@ authors = ["Moritz Wolf <moritz.m.wolf@tum.de>"]
 python = "3.7.4"
 requests = "^2.23"
 tqdm = "^4.46"
+pathlib = "^1.0"
 
 [tool.poetry.dev-dependencies]
 
