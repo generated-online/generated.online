@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "german-laws"
+version = "0.1.0"
+description = ""
+authors = ["Moritz Wolf <moritz.m.wolf@tum.de>"]
+
+[tool.poetry.dependencies]
+python = "3.7.4"
+requests = "^2.23"
+tqdm = "^4.46"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
