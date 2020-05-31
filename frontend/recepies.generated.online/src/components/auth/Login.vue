@@ -51,7 +51,7 @@ export default {
           if (firebase.auth().currentUser.emailVerified) {
             this.$router.replace('dashboard')
           } else {
-            this.status = 'Please confirm your e-mail!'
+            this.status = 'Please confirm your e-mail!';
             this.resend = true
           }
         },
@@ -61,8 +61,8 @@ export default {
       )
     },
     resendEmail: function () {
-      firebase.auth().currentUser.sendEmailVerification()
-      this.status = 'We have re-sent you a verification email. Please check your spam folder as well.'
+      firebase.auth().currentUser.sendEmailVerification();
+      this.status = 'We have re-sent you a verification email. Please check your spam folder as well.';
       this.resend = false
     },
     sendResetEmail: function () {
@@ -75,9 +75,9 @@ export default {
     },
     googleLogin: function () {
       // Using a popup.
-      var provider = new firebase.auth.GoogleAuthProvider()
-      provider.addScope('profile')
-      provider.addScope('email')
+      var provider = new firebase.auth.GoogleAuthProvider();
+      provider.addScope('profile');
+      provider.addScope('email');
       firebase.auth().signInWithPopup(provider).then((result) => {
         this.$router.replace('dashboard')
       }).catch((err) => {
