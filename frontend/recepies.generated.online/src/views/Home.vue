@@ -3,7 +3,7 @@
     <div class="home" color="primary">
       <!-- RECIPE CONTAINER-->
       <v-container>
-        <v-card v-for="recipe in recipes" :key="recipes.id" class="pa-5 ma-5" color="error--text">
+        <v-card v-for="recipe in recipes" :key="recipes.id" class="pa-5 ma-5" color="GOred--text">
           <v-card-title class="large-font text-center justify-center">
             {{recipe.title}}
           </v-card-title>
@@ -104,7 +104,6 @@ export default {
     }
   }
   .item {
-    align-content: ;
     margin: 1em;
     padding: 1em;
     text-decoration: none;
