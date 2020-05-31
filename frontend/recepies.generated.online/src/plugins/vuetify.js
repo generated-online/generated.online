@@ -1,10 +1,9 @@
 import Vue from 'vue';
-import Vuetify from 'vuetify';
-import 'vuetify/dist/vuetify.min.css';
+import Vuetify from 'vuetify/lib';
+//import colors from 'vuetify/es5/util/colors'
 
-import colors from 'vuetify/lib/util/colors'
+Vue.use(Vuetify)
 
-Vue.use(Vuetify);
 
 export default new Vuetify({
   icons: {
@@ -13,9 +12,17 @@ export default new Vuetify({
   theme: {
     themes: {
       light: {
-        primary: colors.red.darken1, // #E53935
-        secondary: colors.red.lighten4, // #FFCDD2
-        accent: colors.indigo.base, // #3F51B5
+        primary: '#3f51b5',
+            secondary: '#f7f6f9',
+            accent: '#8c9eff',
+            error: '#b71c1c',
+          //
+              GOdark: "#323E40",
+              GOgrey: "#939ca8",
+              GOyellow: "#F2AB27",
+              GOorange: "#D97D0D",
+              GOdarkred: "#732002",
+              GOred: "#D94D1A",
       },
     },
   },
