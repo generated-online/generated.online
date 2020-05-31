@@ -26,15 +26,6 @@ for suffix in tqdm(subfix_list):
 
     for i, xml_url in tqdm(enumerate(xml_sub_urls)):
         zip_url = main_url+ xml_url
-        download_url(zip_url, f"{suffix}_{i}.zip")
-    #     download_url = (zip_url, f"./{suffix}.zip")
-    # print(zip_url)
-    # resp = requests.get(main_url+ xml_sub_urls[0]).content
-    # with ZipFile(BytesIO(resp)) as my_zip_file:
-    #     for contained_file in my_zip_file.namelist():
-    #         # with open(("unzipped_and_read_" + contained_file + ".file"), "wb") as output:
-    #         for line in my_zip_file.open(contained_file).readlines():
-    #             print(line)
-    #             # output.write(line)
+        download_url(zip_url, f"out/{suffix}_{i}.zip")
 
 
