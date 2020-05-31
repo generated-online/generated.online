@@ -27,7 +27,7 @@
           <v-divider/>
 
           <v-container>
-            <v-card-text class="text-justify larger-font">
+            <v-card-text class="text-justify larger-font conserve-spaces">
               {{recipe.instructions}}
             </v-card-text>
           </v-container>
@@ -93,6 +93,9 @@ export default {
 </script>
 
 <style>
+  .conserve-spaces {
+    white-space: pre-line !important;
+  }
   .counter {
     line-height: 2.5em !important;
     position:relative;
