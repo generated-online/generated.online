@@ -1,11 +1,12 @@
 [tool.poetry]
-name = "german-laws"
+name = "upload"
 version = "0.1.0"
 description = ""
 authors = ["Moritz Wolf <moritz.m.wolf@tum.de>"]
 
 [tool.poetry.dependencies]
-python = "3.7.4"
+python = "^3.6"
+firebase_admin = "^4.3"
 requests = "^2.23"
 tqdm = "^4.46"
 pathlib = "^1.0"
