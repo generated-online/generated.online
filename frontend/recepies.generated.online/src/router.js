@@ -21,25 +21,14 @@ const router = new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/',
-      name: 'home',
+      path: '/:id',
+      name: 'home2',
       component: Home
     },
     {
-      path: '/login',
-      name: 'Login',
-      props: { status: '' },
-      component: Login
-    },
-    {
-      path: '/signup',
-      name: 'Signup',
-      component: Signup
-    },
-    {
-      path: '/verify',
-      name: 'Verify',
-      component: Verify
+      path: '/',
+      name: 'home',
+      component: Home
     },
   ]
 });
