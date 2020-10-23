@@ -22,9 +22,6 @@ for result in results:
             u'intrigents': intrigents,
             u'instructions': result[7]
         }        
-        # db.collection(u'firstTest').document().set(data)
+        db.collection(u'firstTest').document().set(data)
         print(result[7])
-        # print(f"Added: {data['title']}")
-        
-        
-        1/0
+        print(f"Added: {data['title']}")
