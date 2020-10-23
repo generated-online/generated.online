@@ -3,7 +3,7 @@
     <div class="home" color="primary">
       <!-- RECIPE CONTAINER-->
       <v-container>
-        <v-card v-for="recipe in recipes" :key="recipes.id" class="pa-5 ma-5" color="GOred--text">
+        <v-card v-for="recipe in recipes" :key="recipe.id" class="pa-5 ma-5" color="GOred--text">
           <v-card-title class="large-font text-center justify-center">
             {{recipe.title}}
           </v-card-title>
@@ -17,7 +17,7 @@
                   </v-content>
                   <v-content key="0" class="half">
                     <v-list class="list">
-                      <v-list-item class="list normal-font" align="center" justify="center" v-for="ingredient in recipe.ingredients">{{ingredient}}</v-list-item>
+                      <v-list-item class="list normal-font" align="center" :key="ingredient" justify="center" v-for="ingredient in recipe.ingredients">{{ingredient}}</v-list-item>
                     </v-list>
                   </v-content>
                 </v-row>
