@@ -25,7 +25,7 @@
       </div>
 
           <div class="mybutton-container">
-      <button @click="$router.replace('/'); $router.go('/')">Show new recipe!</button>
+      <button @click="$router.replace('/'); $router.go('/')">Neues Rezept generieren!</button>
     </div>
 
     </div>
@@ -48,7 +48,7 @@
     },
     created() {
       let db = firebase.firestore();
-      const ref = db.collection("firstTest")
+      const ref = db.collection("800x50")
 
       this.id = this.$route.params.id;
       let key = ""
@@ -57,7 +57,7 @@
           this.loadData(doc)
         })
       } else {
-        key = db.collection("firstTest").doc().id;
+        key = db.collection("800x50").doc().id;
         ref
           .where(firebase.firestore.FieldPath.documentId(), '>=', key).limit(1)
           .get()
