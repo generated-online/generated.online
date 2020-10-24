@@ -1,83 +1,84 @@
 <template>
   <div class="container">
-
     <div v-for="recipe in recipes" :key="recipe.id" class="recipe">
-      <div class="title-container" :style="'background:'+ titleColor">
+      <div class="title-container" :style="'background:' + titleColor">
         <span class="recipe-title">
-          {{ recipe.title}}
+          {{ recipe.title }}
         </span>
       </div>
 
       <div class="recipe-body">
-
         <!-- ZUTATEN -->
         <div class="ingredients">
           <div class="ingredient" :key="ingredient" justify="center" v-for="ingredient in recipe.ingredients">
-            {{ingredient}}
+            {{ ingredient }}
           </div>
         </div>
 
         <!--  Instructions -->
         <div class="instruction">
-          {{recipe.instructions}}
+          {{ recipe.instructions }}
         </div>
-
       </div>
-
-          <div class="mybutton-container">
-      <button @click="$router.replace('/'); $router.go('/')">Show new recipe!</button>
     </div>
 
-    </div>
+    <Footer :recipes="recipes" />
   </div>
 </template>
 
 <script>
   import firebase from "firebase";
+  import Footer from "./Footer";
 
   export default {
-    name: 'home',
-    components: {},
+    name: "home",
+    components: {
+      Footer
+    },
     data() {
       return {
-        id: '',
+        id: "",
         recipes: [],
         error: "",
-        titleColor: ''
-      }
+        titleColor: "",
+      };
     },
     created() {
       let db = firebase.firestore();
-      const ref = db.collection("firstTest")
+      const ref = db.collection("800x50");
 
       this.id = this.$route.params.id;
-      let key = ""
-      if (typeof this.id !== 'undefined') {
-        ref.doc(this.id).get().then((doc) => {
-          this.loadData(doc)
-        })
-      } else {
-        key = db.collection("firstTest").doc().id;
+      let key = "";
+      if (typeof this.id !== "undefined") {
         ref
-          .where(firebase.firestore.FieldPath.documentId(), '>=', key).limit(1)
+          .doc(this.id)
           .get()
-          .then(snap => {
+          .then((doc) => {
+            this.loadData(doc);
+          });
+      } else {
+        key = ref.doc().id;
+        ref
+          .where(firebase.firestore.FieldPath.documentId(), ">=", key)
+          .limit(1)
+          .get()
+          .then((snap) => {
             if (snap.size === 0) {
               ref
-                .where(firebase.firestore.FieldPath.documentId(), '<', key).limit(1)
+                .where(firebase.firestore.FieldPath.documentId(), "<", key)
+                .limit(1)
                 .get()
-                .then(snap => {
+                .then((snap) => {
                   snap.docs.map(this.loadData);
-                })
+                });
             } else {
               snap.docs.map(this.loadData);
             }
           })
-          .catch(err => {
-            this.error = err
+          .catch((err) => {
+            this.error = err;
           });
       }
-
     },
     methods: {
       loadData(doc) {
@@ -86,21 +87,29 @@
           ingredients: doc.data().intrigents,
           title: doc.data().title,
           instructions: doc.data().instructions,
-          counterVal: Math.round(Math.random() * 100)
+          counterVal: Math.round(Math.random() * 100),
         });
-        this.pickTitleColor(doc.id)
-        this.$router.replace('/' + doc.id)
+        this.pickTitleColor(doc.id);
+        this.$router.replace("/recipe/" + doc.id);
       },
       pickTitleColor(id) {
-
-        const colors = ["lightcoral", "lightcyan", "lightblue", "lightgoldenrodyellow", "lightgreen", "lightpink",
-          "lightsalmon", "lightseagreen", "lightskyblue", "lightsteelblue", "lightyellow"
+        const colors = [
+          "lightcoral",
+          "lightcyan",
+          "lightblue",
+          "lightgoldenrodyellow",
+          "lightgreen",
+          "lightpink",
+          "lightsalmon",
+          "lightseagreen",
+          "lightskyblue",
+          "lightsteelblue",
+          "lightyellow",
         ].sort(() => Math.random() - 0.5);
         this.titleColor = colors[0];
-
-      }
-    }
-  }
+      },
+    },
+  };
 </script>
 
 <style>
@@ -116,7 +125,7 @@
   button {
     background: whites;
     margin-top: 3em;
-        margin-bottom: 3em;
+    margin-bottom: 3em;
 
     padding: 0.3em 1em 0.3em 1em;
     font-size: 1.5em;
@@ -140,14 +149,14 @@
   }
 
   .recipe-title {
-    font-size: calc(70vw/15);
+    font-size: calc(70vw / 15);
     padding: 0.2em 0.2em 0.2em 0.2em;
     word-wrap: break-word;
     font-family: "Commissioner";
   }
 
   .recipe-body {
-    margin-top: calc(70vw/15);
+    margin-top: calc(70vw / 15);
     position: relative;
   }
 
@@ -171,6 +180,7 @@
     text-align: justify;
   }
 
+
   @media (max-width: 1100px) {
     .container {
       padding: 2em 2em 2em 2em !important;
@@ -183,9 +193,8 @@
     }
 
     .recipe-title {
-      font-size: calc(70vw/8) !important;
+      font-size: calc(70vw / 8) !important;
       text-align: center !important;
-
     }
 
     .title-container {
@@ -197,6 +206,7 @@
       width: 90vw !important;
       padding-left: 0 !important;
     }
+
     button {
       text-align: center;
     }
@@ -206,8 +216,6 @@
       padding-left: 0 !important;
       margin: 0 !important;
       max-width: 90vh !important;
-
     }
-
   }
 </style>

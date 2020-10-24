@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
+import Info from "./views/Info.vue"
 import Login from './components/auth/Login'
 import Signup from './components/auth/Signup'
 import Verify from './components/auth/Verify'
@@ -21,7 +22,7 @@ const router = new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/:id',
+      path: '/recipe/:id',
       name: 'home2',
       component: Home
     },
@@ -30,6 +31,11 @@ const router = new Router({
       name: 'home',
       component: Home
     },
+    {
+      path: "/info",
+      name: "info",
+      component: Info
+    }
   ]
 });
 

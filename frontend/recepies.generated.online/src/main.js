@@ -6,7 +6,6 @@ import store from './store'
 import '@babel/polyfill'
 import firebase from "firebase";
 
-
 const firebaseConfig = {
   apiKey: "AIzaSyDmmSPNA_lC7rtpuS3-Yx4dmy4BegppYIw",
   authDomain: "generatedonline-a1cb0.firebaseapp.com",
