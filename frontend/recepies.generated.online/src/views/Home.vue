@@ -45,7 +45,7 @@
     },
     created() {
       let db = firebase.firestore();
-      const ref = db.collection("800x50");
+      const ref = db.collection("800x50")
 
       this.id = this.$route.params.id;
       let key = "";
