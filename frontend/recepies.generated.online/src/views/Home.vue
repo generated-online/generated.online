@@ -144,7 +144,7 @@
   .container {
     text-align: left;
     height: 100%;
-    padding: 2em 5em 2em 5em;
+    padding: 2em 2em 2em 2em;
     font-family: "Roboto";
   }
 
@@ -161,27 +161,26 @@
   }
 
   .ingredient {
-    padding-left: 1em;
     padding-bottom: 1em;
     font-size: 1.4em;
   }
 
   .ingredients {
     float: left;
-    width: 20vw;
+    width: 25vw;
+    margin-left: 2vw;
   }
 
   .instruction {
-    margin-left: 2em;
-    float: left;
-
+    margin-right: 2vw;
+    float: right;
     font-size: 1.5em;
-    max-width: 65vw;
+    max-width: calc(100vw - 25vw - 2em - 3em); /* this should be exactly the space left */
     text-align: justify;
   }
 
 
-  @media (max-width: 1100px) {
+  @media (max-width: 800px) {
     .container {
       padding: 2em 2em 2em 2em !important;
     }
@@ -212,10 +211,11 @@
     }
 
     .instruction {
-      float: none;
+      float: none !important;
       padding-left: 0 !important;
+      margin-left: 0em !important;
       margin: 0 !important;
-      max-width: 90vh !important;
+      max-width: 100vw !important;
     }
   }
 </style>
