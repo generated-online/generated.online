@@ -1,31 +1,70 @@
 <template>
-    <div class="footer-container">
-        <div class="footer">
-            <span class="footer-element">
-                <router-link to="/" class="inline-block">
-                    <img src="/reload.svg" class="icon" /></router-link>
-            </span>
-            <span class="vertical-line">
-            </span>
-            <span class="footer-element">
-                <a href="https://github.com/generated-online/generated.online" class="inline-block">
-                    <img src="/github.png" class="icon" /></a>
-            </span>
-            <span class="footer-element">
-                <router-link to="/info"><img src="/info.svg" class="icon" /></router-link>
-            </span>
-            <!-- show whatsapp share button, when not loaded yet just an empty button -->
-            <span class="footer-element" v-if="recipes.length !== 0">
-                <ShareNetwork class="inline-block" network="whatsapp" :url="url"
-                    :title="'Schau dir dieses coole Rezept an: ' + recipes[0]['title']">
-                    <img src="/whatsapp.svg" class="icon" />
-                </ShareNetwork>
-            </span>
-            <span class="footer-element inline-block" v-if="recipes.length === 0">
-                <img src="/whatsapp.svg" class="icon" />
-            </span>
-        </div>
-    </div>
+    <v-card>
+        <v-footer padless fixed>
+            <v-card flat tile width="100%" class="footer-container lighten-1 text-center">
+                <v-card-text class="py-2 text center" width="100%">
+
+                    <v-btn class="mx-4 my-0" icon>
+                        <router-link to="/">
+                            <img src="/reload.svg" class="my-icon" />
+                        </router-link>
+                    </v-btn>
+                    <v-btn class="mx-4 my-0" icon>
+                        <a href="https://github.com/generated-online/generated.online" class="inline-block">
+
+                            <img src="/github.png" class="my-icon" />
+                        </a>
+                    </v-btn>
+                    <v-btn class="mx-4 my-0" icon>
+                        <router-link to="/info">
+                            <img src="/info.svg" class="my-icon" />
+                        </router-link>
+                    </v-btn>
+                    <v-btn class="mx-4 my-0" icon>
+                        <!-- show whatsapp share button, when not loaded yet just an empty button -->
+                        <ShareNetwork class="inline-block" network="whatsapp" :url="url"
+                            :title="(recipes.length === 0) ? 'Schau dir diese coolen von einer KI generierten Rezepte an!' : 'Schau dir dieses coole Rezept an: ' + recipes[0]['title']">
+                            <img src="/whatsapp.svg" class="my-icon" />
+                        </ShareNetwork>
+                    </v-btn>
+                </v-card-text>
+            </v-card>
+        </v-footer>
+        <v-footer padless absolute>
+            <v-card flat tile width="100%" class="footer-container lighten-1 text-center">
+
+                <v-card-text class="py-2 text center" width="100%">
+                    <v-btn class="mx-4 my-0" icon>
+                        <router-link to="/">
+                            <img src="/reload.svg" class="my-icon" />
+                        </router-link>
+                    </v-btn>
+                    <v-btn class="mx-4 my-0" icon>
+                        <a href="https://github.com/generated-online/generated.online" class="inline-block">
+
+                            <img src="/github.png" class="my-icon" />
+                        </a>
+                    </v-btn>
+                    <v-btn class="mx-4 my-0" icon>
+                        <router-link to="/info">
+                            <img src="/info.svg" class="my-icon" />
+                        </router-link>
+                    </v-btn>
+                    <v-btn class="mx-4 my-0" icon>
+                        <!-- show whatsapp share button, when not loaded yet just an empty button -->
+                        <ShareNetwork class="inline-block" network="whatsapp" :url="url"
+                            :title="(recipes.length === 0) ? 'Schau dir diese coolen von einer KI generierten Rezepte an!' : 'Schau dir dieses coole Rezept an: ' + recipes[0]['title']">
+                            <img src="/whatsapp.svg" class="my-icon" />
+                        </ShareNetwork>
+                    </v-btn>
+                    <v-divider></v-divider>
+                    <v-card-text class="py-2 footer-text">
+                        {{ new Date().getFullYear() }} — <strong>recipes.generated.online</strong>
+                    </v-card-text>
+                </v-card-text>
+            </v-card>
+        </v-footer>
+    </v-card>
 </template>
 
 <script>
@@ -58,54 +97,20 @@
 </script>
 
 <style>
-    body,
-    #app {
-        margin: 0;
-        padding: 0;
-        overflow-x: hidden;
-        max-width: 100vw !important;
-        min-height: 100vh !important;
-    }
-
     .footer-container {
-        height: 4em;
+        background-color: rgb(93, 146, 177) !important;
+        color: white !important;
     }
 
-    .footer {
-        height: 4em;
-        position: fixed;
-        left: 0;
-        bottom: 0;
-        width: 100%;
-        background-color: rgb(119, 136, 153);
-        text-align: center;
-    }
-
-    .footer-element {
-        display: inline-block;
-        overflow: hidden;
-        height: 100%;
-    }
-
-    .icon {
-        padding: 1em 1em 1em 1em;
-        margin: 0;
-        width: 2em;
-        height: 2em;
+    .my-icon {
         cursor: grab;
-        overflow: hidden;
+        filter: invert(77%) sepia(90%) saturate(1%) hue-rotate(10deg) brightness(88%) contrast(108%);
+        opacity: 0.8;
+        width: 1.75em;
+        height: 1.75em;
     }
 
-    .vertical-line {
-        padding: 0em 1em 0em 1em;
-        display: inline-block;
-        height: 100%
+    .footer-text {
+        color: rgb(211, 211, 211);
     }
-
-    .inline-block {
-        display: inline-block;
-        height: 100%;
-    }
-
-    @media (max-width: 1100px) {}
 </style>

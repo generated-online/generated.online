@@ -1,27 +1,28 @@
 <template>
-  <div class="container">
-    <div v-for="recipe in recipes" :key="recipe.id" class="recipe">
-      <div class="title-container" :style="'background:' + titleColor">
-        <span class="recipe-title">
-          {{ recipe.title }}
-        </span>
-      </div>
-
-      <div class="recipe-body">
-        <!-- ZUTATEN -->
-        <div class="ingredients">
-          <div class="ingredient" :key="ingredient" justify="center" v-for="ingredient in recipe.ingredients">
-            {{ ingredient }}
-          </div>
+  <div>
+    <div class="recipe-container">
+      <div v-for="recipe in recipes" :key="recipe.id" class="recipe">
+        <div class="title-container" :style="'background:' + titleColor">
+          <span class="recipe-title">
+            {{ recipe.title }}
+          </span>
         </div>
 
-        <!--  Instructions -->
-        <div class="instruction">
-          {{ recipe.instructions }}
+        <div class="recipe-body">
+          <!-- ZUTATEN -->
+          <div class="ingredients">
+            <div class="ingredient" :key="ingredient" justify="center" v-for="ingredient in recipe.ingredients">
+              {{ ingredient }}
+            </div>
+          </div>
+
+          <!--  Instructions -->
+          <div class="instruction">
+            {{ recipe.instructions }}
+          </div>
         </div>
       </div>
     </div>
-
     <Footer :recipes="recipes" />
   </div>
 </template>
@@ -120,32 +121,14 @@
     overflow-x: hidden;
     max-width: 100vw !important;
     min-height: 100vh !important;
+    font-family: "Roboto";
   }
 
-  button {
-    background: whites;
-    margin-top: 3em;
-    margin-bottom: 3em;
-
-    padding: 0.3em 1em 0.3em 1em;
-    font-size: 1.5em;
-    border: none;
-    cursor: grab;
-    width: 100%;
-    text-align: left;
-  }
-
-  .mybutton-container {
-    float: left;
-    width: 100%;
-    /* margin: 5em 0 5em 0; */
-  }
-
-  .container {
+  .recipe-container {
     text-align: left;
     height: 100%;
     padding: 2em 2em 2em 2em;
-    font-family: "Roboto";
+    margin: 0 0 6em 0;
   }
 
   .recipe-title {
@@ -175,14 +158,16 @@
     margin-right: 2vw;
     float: right;
     font-size: 1.5em;
-    max-width: calc(100vw - 25vw - 2em - 3em); /* this should be exactly the space left */
+    max-width: calc(100vw - 25vw - 2em - 3em);
+    /* this should be exactly the space left */
     text-align: justify;
   }
 
 
   @media (max-width: 800px) {
-    .container {
+    .recipe-container {
       padding: 2em 2em 2em 2em !important;
+      margin: 0 0 2em 0 !important;
     }
 
     .ingredients {
@@ -206,15 +191,10 @@
       padding-left: 0 !important;
     }
 
-    button {
-      text-align: center;
-    }
-
     .instruction {
       float: none !important;
       padding-left: 0 !important;
-      margin-left: 0em !important;
-      margin: 0 !important;
+      margin: 0 0 2em 0 !important;
       max-width: 100vw !important;
     }
   }

@@ -2,9 +2,6 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
 import Info from "./views/Info.vue"
-import Login from './components/auth/Login'
-import Signup from './components/auth/Signup'
-import Verify from './components/auth/Verify'
 
 import firebase from 'firebase'
 
