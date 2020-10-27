@@ -128,7 +128,8 @@
     text-align: left;
     height: 100%;
     padding: 2em 2em 2em 2em;
-    /* margin: 0 0 6em 0; */
+    min-height: 100vh;
+    margin: 0 0 100px 0;
   }
 
   .recipe-title {
