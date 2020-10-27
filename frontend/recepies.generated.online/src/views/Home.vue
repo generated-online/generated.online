@@ -128,7 +128,7 @@
     text-align: left;
     height: 100%;
     padding: 2em 2em 2em 2em;
-    margin: 0 0 6em 0;
+    /* margin: 0 0 6em 0; */
   }
 
   .recipe-title {
@@ -150,16 +150,18 @@
 
   .ingredients {
     float: left;
-    width: 25vw;
-    margin-left: 2vw;
+    width: 25%;
+    margin-left: 2%;
+    margin-right: 2%
   }
 
   .instruction {
-    margin-right: 2vw;
+    margin-left: 2%;
+    margin-right: 2%;
     float: right;
     font-size: 1.5em;
-    max-width: calc(100vw - 25vw - 2em - 3em);
     /* this should be exactly the space left */
+    width: calc(100% - 25% - 2%*4);
     text-align: justify;
   }
 
@@ -172,7 +174,7 @@
 
     .ingredients {
       float: none;
-      max-width: 90vw !important;
+      width: 100% !important;
       padding-bottom: 2em;
     }
 
@@ -195,7 +197,7 @@
       float: none !important;
       padding-left: 0 !important;
       margin: 0 0 2em 0 !important;
-      max-width: 100vw !important;
+      width: 100% !important;
     }
   }
 </style>
