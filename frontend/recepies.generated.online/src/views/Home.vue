@@ -1,8 +1,8 @@
 <template>
     <div>
         <div class="info-container">
-            Hello our starting page here!
-            <Search/>
+            <h1 style="text-align:center; margin-bottom:1em"> KI generierte Rezepte! </h1>
+            <Search />
         </div>
     </div>
 </template>
@@ -12,7 +12,9 @@
 
     export default {
         name: "info",
-        components: {Search},
+        components: {
+            Search
+        },
         created() {
             this.$emit('shareText', "Schau dir diese coolen von einer KI generierten Rezepte an!");
         }

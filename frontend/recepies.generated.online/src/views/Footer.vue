@@ -4,14 +4,7 @@
             <v-card flat tile width="100%" class="footer-container lighten-1 text-center"
                 :style="'background-color:' + color">
                 <v-card-text class="py-2 text center" width="100%">
-                    <span class="mx-4 mr-0">
-                        neues rezept
-                    </span>
-                    <v-btn class="mx-4 ml-0" icon>
-                        <router-link to="/recipe">
-                            <img src="/reload.svg" class="my-icon" />
-                        </router-link>
-                    </v-btn>
+                    <generateRecipeButton />
                     <v-btn class="mx-4 my-0" icon>
                         <a href="https://github.com/generated-online/generated.online" class="inline-block">
 
@@ -39,6 +32,7 @@
     import Vue from "vue";
     import VueSocialSharing from "vue-social-sharing";
     import recipeToColor from "@/functions/recipe_to_color";
+    import generateRecipeButton from "@/components/generateRecipeButton";
 
     Vue.use(VueSocialSharing);
 
@@ -55,7 +49,8 @@
             }
         },
         components: {
-            VueSocialSharing
+            VueSocialSharing,
+            generateRecipeButton
         },
         data() {
             return {
@@ -74,7 +69,7 @@
     }
 </script>
 
-<style scoped>
+<style>
     .footer-container {
         color: white !important;
     }
