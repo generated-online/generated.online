@@ -3,7 +3,6 @@
         <v-footer padless fixed>
             <v-card flat tile width="100%" class="footer-container lighten-1 text-center">
                 <v-card-text class="py-2 text center" width="100%">
-
                     <v-btn class="mx-4 my-0" icon>
                         <router-link to="/">
                             <img src="/reload.svg" class="my-icon" />
@@ -22,45 +21,10 @@
                     </v-btn>
                     <v-btn class="mx-4 my-0" icon>
                         <!-- show whatsapp share button, when not loaded yet just an empty button -->
-                        <ShareNetwork class="inline-block" network="whatsapp" :url="url"
-                            :title="(recipes.length === 0) ? 'Schau dir diese coolen von einer KI generierten Rezepte an!' : 'Schau dir dieses coole Rezept an: ' + recipes[0]['title']">
+                        <ShareNetwork class="inline-block" network="whatsapp" :url="url" :title="shareText">
                             <img src="/whatsapp.svg" class="my-icon" />
                         </ShareNetwork>
                     </v-btn>
-                </v-card-text>
-            </v-card>
-        </v-footer>
-        <v-footer padless absolute>
-            <v-card flat tile width="100%" class="footer-container lighten-1 text-center">
-
-                <v-card-text class="py-2 text center" width="100%">
-                    <v-btn class="mx-4 my-0" icon>
-                        <router-link to="/">
-                            <img src="/reload.svg" class="my-icon" />
-                        </router-link>
-                    </v-btn>
-                    <v-btn class="mx-4 my-0" icon>
-                        <a href="https://github.com/generated-online/generated.online" class="inline-block">
-
-                            <img src="/github.png" class="my-icon" />
-                        </a>
-                    </v-btn>
-                    <v-btn class="mx-4 my-0" icon>
-                        <router-link to="/info">
-                            <img src="/info.svg" class="my-icon" />
-                        </router-link>
-                    </v-btn>
-                    <v-btn class="mx-4 my-0" icon>
-                        <!-- show whatsapp share button, when not loaded yet just an empty button -->
-                        <ShareNetwork class="inline-block" network="whatsapp" :url="url"
-                            :title="(recipes.length === 0) ? 'Schau dir diese coolen von einer KI generierten Rezepte an!' : 'Schau dir dieses coole Rezept an: ' + recipes[0]['title']">
-                            <img src="/whatsapp.svg" class="my-icon" />
-                        </ShareNetwork>
-                    </v-btn>
-                    <v-divider></v-divider>
-                    <v-card-text class="py-2 footer-text">
-                        {{ new Date().getFullYear() }} — <strong>recipes.generated.online</strong>
-                    </v-card-text>
                 </v-card-text>
             </v-card>
         </v-footer>
@@ -75,11 +39,9 @@
     export default {
         name: "big-footer",
         props: {
-            "recipes": {
-                type: Array,
-                default: function () {
-                    return []
-                }
+            "shareText": {
+                type: String,
+                default: "Schau dir diese coolen von einer KI generierten Rezepte an!"
             }
         },
         components: {
@@ -90,10 +52,12 @@
                 url: "",
             };
         },
-        created() {
-            this.url = window.location.href;
-        },
-    };
+        watch: {
+            '$route': function (refreshPage) {
+                this.url = window.location.href;
+            }
+        }
+    }
 </script>
 
 <style>

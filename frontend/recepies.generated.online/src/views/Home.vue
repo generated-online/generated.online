@@ -1,41 +1,34 @@
 <template>
-  <div>
-    <div class="recipe-container">
-      <div v-for="recipe in recipes" :key="recipe.id" class="recipe">
-        <div class="title-container" :style="'background:' + titleColor">
-          <span class="recipe-title">
-            {{ recipe.title }}
-          </span>
+  <div class="recipe-container">
+    <div v-for="recipe in recipes" :key="recipe.id" class="recipe">
+      <div class="title-container" :style="'background:' + titleColor">
+        <span class="recipe-title">
+          {{ recipe.title }}
+        </span>
+      </div>
+
+      <div class="recipe-body">
+        <!-- ZUTATEN -->
+        <div class="ingredients">
+          <div class="ingredient" :key="ingredient" justify="center" v-for="ingredient in recipe.ingredients">
+            {{ ingredient }}
+          </div>
         </div>
 
-        <div class="recipe-body">
-          <!-- ZUTATEN -->
-          <div class="ingredients">
-            <div class="ingredient" :key="ingredient" justify="center" v-for="ingredient in recipe.ingredients">
-              {{ ingredient }}
-            </div>
-          </div>
-
-          <!--  Instructions -->
-          <div class="instruction">
-            {{ recipe.instructions }}
-          </div>
+        <!--  Instructions -->
+        <div class="instruction">
+          {{ recipe.instructions }}
         </div>
       </div>
     </div>
-    <Footer :recipes="recipes" />
   </div>
 </template>
 
 <script>
   import firebase from "firebase";
-  import Footer from "./Footer";
 
   export default {
     name: "home",
-    components: {
-      Footer
-    },
     data() {
       return {
         id: "",
@@ -90,6 +83,8 @@
           instructions: doc.data().instructions,
           counterVal: Math.round(Math.random() * 100),
         });
+
+        this.$emit('shareText', 'Schau dir dieses coole Rezept an: ' + this.recipes[0]['title']);
         this.pickTitleColor(doc.id);
         this.$router.replace("/recipe/" + doc.id);
       },

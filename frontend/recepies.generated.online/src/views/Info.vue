@@ -15,6 +15,9 @@
         components: {
             Footer
         },
+        created() {
+            this.$emit('shareText', "Schau dir diese coolen von einer KI generierten Rezepte an!");
+        }
     };
 </script>
 
