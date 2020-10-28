@@ -84,7 +84,7 @@
           counterVal: Math.round(Math.random() * 100),
         });
 
-        this.$emit('shareText', 'Schau dir dieses coole Rezept an: ' + this.recipes[0]['title']);
+        this.$emit('shareText', 'Schau dir dieses coole KI generierte Rezept an: ' + this.recipes[0]['title']);
         this.pickTitleColor(doc.id);
         this.$router.replace("/recipe/" + doc.id);
       },
