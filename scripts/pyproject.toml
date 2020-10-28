@@ -12,6 +12,7 @@ tqdm = "^4.46"
 pathlib = "^1.0"
 google-cloud-firestore = "^1.9.0"
 grpcio = "^1.33.1"
+algoliasearch = "^2.4.0"
 
 [tool.poetry.dev-dependencies]
 

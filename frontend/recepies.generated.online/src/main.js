@@ -7,6 +7,9 @@ import vuetify from '@/plugins/vuetify'
 import '@babel/polyfill'
 import firebase from "firebase";
 
+import InstantSearch from 'vue-instantsearch'
+Vue.use(InstantSearch)
+
 const firebaseConfig = {
   apiKey: "AIzaSyDmmSPNA_lC7rtpuS3-Yx4dmy4BegppYIw",
   authDomain: "generatedonline-a1cb0.firebaseapp.com",

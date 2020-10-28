@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Recipe from './views/Recipe.vue'
-import Home from './views/Home.vue'
+import Home from './views/Search.vue'
 import Info from "./views/Info.vue"
 
 import firebase from 'firebase'
