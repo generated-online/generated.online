@@ -9,13 +9,7 @@
 
         <ais-hits>
           <div slot="item" slot-scope="{ item }">
-            <!-- show name -->
-            <!-- show content -->
-            <!-- show content with highlight -->
-            <router-link :to="'/recipes/' + item.objectID"><ais-highlight attribute="title" :hit="item"/></router-link>
-            
-            <!-- show content with snippet: need to setup Snipetting in Indices
-            <div><ais-snippet attribute="title" :hit="item"/></div> -->
+            <router-link :to="'/recipe/' + item.objectID"><ais-highlight attribute="title" :hit="item"/></router-link>
           </div>
         </ais-hits>
 
@@ -70,7 +64,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 /* add bottom margin to search box */
 .ais-SearchBox {
   margin-bottom: 1em;

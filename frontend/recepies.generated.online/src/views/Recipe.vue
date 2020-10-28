@@ -39,7 +39,7 @@
     },
     created() {
       let db = firebase.firestore();
-      const ref = db.collection("recipes")
+      const ref = db.collection("algolia-test")
 
       this.id = this.$route.params.id;
       let key = "";
@@ -76,7 +76,6 @@
     },
     methods: {
       loadData(doc) {
-        console.log(doc);
         this.recipes.push({
           id: doc.id,
           ingredients: doc.data().ingredients,
@@ -87,7 +86,7 @@
 
         this.$emit('shareText', 'Schau dir dieses coole KI generierte Rezept an: ' + this.recipes[0]['title']);
         this.pickTitleColor(doc.id);
-        if (typeof this.id === undefined) {
+        if (this.id === undefined) {
           this.$router.replace("/recipe/" + doc.id);
         }
       },
@@ -111,17 +110,7 @@
   };
 </script>
 
-<style>
-  body,
-  #app {
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
-    max-width: 100vw !important;
-    min-height: 100vh !important;
-    font-family: "Roboto";
-  }
-
+<style scoped>
   .recipe-container {
     text-align: left;
     height: 100%;

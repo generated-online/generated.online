@@ -30,3 +30,15 @@
         },
     }
 </script>
+
+<style>
+    body,
+    #app {
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+        max-width: 100vw !important;
+        min-height: 100vh !important;
+        font-family: "Roboto";
+    }
+</style>

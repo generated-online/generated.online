@@ -63,7 +63,7 @@
     }
 </script>
 
-<style>
+<style scoped>
     .footer-container {
         background-color: rgb(93, 146, 177) !important;
         color: white !important;
