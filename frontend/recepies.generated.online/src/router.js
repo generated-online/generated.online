@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
+import Recipe from './views/Recipe.vue'
 import Info from "./views/Info.vue"
 
 import firebase from 'firebase'
@@ -20,13 +20,13 @@ const router = new Router({
   routes: [
     {
       path: '/recipe/:id',
-      name: 'home2',
-      component: Home
+      name: 'recipe2',
+      component: Recipe
     },
     {
       path: '/',
-      name: 'home',
-      component: Home
+      name: 'recipe',
+      component: Recipe
     },
     {
       path: "/info",

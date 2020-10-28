@@ -28,7 +28,7 @@
   import firebase from "firebase";
 
   export default {
-    name: "home",
+    name: "recipe",
     data() {
       return {
         id: "",

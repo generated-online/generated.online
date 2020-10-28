@@ -3,18 +3,12 @@
         <div class="info-container">
             Hier wird demnächst super info stehen!
         </div>
-        <Footer />
     </div>
-
 </template>
 
 <script>
-    import Footer from "./Footer";
     export default {
         name: "info",
-        components: {
-            Footer
-        },
         created() {
             this.$emit('shareText', "Schau dir diese coolen von einer KI generierten Rezepte an!");
         }
