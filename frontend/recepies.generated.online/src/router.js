@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Recipe from './views/Recipe.vue'
+import Home from './views/Home.vue'
 import Info from "./views/Info.vue"
 
 import firebase from 'firebase'
@@ -17,14 +18,18 @@ meta: {
 const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes: [
+  routes: [{
+      path: '/',
+      name: 'home',
+      component: Home
+    },
     {
       path: '/recipe/:id',
-      name: 'recipe2',
+      name: 'specific-recipe',
       component: Recipe
     },
     {
-      path: '/',
+      path: '/recipe',
       name: 'recipe',
       component: Recipe
     },
@@ -32,6 +37,10 @@ const router = new Router({
       path: "/info",
       name: "info",
       component: Info
+    },
+    {
+      path: "*",
+      redirect: "/"
     }
   ]
 });

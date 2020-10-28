@@ -39,7 +39,7 @@
     },
     created() {
       let db = firebase.firestore();
-      const ref = db.collection("800x50")
+      const ref = db.collection("recipes")
 
       this.id = this.$route.params.id;
       let key = "";
@@ -76,9 +76,10 @@
     },
     methods: {
       loadData(doc) {
+        console.log(doc);
         this.recipes.push({
-          id: doc.title,
-          ingredients: doc.data().intrigents,
+          id: doc.id,
+          ingredients: doc.data().ingredients,
           title: doc.data().title,
           instructions: doc.data().instructions,
           counterVal: Math.round(Math.random() * 100),
@@ -86,7 +87,9 @@
 
         this.$emit('shareText', 'Schau dir dieses coole KI generierte Rezept an: ' + this.recipes[0]['title']);
         this.pickTitleColor(doc.id);
-        this.$router.replace("/recipe/" + doc.id);
+        if (typeof this.id === undefined) {
+          this.$router.replace("/recipe/" + doc.id);
+        }
       },
       pickTitleColor(id) {
         const colors = [

@@ -4,10 +4,10 @@
             <v-card flat tile width="100%" class="footer-container lighten-1 text-center">
                 <v-card-text class="py-2 text center" width="100%">
                     <span class="mx-4 mr-0">
-                        re-generate
+                        neues rezept
                     </span>
                     <v-btn class="mx-4 ml-0" icon>
-                        <router-link to="/">
+                        <router-link to="/recipe">
                             <img src="/reload.svg" class="my-icon" />
                         </router-link>
                     </v-btn>
