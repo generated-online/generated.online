@@ -1,8 +1,8 @@
 <template>
     <div id="app">
         <v-app id="inspire">
-            <router-view :key="$route.path" @shareText="updateTitle($event)"></router-view>
-            <Footer :shareText="shareText" />
+            <router-view :key="$route.path" @shareText="updateTitle($event)" @recipeId="updateRecipeId($event)"></router-view>
+            <Footer :shareText="shareText" :recipeId="recipeId" />
         </v-app>
     </div>
 </template>
@@ -16,12 +16,16 @@
         methods: {
             updateTitle(shareText) {
                 this.shareText = shareText;
+            },
+            updateRecipeId(id){
+                this.recipeId = id;
             }
         },
         data() {
             return {
                 url: "",
-                shareText: "Schau dir diese coolen von einer KI generierten Rezepte an!"
+                shareText: "Schau dir diese coolen von einer KI generierten Rezepte an!",
+                recipeId: null
             };
 
         },

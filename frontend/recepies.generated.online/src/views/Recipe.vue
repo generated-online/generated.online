@@ -26,6 +26,7 @@
 
 <script>
   import firebase from "firebase";
+  import recipeToColor from "@/functions/recipe_to_color";
 
   export default {
     name: "recipe",
@@ -85,28 +86,13 @@
         });
 
         this.$emit('shareText', 'Schau dir dieses coole KI generierte Rezept an: ' + this.recipes[0]['title']);
-        this.pickTitleColor(doc.id);
+        this.$emit('recipeId', this.recipes[0].id);
+        this.titleColor = recipeToColor(doc.id);
         if (this.id === undefined) {
           this.$router.replace("/recipe/" + doc.id);
         }
       },
-      pickTitleColor(id) {
-        const colors = [
-          "lightcoral",
-          "lightcyan",
-          "lightblue",
-          "lightgoldenrodyellow",
-          "lightgreen",
-          "lightpink",
-          "lightsalmon",
-          "lightseagreen",
-          "lightskyblue",
-          "lightsteelblue",
-          "lightyellow",
-        ].sort(() => Math.random() - 0.5);
-        this.titleColor = colors[0];
-      },
-    },
+    }
   };
 </script>
 

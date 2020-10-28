@@ -1,7 +1,8 @@
 <template>
     <v-card>
         <v-footer padless fixed>
-            <v-card flat tile width="100%" class="footer-container lighten-1 text-center">
+            <v-card flat tile width="100%" class="footer-container lighten-1 text-center"
+                :style="'background-color:' + color">
                 <v-card-text class="py-2 text center" width="100%">
                     <span class="mx-4 mr-0">
                         neues rezept
@@ -37,6 +38,8 @@
 <script>
     import Vue from "vue";
     import VueSocialSharing from "vue-social-sharing";
+    import recipeToColor from "@/functions/recipe_to_color";
+
     Vue.use(VueSocialSharing);
 
     export default {
@@ -45,6 +48,10 @@
             "shareText": {
                 type: String,
                 default: "Schau dir diese coolen von einer KI generierten Rezepte an!"
+            },
+            "recipeId": {
+                type: String,
+                default: "random as fuck"
             }
         },
         components: {
@@ -53,11 +60,15 @@
         data() {
             return {
                 url: "",
+                color: "lightgreen",
             };
         },
         watch: {
-            '$route': function (refreshPage) {
+            '$route': function () {
                 this.url = window.location.href;
+            },
+            'recipeId': function () {
+                this.color = recipeToColor(this.recipeId);
             }
         }
     }
@@ -65,7 +76,6 @@
 
 <style scoped>
     .footer-container {
-        background-color: rgb(93, 146, 177) !important;
         color: white !important;
     }
 

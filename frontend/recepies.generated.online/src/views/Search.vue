@@ -7,7 +7,7 @@
 
         <ais-search-box />
 
-        <ais-hits>
+        <ais-hits class="ais-hits">
           <div slot="item" slot-scope="{ item }">
             <router-link :to="'/recipe/' + item.objectID"><ais-highlight attribute="title" :hit="item"/></router-link>
           </div>
@@ -64,25 +64,16 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 /* add bottom margin to search box */
 .ais-SearchBox {
   margin-bottom: 1em;
 }
 
 /* change search result from grid/box to row */
-.ais-Hits-item {
-  width: 100%;
-  border: none;
-  box-shadow: none;
-
+.ais-Hits-list{
+  padding: 0 !important;
+  
 }
 
-/* prevent highlight overwrite font-size */
-.ais-Highlight {
-  font-size: inherit;
-}
-.ais-Highlight-highlighted {
-  font-size: inherit;
-}
 </style>
