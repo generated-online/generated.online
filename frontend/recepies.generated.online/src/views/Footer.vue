@@ -5,18 +5,18 @@
                 :style="'background-color:' + color">
                 <v-card-text class="py-2 text center" width="100%">
                     <generateRecipeButton />
-                    <v-btn class="mx-4 my-0" icon>
+                    <v-btn class="mx-3 my-0" icon>
                         <a href="https://github.com/generated-online/generated.online" class="inline-block">
 
                             <img src="/github.png" class="my-icon" />
                         </a>
                     </v-btn>
-                    <v-btn class="mx-4 my-0" icon>
+                    <v-btn class="mx-3 my-0" icon>
                         <router-link to="/info">
                             <img src="/info.svg" class="my-icon" />
                         </router-link>
                     </v-btn>
-                    <v-btn class="mx-4 my-0" icon>
+                    <v-btn class="mx-3 my-0" icon>
                         <!-- show whatsapp share button, when not loaded yet just an empty button -->
                         <ShareNetwork class="inline-block" network="whatsapp" :url="url" :title="shareText">
                             <img src="/whatsapp.svg" class="my-icon" />
