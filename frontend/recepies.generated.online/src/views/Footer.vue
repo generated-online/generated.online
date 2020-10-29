@@ -53,7 +53,7 @@
         },
         data() {
             return {
-                url: "",
+                url: window.location.href,
                 color: recipeToColor(this.recipeId),
             };
         },
