@@ -6,10 +6,9 @@
                 <v-card-text class="py-2 text center" width="100%">
                     <generateRecipeButton />
                     <v-btn class="mx-3 my-0" icon>
-                        <a href="https://github.com/generated-online/generated.online" class="inline-block">
-
-                            <img src="/github.png" class="my-icon" />
-                        </a>
+                        <router-link to="/" style="text-decoration: none !important;">
+                            <v-icon class="vue-icon" size="30">search</v-icon>
+                        </router-link>
                     </v-btn>
                     <v-btn class="mx-3 my-0" icon>
                         <router-link to="/info">
@@ -45,7 +44,7 @@
             },
             "recipeId": {
                 type: String,
-                default: "random as fuck"
+                default: null
             }
         },
         components: {
@@ -55,7 +54,7 @@
         data() {
             return {
                 url: "",
-                color: "lightgreen",
+                color: recipeToColor(this.recipeId),
             };
         },
         watch: {
@@ -78,8 +77,11 @@
         cursor: grab;
         filter: invert(77%) sepia(90%) saturate(1%) hue-rotate(10deg) brightness(88%) contrast(108%);
         opacity: 0.8;
-        width: 1.75em;
-        height: 1.75em;
+    }
+
+    .vue-icon {
+        cursor: grab;
+        color: rgba(0.82745098039, 0.82745098039, 0.82745098039, 0.6) !important;
     }
 
     .footer-text {
