@@ -12,7 +12,7 @@
           <ais-highlight attribute="title" :hit="item" />
           <div>
             <span class="search-item-ingredients" v-for="ingredient in item.ingredients"
-              :key="ingredient">{{ingredient}}</span>
+              :key="ingredient+String(Math.floor(Math.random() * 100))">{{ingredient}}</span>
           </div>
         </router-link>
       </ais-hits>
