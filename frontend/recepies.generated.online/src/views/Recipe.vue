@@ -10,7 +10,7 @@
       <div class="recipe-body">
         <!-- ZUTATEN -->
         <div class="ingredients">
-          <div class="ingredient" :key="ingredient" justify="center" v-for="ingredient in recipe.ingredients">
+          <div class="ingredient" :key="ingredient+String(Math.floor(Math.random() * 100))" justify="center" v-for="ingredient in recipe.ingredients">
             {{ ingredient }}
           </div>
         </div>
