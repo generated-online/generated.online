@@ -2,8 +2,15 @@
   <div>
     <ais-instant-search :search-client="searchClient" index-name="Recipes">
 
-      <ais-search-box placeholder="Suche hier nach Rezepten..." submit-title="Suche" reset-title="Lösche alles"
-        show-loading-indicator />
+      <ais-search-box placeholder="Suche nach Rezepten..." attribute="title" submit-title="Suche"
+        reset-title="Lösche alles" show-loading-indicator />
+
+      <ais-refinement-list attribute="filtered_ingredients" operator="and" :limit="5" :show-more="true"
+        :searchable="false" searchable-placeholder="Suche nach Zutaten..." :sort-by="['count:desc']" :class-names="{
+          'ais-RefinementList-showMore': 'showMore-button',
+          'ais-RefinementList-showMore--disabled': 'showMore-button--disbaled',
+          }" />
+
 
       <ais-hits class="ais-hits">
 
@@ -12,7 +19,7 @@
           <ais-highlight attribute="title" :hit="item" />
           <div>
             <span class="search-item-ingredients" v-for="ingredient in item.ingredients"
-              :key="ingredient+String(Math.floor(Math.random() * 100))">{{ingredient}}</span>
+              :key="ingredient+String(Math.floor(Math.random() * 10000))">{{ingredient}}</span>
           </div>
         </router-link>
       </ais-hits>
@@ -63,6 +70,9 @@
         });
       }
       return algoliaClient.search(requests);
+    },
+    searchForFacetValues: function (requests) {
+      return algoliaClient.searchForFacetValues(requests);
     },
   };
 
@@ -117,8 +127,28 @@
     font-size: 0.75em !important
   }
 
+  .ais-RefinementList {
+    padding-bottom: 25px !important;
+  }
+
   .ais-Pagination {
     padding-bottom: 50px !important;
     padding-top: 25px !important;
+  }
+
+  .showMore-button,
+  .showMore-button:focus {
+    background-color: transparent;
+    color: black;
+    border: thin solid black;
+  }
+
+  .showMore-button:hover {
+    background-color: lightgray;
+  }
+
+  .showMore-button--disbaled,
+  .showMore-button--disabled:hover {
+    display: none;
   }
 </style>

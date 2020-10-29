@@ -10,7 +10,8 @@
       <div class="recipe-body">
         <!-- ZUTATEN -->
         <div class="ingredients">
-          <div class="ingredient" :key="ingredient+String(Math.floor(Math.random() * 100))" justify="center" v-for="ingredient in recipe.ingredients">
+          <div class="ingredient" :key="ingredient+String(Math.floor(Math.random() * 100))" justify="center"
+            v-for="ingredient in recipe.ingredients">
             {{ ingredient }}
           </div>
         </div>
@@ -40,7 +41,7 @@
     },
     created() {
       let db = firebase.firestore();
-      const ref = db.collection("algolia-test")
+      const ref = db.collection("recipes")
 
       this.id = this.$route.params.id;
       let key = "";
