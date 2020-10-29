@@ -2,7 +2,8 @@
   <div>
     <ais-instant-search :search-client="searchClient" index-name="Recipes">
 
-      <ais-search-box />
+      <ais-search-box placeholder="Suche hier nach Rezepten..." submit-title="Suche" reset-title="Lösche alles"
+        show-loading-indicator />
 
       <ais-hits class="ais-hits">
 

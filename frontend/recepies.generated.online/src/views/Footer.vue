@@ -3,8 +3,8 @@
         <v-footer padless fixed>
             <v-card flat tile width="100%" class="footer-container lighten-1 text-center"
                 :style="'background-color:' + color">
-                <v-card-text class="py-2 text center" width="100%">
-                    <generateRecipeButton />
+                <v-card-text class="py-2 px-0 text center" width="100%">
+                    <generateRecipeButton buttonText="" />
                     <v-btn class="mx-3 my-0" icon>
                         <router-link to="/" style="text-decoration: none !important;">
                             <v-icon class="vue-icon" size="30">search</v-icon>
