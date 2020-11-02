@@ -1,14 +1,17 @@
 <template>
-    <router-link to="/recipe" style="    text-decoration: none;
-    color: rgb(100, 100, 100);
-    font-weight: 600;">
-        <span class="mx-3 mr-0">
+    <span>
+        <!-- if there is text we want to have a real button -->
+        <v-btn v-if="buttonText !== ''" to="/recipe" depressed outlined style="background: white; opacity: 0.8"
+            class="mx-3 my-0">
             {{buttonText}}
-        </span>
-        <v-btn class="mx-3 ml-0" icon>
-            <img src="/reload.svg" class="my-icon" />
+            <v-icon style="padding-left:0.5em">shuffle</v-icon>
         </v-btn>
-    </router-link>
+        <!-- without text no button -->
+        <v-btn v-if="buttonText === ''" to="/recipe" icon class="mx-3 my-0">
+            <v-icon class="vue-icon">shuffle</v-icon>
+        </v-btn>
+    </span>
+
 </template>
 
 

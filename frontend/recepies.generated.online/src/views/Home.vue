@@ -1,7 +1,8 @@
 <template>
     <div>
         <div class="info-container">
-            <h1 style="text-align:center; margin-bottom:1em"> KI generierte Rezepte! </h1>
+            <h1 style="text-align:center; margin-bottom:1em"> <span class="text-span"> KI generierte Rezepte!</span>
+            </h1>
             <Search />
         </div>
     </div>

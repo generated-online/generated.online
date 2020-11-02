@@ -1,32 +1,40 @@
 <template>
     <div class="info-container">
-        <h1>Um was geht es bei dieser Website?</h1>
+        <h1><span class=text-span>Um was geht es bei dieser Website?</span></h1>
         <br>
         <div class="project-description">
-            Stell dir vor jemand schaut sich alle Rezepte von chefkoch.de an,
-            filtert alle unbedeutenten und schlechten Rezepte raus und erstellt
-            neue Rezepte basierend auf diesem Datensatz.
+            <span class=text-span>
+                Stell dir vor jemand schaut sich alle Rezepte von chefkoch.de an,
+                filtert alle unbedeutenten und schlechten Rezepte raus und erstellt
+                neue Rezepte basierend auf diesem Datensatz.
+            </span>
             <br>
             <br>
-            Genau das haben wir gemacht!
+            <span class=text-span>
+                Genau das haben wir gemacht!
+            </span>
             <br>
             <br>
-            Aber anstatt uns selber neue Rezepte zu
-            überlegen, haben wir eine Künstliche Intelligenz (<b>KI</b>) darauf trainiert
-            möglichst gute Rezepte zu generieren.
+            <span class=text-span>
+                Aber anstatt uns selber neue Rezepte zu
+                überlegen, haben wir eine Künstliche Intelligenz (<b>KI</b>) darauf trainiert
+                möglichst gute Rezepte zu generieren.
+            </span>
             <br>
             <br>
-            Die Ergebnisse reichen von sehr lustig oder unkochbar zu einwandfrei
-            vorstellbar als Rezept aus einem Kochbuch.
+            <span class=text-span>
+                Die Ergebnisse reichen von sehr lustig oder unkochbar zu einwandfrei
+                vorstellbar als Rezept aus einem Kochbuch.
+            </span>
             <br>
             <br>
-            Wenn dich unser Code interessiert schau doch mal auf unserem Github-Repo vorbei und lass einen Stern da:
+            <span class=text-span>
+                Wenn dich unser Code interessiert schau doch mal auf unserem Github-Repo vorbei und lass einen Stern da:
+            </span>
         </div>
         <div class="github-button">
-            <v-btn icon>
-                <a href="https://github.com/generated-online/generated.online" class="inline-block">
-                    <img src="/github.png" class="my-icon" style="width:1.5em; height:1.5em" />
-                </a>
+            <v-btn icon outlined large href="https://github.com/generated-online/generated.online">
+                <v-icon class="vue-icon" align="middle" size="40">mdi-github</v-icon>
             </v-btn>
         </div>
     </div>

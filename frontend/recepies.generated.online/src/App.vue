@@ -1,7 +1,8 @@
 <template>
     <div id="app">
         <v-app id="inspire">
-            <router-view :key="$route.path" @shareText="updateTitle($event)" @recipeId="updateRecipeId($event)"></router-view>
+            <router-view :key="$route.path" @shareText="updateTitle($event)" @recipeId="updateRecipeId($event)">
+            </router-view>
             <Footer :shareText="shareText" :recipeId="recipeId" />
         </v-app>
     </div>
@@ -17,7 +18,7 @@
             updateTitle(shareText) {
                 this.shareText = shareText;
             },
-            updateRecipeId(id){
+            updateRecipeId(id) {
                 this.recipeId = id;
             }
         },
@@ -35,8 +36,46 @@
     }
 </script>
 
-<style>
-    body,
+<style lang="scss">
+    $softPink: #F9D8D4;
+    $yellow: #F9A734;
+    $DarkYellow: #FB8B24;
+    $green: #36964C;
+    $DarkGreen: #286E38;
+
+    #inspire {
+        background:
+            /* Pineapple details */
+            radial-gradient(circle closest-side at 50px 50px, $DarkYellow 3px, transparent 0),
+            radial-gradient(circle closest-side at 40px 60px, $DarkYellow 3px, transparent 0),
+            radial-gradient(circle closest-side at 60px 60px, $DarkYellow 3px, transparent 0),
+            radial-gradient(circle closest-side at 50px 70px, $DarkYellow 3px, transparent 0),
+
+            radial-gradient(circle closest-side at 150px 165px, $DarkYellow 3px, transparent 0),
+            radial-gradient(circle closest-side at 140px 175px, $DarkYellow 3px, transparent 0),
+            radial-gradient(circle closest-side at 160px 175px, $DarkYellow 3px, transparent 0),
+            radial-gradient(circle closest-side at 150px 185px, $DarkYellow 3px, transparent 0),
+
+            /* Pineapple base */
+            radial-gradient(ellipse closest-side at 50px 60px, $yellow 18px, transparent 0),
+
+            radial-gradient(ellipse closest-side at 150px 175px, $yellow 18px, transparent 0),
+
+            /* Pineapple leafs */
+            radial-gradient(circle closest-side at 30px 40px, $softPink 15px, transparent 0),
+            radial-gradient(circle closest-side at 40px 35px, $green 15px, transparent 0),
+            radial-gradient(circle closest-side at 70px 40px, $softPink 15px, transparent 0),
+            radial-gradient(circle closest-side at 60px 35px, $DarkGreen 15px, transparent 0),
+
+            radial-gradient(circle closest-side at 130px 155px, $softPink 15px, transparent 0),
+            radial-gradient(circle closest-side at 140px 150px, $green 15px, transparent 0),
+            radial-gradient(circle at 170px 155px, $softPink 15px, transparent 0),
+            radial-gradient(circle at 160px 150px, $DarkGreen 15px, transparent 0);
+        background-color: $softPink;
+        background-size: 180px 210px;
+    }
+
+
     #app {
         margin: 0;
         padding: 0;
@@ -44,5 +83,9 @@
         max-width: 100vw !important;
         min-height: 100vh !important;
         font-family: "Roboto";
+    }
+
+    .text-span {
+        background: $softPink
     }
 </style>

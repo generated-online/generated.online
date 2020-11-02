@@ -4,21 +4,17 @@
             <v-card flat tile width="100%" class="footer-container lighten-1 text-center"
                 :style="'background-color:' + color">
                 <v-card-text class="py-2 px-0 text center" width="100%">
-                    <generateRecipeButton buttonText="" />
-                    <v-btn class="mx-3 my-0" icon>
-                        <router-link to="/" style="text-decoration: none !important;">
-                            <v-icon class="vue-icon" size="30">search</v-icon>
-                        </router-link>
+                    <v-btn class="mx-3 my-0" to="/" icon>
+                        <v-icon class="vue-icon" size="30">search</v-icon>
                     </v-btn>
-                    <v-btn class="mx-3 my-0" icon>
-                        <router-link to="/info">
-                            <img src="/info.svg" class="my-icon" />
-                        </router-link>
+                    <generateRecipeButton buttonText="" />
+                    <v-btn class="mx-3 my-0" icon to="/info">
+                        <v-icon class="vue-icon" size="30">mdi-information-outline</v-icon>
                     </v-btn>
                     <v-btn class="mx-3 my-0" icon>
                         <!-- show whatsapp share button, when not loaded yet just an empty button -->
                         <ShareNetwork class="inline-block" network="whatsapp" :url="url" :title="shareText">
-                            <img src="/whatsapp.svg" class="my-icon" />
+                            <v-icon class="vue-icon" size="30">mdi-whatsapp</v-icon>
                         </ShareNetwork>
                     </v-btn>
                 </v-card-text>
@@ -71,12 +67,6 @@
 <style>
     .footer-container {
         color: white !important;
-    }
-
-    .my-icon {
-        cursor: grab;
-        filter: invert(77%) sepia(90%) saturate(1%) hue-rotate(10deg) brightness(88%) contrast(108%);
-        opacity: 0.8;
     }
 
     .vue-icon {

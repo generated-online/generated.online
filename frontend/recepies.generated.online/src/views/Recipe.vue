@@ -12,14 +12,14 @@
         <div class="ingredients">
           <div class="ingredient" :key="ingredient+String(Math.floor(Math.random() * 100))" justify="center"
             v-for="ingredient in recipe.ingredients">
-            {{ ingredient }}
+            <span class="text-span">{{ ingredient }}</span>
           </div>
         </div>
 
         <!--  Instructions -->
-        <div class="instruction">
+        <span class="instruction text-span">
           {{ recipe.instructions }}
-        </div>
+        </span>
       </div>
     </div>
   </div>
@@ -138,6 +138,7 @@
     /* this should be exactly the space left */
     width: calc(100% - 25% - 2%*4);
     text-align: justify;
+    display: block
   }
 
 
