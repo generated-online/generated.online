@@ -1,6 +1,11 @@
 <template>
     <div id="app">
-        <v-app id="inspire">
+        <v-app id="inspire" :style="{
+                'border-left':backgroundPosition +' solid',
+                'border-right': backgroundPosition +' solid',
+                'padding-left': `calc(2em - ${backgroundPosition})`,
+                'padding-right': `calc(2em - ${backgroundPosition})`,
+                }">
             <router-view :key="$route.path" @shareText="updateTitle($event)" @recipeId="updateRecipeId($event)">
             </router-view>
             <Footer :shareText="shareText" :recipeId="recipeId" />
@@ -26,13 +31,20 @@
             return {
                 url: "",
                 shareText: "Schau dir diese coolen von einer KI generierten Rezepte an!",
-                recipeId: null
+                recipeId: null,
+                backgroundPosition: (window.innerWidth % 90) / 2 + "px",
             };
 
         },
         created() {
             this.url = window.location.href;
         },
+        mounted() {
+            window.addEventListener('resize', () => {
+                this.backgroundPosition = (window.innerWidth % 90) / 2 + "px";
+            })
+        },
+
     }
 </script>
 
@@ -73,6 +85,9 @@
             radial-gradient(circle at 160px 150px, $DarkGreen 15px, transparent 0);
         background-color: $softPink;
         background-size: 180px 210px;
+        background-position: -15px 0;
+        border-left-color: $softPink !important;
+        border-right-color: $softPink !important;
     }
 
 

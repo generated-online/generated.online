@@ -101,7 +101,7 @@
   .recipe-container {
     text-align: left;
     height: 100%;
-    padding: 2em 2em 2em 2em;
+    padding: 0em 2em 0em 2em;
     min-height: 100vh;
     margin: 0 0 100px 0;
   }
@@ -144,7 +144,7 @@
 
   @media (max-width: 800px) {
     .recipe-container {
-      padding: 2em 2em 2em 2em !important;
+      padding: 2em 0em 2em 0em !important;
       margin: 0 0 2em 0 !important;
     }
 
