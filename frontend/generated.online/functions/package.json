@@ -16,7 +16,8 @@
     "firebase-functions": "^3.1.0"
   },
   "devDependencies": {
-    "firebase-functions-test": "^0.1.6"
+    "firebase-functions-test": "^0.1.6",
+    "node-forge": "^0.10.0"
   },
   "private": true
 }

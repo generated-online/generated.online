@@ -19,6 +19,9 @@
     "@vue/cli-plugin-babel": "^3.12.1",
     "@vue/cli-service": "^3.12.1",
     "vue-cli-plugin-vuetify": "^0.6.3",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.11",
+    "serialize-javascript": "^3.1.0",
+    "node-fetch": "^2.6.1",
+    "node-forge": "^0.10.0"
   }
 }
