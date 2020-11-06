@@ -22,6 +22,7 @@
         methods: {
             updateTitle(shareText) {
                 this.shareText = shareText;
+                    this.$analytics.logEvent("notification_received");
             },
             updateRecipeId(id) {
                 this.recipeId = id;

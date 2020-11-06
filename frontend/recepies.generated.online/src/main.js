@@ -5,7 +5,9 @@ import store from './store'
 import vuetify from '@/plugins/vuetify'
 
 import '@babel/polyfill'
-import firebase from "firebase";
+import * as firebase from "firebase/app";
+import "firebase/firestore";
+import "firebase/analytics";
 
 import InstantSearch from 'vue-instantsearch'
 Vue.use(InstantSearch)
@@ -17,11 +19,16 @@ const firebaseConfig = {
   projectId: "generatedonline-a1cb0",
   storageBucket: "generatedonline-a1cb0.appspot.com",
   messagingSenderId: "988309438314",
-  appId: "1:988309438314:web:0db27d9fa52f9108172f13"
+  appId: "1:988309438314:web:0db27d9fa52f9108172f13",
+  measurementId: "G-P84D64G1BB"
 };
 
 firebase.initializeApp(firebaseConfig);
-Vue.config.productionTip = false
+firebase.analytics();
+
+Vue.config.productionTip = false;
+
+Vue.prototype.$analytics = firebase.analytics();
 
 firebase.auth().onAuthStateChanged(() => {
   new Vue({
