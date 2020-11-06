@@ -1,11 +1,6 @@
 <template>
     <div id="app">
-        <v-app id="inspire" :style="{
-                'border-left':backgroundPosition +' solid',
-                'border-right': backgroundPosition +' solid',
-                'padding-left': `calc(2em - ${backgroundPosition})`,
-                'padding-right': `calc(2em - ${backgroundPosition})`,
-                }">
+        <v-app id="inspire" :style="cssVars">
             <router-view :key="$route.path" @shareText="updateTitle($event)" @recipeId="updateRecipeId($event)">
             </router-view>
             <Footer :shareText="shareText" :recipeId="recipeId" />
@@ -15,6 +10,8 @@
 
 <script>
     import Footer from "./views/Footer";
+    import recipeToColor from "@/functions/recipe_to_color";
+
     export default {
         components: {
             Footer
@@ -22,10 +19,11 @@
         methods: {
             updateTitle(shareText) {
                 this.shareText = shareText;
-                    this.$analytics.logEvent("notification_received");
+                this.$analytics.logEvent("notification_received");
             },
             updateRecipeId(id) {
                 this.recipeId = id;
+                this.backgroundColor = recipeToColor(this.recipeId);
             }
         },
         data() {
@@ -34,6 +32,7 @@
                 shareText: "Schau dir diese coolen von einer KI generierten Rezepte an!",
                 recipeId: null,
                 backgroundPosition: (window.innerWidth % 90) / 2 + "px",
+                backgroundColor: recipeToColor(null)
             };
 
         },
@@ -45,12 +44,23 @@
                 this.backgroundPosition = (window.innerWidth % 90) / 2 + "px";
             })
         },
+        computed: {
+            cssVars() {
+                return {
+                    '--bg-color': this.backgroundColor,
+                    'border-left': this.backgroundPosition + ' solid',
+                    'border-right': this.backgroundPosition + ' solid',
+                    'padding-left': `calc(2em - ${this.backgroundPosition})`,
+                    'padding-right': `calc(2em - ${this.backgroundPosition})`,
+                }
+            }
+        }
 
     }
 </script>
 
 <style lang="scss">
-    $softPink: #F9D8D4;
+    $softPink: var(--bg-color);
     $yellow: #F9A734;
     $DarkYellow: #FB8B24;
     $green: #36964C;

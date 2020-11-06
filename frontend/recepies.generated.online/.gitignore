@@ -86,3 +86,8 @@ node_modules/
 
 # dotenv environment variables file
 .env
+
+# npm lock
+*package-lock.json
+
+build

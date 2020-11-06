@@ -3,3 +3,4 @@ food/src/chefkoch/data
 *.zip
 *.pkl
 .DS_Store
+/data_save

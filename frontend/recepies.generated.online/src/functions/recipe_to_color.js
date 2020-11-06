@@ -7,10 +7,10 @@ export default (id) => {
         "lightgreen",
         "lightpink",
         "lightsalmon",
-        "lightseagreen",
         "lightskyblue",
         "lightsteelblue",
         "lightyellow",
+        "lightseagreen",
     ]
     let num = parseInt(id, 36) % colors.length;
     return colors[num];
