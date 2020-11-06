@@ -54,7 +54,7 @@
     .info-container {
         text-align: left;
         height: 100% !important;
-        padding: 2em 2em 2em 2em;
+        padding: 2em 0em 2em 0em;
         max-width: 100vw !important;
         min-height: 100vh !important;
         margin: 0 0 25px 0;
