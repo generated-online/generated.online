@@ -101,7 +101,7 @@
   .recipe-container {
     text-align: left;
     height: 100%;
-    padding: 0em 2em 0em 2em;
+    padding: 2em 0em 2em 0em;
     min-height: 100vh;
     margin: 0 0 100px 0;
   }
