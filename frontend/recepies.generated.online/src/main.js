@@ -12,6 +12,10 @@ import "firebase/analytics";
 import InstantSearch from 'vue-instantsearch'
 Vue.use(InstantSearch)
 
+import VueCookies from 'vue-cookies'
+Vue.use(VueCookies)
+Vue.$cookies.config('Infinitiy')
+
 const firebaseConfig = {
   apiKey: "AIzaSyDmmSPNA_lC7rtpuS3-Yx4dmy4BegppYIw",
   authDomain: "generatedonline-a1cb0.firebaseapp.com",

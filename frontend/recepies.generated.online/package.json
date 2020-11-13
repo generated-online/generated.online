@@ -15,6 +15,7 @@
     "firebase": "^7.24.0",
     "instantsearch.css": "^7.4.5",
     "vue": "^2.6.11",
+    "vue-cookies": "^1.7.4",
     "vue-instantsearch": "^3.4.2",
     "vue-router": "^3.3.2",
     "vue-server-renderer": "^2.6.12",

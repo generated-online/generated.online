@@ -1,26 +1,29 @@
 <template>
   <div class="recipe-container">
     <div v-for="recipe in recipes" :key="recipe.id" class="recipe">
-      <div class="title-container" :style="'background:' + titleColor">
-        <span class="recipe-title">
-          {{ recipe.title }}
-        </span>
-      </div>
-
-      <div class="recipe-body">
-        <!-- ZUTATEN -->
-        <div class="ingredients">
-          <div class="ingredient" :key="ingredient+String(Math.floor(Math.random() * 100))" justify="center"
-            v-for="ingredient in recipe.ingredients">
-            <span class="text-span">{{ ingredient }}</span>
-          </div>
+      <div>
+        <div class="title-container" :style="'background:' + titleColor">
+          <span class="recipe-title">
+            {{ recipe.title }}
+          </span>
         </div>
 
-        <!--  Instructions -->
-        <span class="instruction text-span">
-          {{ recipe.instructions }}
-        </span>
+        <div class="recipe-body">
+          <!-- ZUTATEN -->
+          <div class="ingredients">
+            <div class="ingredient" :key="ingredient+String(Math.floor(Math.random() * 100))" justify="center"
+              v-for="ingredient in recipe.ingredients">
+              <span class="text-span">{{ ingredient }}</span>
+            </div>
+          </div>
+
+          <!--  Instructions -->
+          <span class="instruction text-span">
+            {{ recipe.instructions }}
+          </span>
+        </div>
       </div>
+      <Voting :recipe='recipe' />
     </div>
   </div>
 </template>
@@ -28,9 +31,13 @@
 <script>
   import firebase from "firebase";
   import recipeToColor from "@/functions/recipe_to_color";
+  import Voting from "@/components/Voting"
 
   export default {
     name: "recipe",
+    components: {
+      Voting
+    },
     data() {
       return {
         id: "",
@@ -83,7 +90,7 @@
           ingredients: doc.data().ingredients,
           title: doc.data().title,
           instructions: doc.data().instructions,
-          counterVal: Math.round(Math.random() * 100),
+          votes: doc.data().votes || 0,
         });
 
         this.$emit('shareText', 'Schau dir dieses coole KI generierte Rezept an: ' + this.recipes[0]['title']);
