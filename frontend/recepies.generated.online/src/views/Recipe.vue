@@ -1,10 +1,12 @@
 <template>
   <div class="recipe-container">
     <div v-for="recipe in recipes" :key="recipe.id" class="recipe">
-      <div>
+      <div style="z-index: 1">
         <div class="title-container" :style="'background:' + titleColor">
           <span class="recipe-title">
             {{ recipe.title }}
+                      <Voting :recipe='recipe' />
+
           </span>
         </div>
 
@@ -20,11 +22,17 @@
           <!--  Instructions -->
           <span class="instruction text-span">
             {{ recipe.instructions }}
+                      <EmojieBackground :recipe="recipe"/>
+
           </span>
+
         </div>
       </div>
-      <Voting :recipe='recipe' />
-    </div>
+      
+      <br>
+      <Postcard :recipe='recipe' :color='titleColor'/>
+          </div>
+
   </div>
 </template>
 
@@ -32,11 +40,14 @@
   import firebase from "firebase";
   import recipeToColor from "@/functions/recipe_to_color";
   import Voting from "@/components/Voting"
+  import Postcard from "@/components/Postcard"
+    import EmojieBackground from "@/components/EmojieBackground"
+
 
   export default {
     name: "recipe",
     components: {
-      Voting
+      Voting, Postcard, EmojieBackground
     },
     data() {
       return {

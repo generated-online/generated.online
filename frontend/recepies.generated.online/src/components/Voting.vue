@@ -1,10 +1,11 @@
 <template>
-    <div class="vote-container">
-        <v-btn class="mx-3 my-3 pa-8" :disabled="!possibleToVote" fab dark small color="transparent" @click="upvote">
-            <div class="nbVotes" style="color: black !important">{{recipe.votes}}</div>
-            <v-icon size="50" :style="cssVars">favorite_border</v-icon>
+    <span class="vote-container">
+        <v-btn class="mx-3 my-3 pa-8 transparentButton" :disabled="!possibleToVote" fab dark small color="transparent"
+            @click="upvote">
+            <span class="nbVotes" style="color: darkred !important; font-size: 22px">{{recipe.votes}}</span>
+            <v-icon size="70" :style="cssVars">favorite_border</v-icon>
         </v-btn>
-    </div>
+    </span>
 
 </template>
 
@@ -64,7 +65,11 @@
     }
 </script>
 
-<style>
+<style scoped>
+    .transparentButton {
+        box-shadow: none;
+    }
+
     .nbVotes {
         position: absolute;
         z-index: 99;

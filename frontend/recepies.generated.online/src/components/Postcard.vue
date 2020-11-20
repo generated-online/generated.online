@@ -1,0 +1,112 @@
+<template>
+    <div style="margin-top: 100vh">
+        <div class="postcard-body" :style="'background:'+ color ">
+            <div class="postcard-inner">
+                <h1>{{recipe.title}}</h1>
+                <p class="ad">recipes.generated.online</p>
+            </div>
+        </div>
+        <div class="postcard-body" style="background:white ">
+            <div class="postcard-inner-back">
+                <div class="half-postcard instructions">
+                    <h2>{{recipe.title}}</h2>
+                    <p v-for="ingredient in recipe.ingredients" v-bind:key="ingredient">{{ingredient}}</p>
+                    <p>{{recipe.instructions}}</p>
+                    <p>Gesendet von recipes.generated.online</p>
+                </div>
+                <div class="half-postcard">
+                    <div class="stamp"></div>
+                    <div class="address">
+                        <input type="text" placeholder="Name">
+                        <input type="text" placeholder="Straße">
+                        <input type="text" placeholder="Postleitzahl und Ort">
+                        <input type="text" placeholder="Land">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</template>
+
+<script>
+    export default {
+        props: ['recipe', 'color']
+    }
+</script>
+
+<style scoped>
+    .instructions {
+        padding-top: 70px;
+        padding-right: 10px;
+    }
+
+    .stamp {
+        position: absolute;
+        width: 145px;
+        height: 190px;
+        border: dashed black 2px;
+        background: whitesmoke;
+        right: 0;
+    }
+
+    input {
+        padding-top: 10px;
+        margin-top: 10px;
+        width: 50%;
+        margin-right: 40%;
+        margin-left: 10%;
+        background: whitesmoke;
+        border: dashed black 2px;
+        float: right;
+        display: block;
+    }
+
+    .address {
+        border-left: solid black 4px;
+        position: absolute;
+        top: 300px;
+        padding-top: 150px;
+        left: 0;
+    }
+
+    .half-postcard {
+        position: relative;
+        width: 50%;
+        float: left;
+    }
+
+    .postcard-body {
+        margin-top: 50px !important;
+        margin: auto;
+        border: solid black 40px;
+        width: 1440px;
+        height: 1040px;
+    }
+
+    .postcard-inner {
+        position: relative;
+        padding: 140px;
+    }
+
+    .postcard-inner-back {
+        padding: 30px;
+    }
+
+    .ad {
+        position: absolute;
+    }
+
+    h1 {
+        font-size: 120px;
+        position: absolute;        
+    }
+
+    p {
+        font-size: 18px;
+    }
+
+    h2 {
+        padding-bottom: 10px;
+    }
+</style>
