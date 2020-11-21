@@ -1,37 +1,41 @@
 <template>
-  <div class="recipe-container">
-    <div v-for="recipe in recipes" :key="recipe.id" class="recipe">
-      <div style="z-index: 1">
-        <div class="title-container" :style="'background:' + titleColor">
-          <span class="recipe-title">
-            {{ recipe.title }}
-                      <Voting :recipe='recipe' />
+  <div>
+    <div class="recipe-container">
+      <div v-for="recipe in recipes" :key="recipe.id" class="recipe">
+        <div style="z-index: 1">
+          <div class="title-container" :style="'background:' + titleColor">
+            <span class="recipe-title">
+              {{ recipe.title }}
+              <Voting :recipe='recipe' />
 
-          </span>
-        </div>
+            </span>
+          </div>
 
-        <div class="recipe-body">
-          <!-- ZUTATEN -->
-          <div class="ingredients">
-            <div class="ingredient" :key="ingredient+String(Math.floor(Math.random() * 100))" justify="center"
-              v-for="ingredient in recipe.ingredients">
-              <span class="text-span">{{ ingredient }}</span>
+          <div class="recipe-body">
+            <!-- ZUTATEN -->
+            <div class="ingredients">
+              <div class="ingredient" :key="ingredient+String(Math.floor(Math.random() * 100))" justify="center"
+                v-for="ingredient in recipe.ingredients">
+                <span class="text-span">{{ ingredient }}</span>
+              </div>
             </div>
+
+            <!--  Instructions -->
+            <span class="instruction text-span">
+              {{ recipe.instructions }}
+              <EmojieBackground :recipe="recipe" />
+
+            </span>
+
           </div>
-
-          <!--  Instructions -->
-          <span class="instruction text-span">
-            {{ recipe.instructions }}
-                      <EmojieBackground :recipe="recipe"/>
-
-          </span>
-
         </div>
+        <div class="postcard" :style="resizedHeight">
+          <Postcard :recipe='recipe' :color='titleColor' :style="resizeTransform" />
+        </div>
+
       </div>
-      
-      <br>
-      <Postcard :recipe='recipe' :color='titleColor'/>
-          </div>
+
+    </div>
 
   </div>
 </template>
@@ -41,13 +45,16 @@
   import recipeToColor from "@/functions/recipe_to_color";
   import Voting from "@/components/Voting"
   import Postcard from "@/components/Postcard"
-    import EmojieBackground from "@/components/EmojieBackground"
-
+  import EmojieBackground from "@/components/EmojieBackground"
+  import FreeTransform from 'vue-free-transform'
 
   export default {
     name: "recipe",
     components: {
-      Voting, Postcard, EmojieBackground
+      Voting,
+      Postcard,
+      EmojieBackground,
+      FreeTransform
     },
     data() {
       return {
@@ -55,6 +62,7 @@
         recipes: [],
         error: "",
         titleColor: "",
+        scale: window.innerWidth / 1480 * 0.7
       };
     },
     created() {
@@ -111,6 +119,21 @@
           this.$router.replace("/recipe/" + doc.id);
         }
       },
+    },
+    computed: {
+      resizeTransform() {
+        return {
+          "transform": "scale(" + (window.innerWidth - 16 * 4) / 1440 + ")",
+          "transform-origin": "top left"
+        }
+      },
+      resizedHeight() {
+        return {
+          "height": 1040 * 2 * ((window.innerWidth - 16 * 4) / 1440) + 100 + "px",
+          "overflow": "hidden"
+        }
+      }
+
     }
   };
 </script>
@@ -120,8 +143,8 @@
     text-align: left;
     height: 100%;
     padding: 2em 0em 2em 0em;
-    min-height: 100vh;
-    margin: 0 0 100px 0;
+    /* min-height: 100vh;
+    margin: 0 0 100px 0; */
   }
 
   .recipe-title {
@@ -134,6 +157,7 @@
   .recipe-body {
     margin-top: calc(70vw / 15);
     position: relative;
+    overflow: hidden;
   }
 
   .ingredient {
@@ -159,11 +183,14 @@
     display: block
   }
 
+  .postcard {
+    overflow: hidden;
+  }
 
   @media (max-width: 800px) {
     .recipe-container {
       padding: 2em 0em 2em 0em !important;
-      margin: 0 0 2em 0 !important;
+      /* margin: 0 0 2em 0 !important; // this breaks things! */
     }
 
     .ingredients {

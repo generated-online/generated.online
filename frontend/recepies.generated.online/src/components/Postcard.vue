@@ -1,5 +1,5 @@
 <template>
-    <div style="margin-top: 100vh">
+    <div class="postcard-container">
         <div class="postcard-body" :style="'background:'+ color ">
             <div class="postcard-inner">
                 <h1>{{recipe.title}}</h1>
@@ -36,6 +36,12 @@
 </script>
 
 <style scoped>
+    .postcard-container {
+        width: 100%;
+        height: 100%;
+        /* overflow: auto; */
+    }
+
     .instructions {
         padding-top: 70px;
         padding-right: 10px;
@@ -99,7 +105,7 @@
 
     h1 {
         font-size: 120px;
-        position: absolute;        
+        position: absolute;
     }
 
     p {
