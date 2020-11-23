@@ -7,7 +7,6 @@
             <span class="recipe-title">
               {{ recipe.title }}
               <Voting :recipe='recipe' />
-
             </span>
           </div>
 
@@ -24,17 +23,16 @@
             <span class="instruction text-span">
               {{ recipe.instructions }}
               <EmojieBackground :recipe="recipe" />
-
             </span>
-
           </div>
         </div>
+
+        <!--  Postcard -->
         <div class="postcard" :style="resizedHeight">
           <Postcard :recipe='recipe' :color='titleColor' :style="resizeTransform" />
         </div>
-
+        <Paypal :recipe='recipe' :color='titleColor' />
       </div>
-
     </div>
 
   </div>
@@ -45,8 +43,8 @@
   import recipeToColor from "@/functions/recipe_to_color";
   import Voting from "@/components/Voting"
   import Postcard from "@/components/Postcard"
+  import Paypal from "@/components/Paypal"
   import EmojieBackground from "@/components/EmojieBackground"
-  import FreeTransform from 'vue-free-transform'
 
   export default {
     name: "recipe",
@@ -54,7 +52,7 @@
       Voting,
       Postcard,
       EmojieBackground,
-      FreeTransform
+      Paypal
     },
     data() {
       return {
