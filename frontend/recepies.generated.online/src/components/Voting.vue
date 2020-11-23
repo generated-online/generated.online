@@ -1,9 +1,9 @@
 <template>
     <span class="vote-container">
-        <v-btn class="mx-3 my-3 pa-8 transparentButton" :disabled="!possibleToVote" fab dark small color="transparent"
-            @click="upvote">
-            <span class="nbVotes" style="color: darkred !important; font-size: 22px">{{recipe.votes}}</span>
-            <v-icon size="70" :style="cssVars">favorite_border</v-icon>
+        <span>{{recipe.votes}}</span>
+        <v-btn class="transparentButton" :disabled="!possibleToVote" :loading="buttonLoading" fab dark small
+            color="transparent" @click="upvote">
+            <span class="womanCook">👩‍🍳</span>
         </v-btn>
     </span>
 
@@ -20,13 +20,17 @@
         },
         data() {
             return {
-                possibleToVote: !this.$cookies.isKey(this.recipe.id)
+                possibleToVote: !this.$cookies.isKey(this.recipe.id),
+                buttonLoading: false,
             };
 
         },
         methods: {
             upvote() {
-                if (!this.$cookies.isKey(this.recipe.id)) {
+                if (!this.$cookies.isKey(this.recipe.id) || true) {
+
+                    // this makes sure the button is not pressed multiple times
+                    this.buttonLoading = true
 
                     var xhr = new XMLHttpRequest()
                     xhr.open('POST', 'https://x8fzkq5471.execute-api.us-east-2.amazonaws.com/default/upvote')
@@ -34,25 +38,30 @@
                         console.log('Error calling api', xhr.response)
                     }
                     xhr.onreadystatechange = () => {
+                        // we get an response and teh request was sucessfull
                         if (xhr.readyState === 4 && xhr.status === 200) {
                             this.$cookies.set(this.recipe.id)
                             this.recipe.votes += 1
                             this.possibleToVote = false
                         }
+
+                        // and enable the button again
+                        this.buttonLoading = false
                     }
                     xhr.send(JSON.stringify({
                         "id": this.recipe.id
                     }))
+
+
                 }
             }
         },
         computed: {
-            cssVars() {
-
+            iconStyle() {
                 if (this.possibleToVote) {
                     return {
                         "cursor": "grab",
-                        "color": "rgb(255, 0, 0) !important"
+                        "color": "rgb(255, 0,0) !important"
                     }
                 } else {
                     return {
@@ -67,16 +76,25 @@
 
 <style scoped>
     .transparentButton {
-        box-shadow: none;
-    }
-
-    .nbVotes {
-        position: absolute;
-        z-index: 99;
+        vertical-align: baseline;
+        margin-left: 20px;
+        width: calc(70vw / 15*1.3);
+        height: calc(70vw / 15*1.3);
+        vertical-align: center;
+        font-size: inherit;
     }
 
     .vote-container {
-        text-align: center;
-        width: 100%;
+        text-align: right;
+        width: fit-content;
+        font-family: "Commissioner";
+        white-space: nowrap;
+    }
+
+    @media (max-width: 800px) {
+        .transparentButton {
+            width: calc(70vw / 8*1.3);
+            height: calc(70vw / 8*1.3);
+        }
     }
 </style>
