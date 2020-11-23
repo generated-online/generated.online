@@ -2,9 +2,11 @@
   <div>
     <div class="recipe-container">
       <div v-for="recipe in recipes" :key="recipe.id" class="recipe">
-        <div style="z-index: 1">
-          <div class="title-container" :style="'background:' + titleColor">
-            <span class="recipe-title">
+        <div style="position: relative">
+          <EmojieBackground :recipe="recipe" :rowHeight="'200px'"/>
+
+          <div class="title-container">
+            <span class="recipe-title text-span">
               {{ recipe.title }}
               <Voting :recipe='recipe' />
             </span>
@@ -22,16 +24,18 @@
             <!--  Instructions -->
             <span class="instruction text-span">
               {{ recipe.instructions }}
-              <EmojieBackground :recipe="recipe" />
             </span>
           </div>
+
         </div>
 
         <!--  Postcard -->
+
         <div class="postcard" :style="resizedHeight">
           <Postcard :recipe='recipe' :color='titleColor' :style="resizeTransform" />
         </div>
         <Paypal :recipe='recipe' :color='titleColor' />
+
       </div>
     </div>
 
@@ -141,8 +145,6 @@
     text-align: left;
     height: 100%;
     padding: 2em 0em 2em 0em;
-    /* min-height: 100vh;
-    margin: 0 0 100px 0; */
   }
 
   .recipe-title {

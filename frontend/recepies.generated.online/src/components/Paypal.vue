@@ -54,4 +54,7 @@
 </script>
 
 <style scoped>
+#smart-button-container {
+    padding: 10em;
+}
 </style>

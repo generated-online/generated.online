@@ -1,11 +1,13 @@
 <template>
     <div class="postcard-container">
         <div class="postcard-body" :style="'background:'+ color ">
+            <EmojieBackground :recipe="recipe" :rowHeight="'260px'" />
+            <p class="ad">recipes.generated.online</p>
             <div class="postcard-inner">
                 <h1>{{recipe.title}}</h1>
-                <p class="ad">recipes.generated.online</p>
             </div>
         </div>
+
         <div class="postcard-body" style="background:white ">
             <div class="postcard-inner-back">
                 <div class="half-postcard instructions">
@@ -30,16 +32,20 @@
 </template>
 
 <script>
+    import EmojieBackground from "@/components/EmojieBackground"
+
     export default {
-        props: ['recipe', 'color']
+        props: ['recipe', 'color'],
+        components: {
+            EmojieBackground,
+        }
     }
 </script>
 
 <style scoped>
     .postcard-container {
-        width: 100%;
-        height: 100%;
-        /* overflow: auto; */
+        width: 90%;
+        height: 90%;
     }
 
     .instructions {
@@ -83,6 +89,7 @@
     }
 
     .postcard-body {
+        position: relative;
         margin-top: 50px !important;
         margin: auto;
         border: solid black 40px;
@@ -101,6 +108,8 @@
 
     .ad {
         position: absolute;
+        left: 140px;
+        bottom: 0;
     }
 
     h1 {
