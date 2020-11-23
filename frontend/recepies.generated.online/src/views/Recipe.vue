@@ -8,8 +8,9 @@
           <div class="title-container">
             <span class="recipe-title text-span">
               {{ recipe.title }}
-              <Voting :recipe='recipe' />
+            <Voting class="recipe-vote dynamic-font-size" :recipe='recipe' />
             </span>
+
           </div>
 
           <div class="recipe-body">
@@ -147,11 +148,27 @@
     padding: 2em 0em 2em 0em;
   }
 
-  .recipe-title {
+  .title-container {
+    position: relative;
+    width: 100%
+  }
+
+  .dynamic-font-size {
     font-size: calc(70vw / 15);
-    padding: 0.2em 0.2em 0.2em 0.2em;
-    word-wrap: break-word;
     font-family: "Commissioner";
+    padding: 0.2em 0.2em 0.2em 0.2em;
+  }
+
+  .recipe-title {
+    word-wrap: break-word;
+    width: 80% !important;
+    display: inline-block;
+  }
+
+  .recipe-vote {
+    position: absolute;
+    right: 0;
+    width: 20%;
   }
 
   .recipe-body {
@@ -188,6 +205,10 @@
   }
 
   @media (max-width: 800px) {
+    .dynamic-font-size {
+      font-size: calc(70vw / 8);
+    }
+
     .recipe-container {
       padding: 2em 0em 2em 0em !important;
       /* margin: 0 0 2em 0 !important; // this breaks things! */
@@ -200,8 +221,11 @@
     }
 
     .recipe-title {
-      font-size: calc(70vw / 8) !important;
       text-align: center !important;
+    }
+
+    .recipe-vote {
+      position: relative;
     }
 
     .title-container {
