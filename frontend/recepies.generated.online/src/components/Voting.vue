@@ -1,7 +1,7 @@
 <template>
     <span class="vote-container">
-        <v-btn class="mx-3 my-3 pa-8 transparentButton" :disabled="!possibleToVote" fab dark small color="transparent"
-            @click="upvote">
+        <v-btn class="mx-3 my-3 pa-8 transparentButton" :disabled="!possibleToVote" :loading="buttonLoading" fab dark
+            small color="transparent" @click="upvote">
             <span class="nbVotes" style="color: darkred !important; font-size: 22px">{{recipe.votes}}</span>
             <v-icon size="70" :style="cssVars">favorite_border</v-icon>
         </v-btn>
@@ -20,13 +20,17 @@
         },
         data() {
             return {
-                possibleToVote: !this.$cookies.isKey(this.recipe.id)
+                possibleToVote: !this.$cookies.isKey(this.recipe.id),
+                buttonLoading: false,
             };
 
         },
         methods: {
             upvote() {
-                if (!this.$cookies.isKey(this.recipe.id)) {
+                if (!this.$cookies.isKey(this.recipe.id) || true) {
+
+                    // this makes sure the button is not pressed multiple times
+                    this.buttonLoading = true
 
                     var xhr = new XMLHttpRequest()
                     xhr.open('POST', 'https://x8fzkq5471.execute-api.us-east-2.amazonaws.com/default/upvote')
@@ -39,10 +43,15 @@
                             this.recipe.votes += 1
                             this.possibleToVote = false
                         }
+
+                        // and enable the button again
+                        this.buttonLoading = false
                     }
                     xhr.send(JSON.stringify({
                         "id": this.recipe.id
                     }))
+
+
                 }
             }
         },
