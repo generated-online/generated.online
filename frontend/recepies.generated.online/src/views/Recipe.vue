@@ -1,42 +1,39 @@
 <template>
-  <div>
-    <div class="recipe-container">
-      <div v-for="recipe in recipes" :key="recipe.id" class="recipe">
-        <div style="z-index: 1">
-          <div class="title-container" :style="'background:' + titleColor">
-            <span class="recipe-title text-span dynamic-font-size">
-              {{ recipe.title }}
-            </span>
-            <Voting class="recipe-vote dynamic-font-size" :recipe='recipe' />
-          </div>
+  <div class="recipe-container">
+    <div v-for="recipe in recipes" :key="recipe.id" class="recipe">
+      <div style="z-index: 1">
+        <EmojieBackground :recipe="recipe" />
+        <div class="title-container">
+          <span class="recipe-title text-span dynamic-font-size">
+            {{ recipe.title }}
+          </span>
+          <Voting class="recipe-vote dynamic-font-size" :recipe='recipe' />
+        </div>
 
-          <div class="recipe-body">
-            <!-- ZUTATEN -->
-            <div class="ingredients">
-              <div class="ingredient" :key="ingredient+String(Math.floor(Math.random() * 100))" justify="center"
-                v-for="ingredient in recipe.ingredients">
-                <span class="text-span">{{ ingredient }}</span>
-              </div>
+        <div class="recipe-body">
+          <!-- ZUTATEN -->
+          <div class="ingredients">
+            <div class="ingredient" :key="ingredient+String(Math.floor(Math.random() * 100))" justify="center"
+              v-for="ingredient in recipe.ingredients">
+              <span class="text-span">{{ ingredient }}</span>
             </div>
-
-            <!--  Instructions -->
-            <span class="instruction text-span">
-              {{ recipe.instructions }}
-            </span>
           </div>
 
+          <!--  Instructions -->
+          <span class="instruction text-span">
+            {{ recipe.instructions }}
+          </span>
         </div>
-
-        <!--  Postcard -->
-
-        <div class="postcard" :style="resizedHeight">
-          <Postcard :recipe='recipe' :color='titleColor' :style="resizeTransform" />
-        </div>
-        <Paypal :recipe='recipe' :color='titleColor' />
 
       </div>
-    </div>
 
+      <!--  Postcard -->
+      <div class="postcard" :style="resizedHeight">
+        <Postcard :recipe='recipe' :color='titleColor' :style="resizeTransform" />
+      </div>
+      <Paypal :recipe='recipe' :color='titleColor' />
+
+    </div>
   </div>
 </template>
 
@@ -142,7 +139,7 @@
   .recipe-container {
     text-align: left;
     height: 100%;
-    padding: 2em 0em 2em 0em;
+    padding: 2em 2em 2em 2em;
   }
 
   .title-container {
@@ -165,7 +162,7 @@
   .recipe-vote {
     position: absolute;
     right: 0;
-    width: 20%;
+    width: fit-content;
   }
 
   .recipe-body {
@@ -206,11 +203,6 @@
       font-size: calc(70vw / 8);
     }
 
-    .recipe-container {
-      padding: 2em 0em 2em 0em !important;
-      /* margin: 0 0 2em 0 !important; // this breaks things! */
-    }
-
     .ingredients {
       float: none;
       width: 100% !important;
@@ -223,6 +215,10 @@
 
     .recipe-vote {
       position: relative;
+      display: inline-table;
+      width: 100%;
+      text-align: center;
+      align-items: center;
     }
 
     .title-container {

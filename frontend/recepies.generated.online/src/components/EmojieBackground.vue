@@ -2,7 +2,7 @@
     <div class="background">
         <span class="emojie-batch">
             <div class="emojie" v-for="(e, idx) in matchingEmos" :key="idx"
-                :style='Math.floor(idx/4) % 2 === 0 ? "text-align: right; height:" + rowHeight: "height:" + rowHeight'>
+                :style='emojiCss + " " + (Math.floor(idx/emojieAmount) % 2 === 0) ? "padding-left: 3px; text-align: right" : "" '>
                 {{e}}</div>
         </span>
     </div>
@@ -10,7 +10,25 @@
 
 <script>
     export default {
-        props: ["recipe", "rowHeight"],
+        props: {
+            "recipe": {
+                type: Object,
+                default: {}
+            },
+            "rowHeight": {
+                type: String,
+                default: "70px"
+            },
+            "emojieSize": {
+                type: String,
+                default: "2em"
+            },
+            "emojieAmount": {
+                type: Number,
+                default: 4
+            },
+
+        },
         data() {
             return {
                 width: window.innerWidth,
@@ -133,10 +151,6 @@
             }
         },
         created() {
-            console.log(this.rowHeight);
-            var winWidth = window.innerWidth;
-            var winHeight = window.innerHeight;
-
             const words = this.recipe.ingredients.toString().replaceAll(",", " ").split(" ")
             words.forEach(word => {
                 if (word !== "") {
@@ -175,9 +189,23 @@
             this.matchingEmos = this.matchingEmos.concat(this.matchingEmos)
             this.matchingEmos = this.matchingEmos.concat(this.matchingEmos)
             this.matchingEmos = this.matchingEmos.concat(this.matchingEmos)
+            this.matchingEmos = this.matchingEmos.concat(this.matchingEmos)
+            this.matchingEmos = this.matchingEmos.concat(this.matchingEmos)
+            this.matchingEmos = this.matchingEmos.concat(this.matchingEmos)
+            this.matchingEmos = this.matchingEmos.concat(this.matchingEmos)
+            this.matchingEmos = this.matchingEmos.concat(this.matchingEmos)
+            this.matchingEmos = this.matchingEmos.concat(this.matchingEmos)
             // }
+        },
+        computed: {
+            emojiCss() {
+                return {
+                    "height": this.rowHeight,
+                    "font-size": this.emojieSize,
+                    "width": 100 / this.emojieAmount + "%",
+                }
+            }
         }
-
     }
 </script>
 
@@ -195,18 +223,14 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
-        padding: 0 2em 0 2em;
     }
 
     .emojie-batch {
         width: 100vw;
-        
     }
 
     .emojie {
         opacity: 0.6;
         float: left;
-        font-size: 6em;
-        width: 25%;
     }
 </style>
