@@ -1,7 +1,8 @@
 <template>
     <div class="background">
 
-        <span class="emojie" v-for="(e, idx) in matchingEmos" v-bind:key="idx" :style="'top:'+ e.top + 'px; left:' + e.left +'px;'">{{e.text}}</span>
+        <span class="emojie" v-for="(e, idx) in matchingEmos" v-bind:key="idx"
+            :style="'top:'+ e.top + 'px; left:' + e.left +'px;'">{{e.text}}</span>
     </div>
 </template>
 
@@ -175,8 +176,6 @@
                     }
                 }
             })
-        
-            console.log(this.matchingEmos);
         }
 
     }
