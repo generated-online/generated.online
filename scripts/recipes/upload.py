@@ -18,7 +18,7 @@ from google.cloud import firestore as firestoreCloud
 from  google.api_core.exceptions import NotFound
 
 # Use service account
-cred = credentials.Certificate("generatedonline-a1cb0-firebase-adminsdk-ffohx-b8d5abe895.json")
+cred = credentials.Certificate("recipes/generatedonline-a1cb0-firebase-adminsdk-ffohx-753457dbeb.json")
 firebase_admin.initialize_app(cred)
 # define database
 db = firestore.client()
@@ -50,7 +50,7 @@ def saveIngredients(ingredients, id):
         except NotFound:
             ingredientRef.set({u'usedIn': firestoreCloud.ArrayUnion([id])})
 
-def uploadData(filename='recipes/201_400.txt_filtered.json', start_idx=0, onlyNonExisting=False, algolia=True, firebase=True):
+def uploadData(filename, start_idx=0, onlyNonExisting=False, algolia=True, firebase=True):
     with open(filename) as f:
         recipe_list = json.load(f)
     
@@ -61,9 +61,7 @@ def uploadData(filename='recipes/201_400.txt_filtered.json', start_idx=0, onlyNo
                 if firebase:
                     recipeRef = db.collection("recipes").document(recipe["id"])
                     doc = recipeRef.get()
-
                     if not doc.exists:
-                        print("Fixed missing data")
                         recipeRef.set(recipe["data"])
                         # saveIngredients(data_dict["ingredients"], data_dict["id"])F
 
@@ -78,7 +76,7 @@ def uploadData(filename='recipes/201_400.txt_filtered.json', start_idx=0, onlyNo
             print("Uploaded all items.")
             break
 
-def processRawFile(filename='recipes/201_400.txt'):
+def processRawFile(filename):
     import os.path
     if os.path.isfile(f"{filename}_filtered.json"):
         print("File already exists!")
@@ -116,5 +114,6 @@ def processRawFile(filename='recipes/201_400.txt'):
         json.dump(processed, f, ensure_ascii=False)
 
 if __name__ == "__main__":
-    processRawFile()
-    uploadData(onlyNonExisting=True, algolia=True, firebase=False)
+    filename = 'recipes/cassis.txt'
+    processRawFile(filename)
+    uploadData(filename + "_filtered.json", onlyNonExisting=True, algolia=True, firebase=True)
