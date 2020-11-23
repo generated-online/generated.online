@@ -1,126 +1,128 @@
 <template>
     <div class="background">
-
-        <span class="emojie" v-for="(e, idx) in matchingEmos" v-bind:key="idx"
-            :style="'top:'+ e.top + 'px; left:' + e.left +'px;'">{{e.text}}</span>
+        <span class="emojie-batch">
+            <div class="emojie" v-for="(e, idx) in matchingEmos" :key="idx"
+                :style='Math.floor(idx/4) % 2 === 0 ? "text-align: right; height:" + rowHeight: "height:" + rowHeight'>
+                {{e}}</div>
+        </span>
     </div>
 </template>
 
 <script>
     export default {
-        props: ["recipe"],
+        props: ["recipe", "rowHeight"],
         data() {
             return {
+                width: window.innerWidth,
                 allEmos: {
-                    "Wasser": ["💧"],
-                    "Fisch": ["🐳", "🐬", "🐋", "🐟", "🐠", "🦈"],
-                    "Oktopus": ["🐙"],
-                    "Krabbe": ["🦀"],
-                    "Hummer": ["🦞"],
-                    "Garnele": ["🦐"],
-                    "Tintenfisch": ["🦑"],
-                    "Kuh": ["🐮", "🐄", "🐂"],
-                    "Rind": ["🐮", "🐄", "🐂"],
-                    "Kalb": ["🐮", "🐄", "🐂"],
-                    "Schwein": ["🐖", "🐷", "🐽"],
-                    "Schaf": ["🐏", "🐑"],
-                    "Lamm": ["🐏", "🐑"],
-                    "Truthan": ["🦃"],
-                    "Huhn": ["🐔", "🐓"],
-                    "Hähnchen": ["🐔", "🐓"],
-                    "Ente": ["🦆"],
-                    "Rose": ["🌹"],
-                    "Sonnenblume": ["🌻"],
-                    "Samen": ["🌱"],
-                    "Hafer": ["🌾"],
-                    "Kräuter": ["🌿"],
-                    "Trauben": ["🍇"],
-                    "Melone": ["🍈"],
-                    "Kartoffel": ["🥔"],
-                    "Zwiebel": ["🧅"],
-                    "Knoblauch": ["🧄"],
-                    "Olive": ["🫒"],
-                    "Karrotte": ["🥕"],
-                    "Paprika": ["🫑"],
-                    "Avocado": ["🥑"],
-                    "Obergine": ["🍆"],
-                    "Blaubeere": ["🫐"],
-                    "Erdbeere": ["🍓"],
-                    "Wassermelone": ["🍉"],
-                    "Mandarine": ["🍊"],
-                    "Zitrone": ["🍋"],
-                    "Banane": ["🍌"],
-                    "Annanas": ["🍍"],
-                    "Mango": ["🥭"],
-                    "Apfel": ["🍎", "🍏"],
-                    "Birne": ["🍐"],
-                    "Pfirsich": ["🍑"],
-                    "Kirsche": ["🍒"],
-                    "Erdbeere": ["🍓"],
-                    "Kiwi": ["🥝"],
-                    "Tomate": ["🍅"],
-                    "Kokosnuss": ["🥥"],
-                    "Avocado": ["🥑"],
-                    "Aubergine": ["🍆"],
-                    "Kartoffel": ["🥔"],
-                    "Karotte": ["🥕"],
-                    "Mais": ["🌽"],
-                    "Chili": ["🌶"],
-                    "Gurke": ["🥒"],
-                    "Salat": ["🥬", "🥗"],
-                    "Brokkoli": ["🥦"],
-                    "Pilz": ["🍄"],
-                    "Erdnüsse": ["🥜"],
-                    "Haselnüsse": ["🌰"],
-                    "Kastanie": ["🌰"],
-                    "Brot": ["🍞"],
-                    "Croissant": ["🥐"],
-                    "Baguette": ["🥖"],
-                    "Breze": ["🥨"],
-                    "Bagel": ["🥯"],
-                    "Pfannkuchen": ["🥞"],
-                    "Käse": ["🧀"],
-                    "Fleisch": ["🥩"],
-                    "Speck": ["🥓"],
-                    "Burger": ["🍔"],
-                    "Pommes": ["🍟"],
-                    "Pizza": ["🍕"],
-                    "Hot Dog": ["🌭"],
-                    "Sandwich": ["🥪"],
-                    "Taco": ["🌮"],
-                    "Burrito": ["🌯"],
-                    "Ei": ["🥚"],
-                    "Spiegei": ["🍳"],
-                    "Topf mit Lebensmitteln": ["🥘", "🍲", "🥙", "🍜"],
-                    "Schüssel": ["🥣"],
-                    "Popcorn": ["🍿"],
-                    "Salz": ["🧂"],
-                    "Dose": ["🥫"],
-                    "Sushi": ["🍱", "🍣"],
-                    "Reis": ["🍚"],
-                    "Curry-Reis": ["🍛"],
-                    "Spaghetti": ["🍝"],
-                    "Süßkartoffel": ["🍠"],
-                    "Spieß": ["🍢", "🍡"],
-                    "Knödel": ["🥟"],
-                    "Glückskeks": ["🥠"],
-                    "Eis": ["🍨", "🍧", "🍦"],
-                    "Krapfen": ["🍩"],
-                    "Keks": ["🍪"],
-                    "Muffin": ["🧁"],
-                    "Kuchen": ["🥧", "🍰", "🎂", "🥮"],
-                    "Schokolade": ["🍫"],
-                    "Süßigkeiten": ["🍬", "🍭"],
-                    "Pudding": ["🍮"],
-                    "Honig": ["🍯"],
-                    "Milch": ["🥛"],
-                    "Tee": ["☕"],
-                    "Suppe": ["🍵"],
-                    "Flasche": ["🍶"],
-                    "Flasche": ["🍾"],
-                    "Wein": ["🍷"],
-                    "Cocktail": ["🍸", "🍹", "🥂"],
-                    "Bier": ["🍺", "🍻", "🥃"],
+                    "Ei": "🥚",
+                    "Tee": "☕",
+                    "Kuh": "🐄",
+                    "Eis": "🍨",
+                    "Rind": "🐂",
+                    "Kalb": "🐄",
+                    "Lamm": "🐑",
+                    "Huhn": "🐓",
+                    "Ente": "🦆",
+                    "Rose": "🌹",
+                    "Kiwi": "🥝",
+                    "Mais": "🌽",
+                    "Pilz": "🍄",
+                    "Brot": "🍞",
+                    "Käse": "🧀",
+                    "Taco": "🌮",
+                    "Salz": "🧂",
+                    "Dose": "🥫",
+                    "Reis": "🍚",
+                    "Keks": "🍪",
+                    "Wein": "🍷",
+                    "Bier": "🍺",
+                    "Fisch": "🐟",
+                    "Schaf": "🐏",
+                    "Samen": "🌱",
+                    "Hafer": "🌾",
+                    "Olive": "🫒",
+                    "Mango": "🥭",
+                    "Apfel": "🍎",
+                    "Birne": "🍐",
+                    "Chili": "🌶",
+                    "Gurke": "🥒",
+                    "Salat": "🥗",
+                    "Breze": "🥨",
+                    "Bagel": "🥯",
+                    "Speck": "🥓",
+                    "Pizza": "🍕",
+                    "Sushi": "🍱",
+                    "Honig": "🍯",
+                    "Milch": "🥛",
+                    "Suppe": "🍵",
+                    "Spieß": "🍡",
+                    "Wasser": "💧",
+                    "Krabbe": "🦀",
+                    "Hummer": "🦞",
+                    "Melone": "🍈",
+                    "Banane": "🍌",
+                    "Tomate": "🍅",
+                    "Gemüse": "🥬",
+                    "Burger": "🍔",
+                    "Pommes": "🍟",
+                    "Knödel": "🥟",
+                    "Muffin": "🧁",
+                    "Kuchen": "🎂",
+                    "Oktopus": "🐙",
+                    "Garnele": "🦐",
+                    "Schwein": "🐖",
+                    "Truthan": "🦃",
+                    "Kräuter": "🌿",
+                    "Trauben": "🍇",
+                    "Zwiebel": "🧅",
+                    "Paprika": "🫑",
+                    "Avocado": "🥑",
+                    "Zitrone": "🍋",
+                    "Annanas": "🍍",
+                    "Kirsche": "🍒",
+                    "Avocado": "🥑",
+                    "Karotte": "🥕",
+                    "Fleisch": "🥩",
+                    "Hot Dog": "🌭",
+                    "Burrito": "🌯",
+                    "Spiegei": "🍳",
+                    "Popcorn": "🍿",
+                    "Krapfen": "🍩",
+                    "Pudding": "🍮",
+                    "Flasche": "🍶",
+                    "Flasche": "🍾",
+                    "Hähnchen": "🐓",
+                    "Karrotte": "🥕",
+                    "Obergine": "🍆",
+                    "Erdbeere": "🍓",
+                    "Pfirsich": "🍑",
+                    "Erdbeere": "🍓",
+                    "Brokkoli": "🥦",
+                    "Erdnüsse": "🥜",
+                    "Kastanie": "🌰",
+                    "Baguette": "🥖",
+                    "Sandwich": "🥪",
+                    "Schüssel": "🥣",
+                    "Cocktail": "🍸",
+                    "Kartoffel": "🥔",
+                    "Knoblauch": "🧄",
+                    "Blaubeere": "🫐",
+                    "Mandarine": "🍊",
+                    "Kokosnuss": "🥥",
+                    "Aubergine": "🍆",
+                    "Kartoffel": "🥔",
+                    "Croissant": "🥐",
+                    "Spaghetti": "🍝",
+                    "Haselnüsse": "🌰",
+                    "Curry-Reis": "🍛",
+                    "Glückskeks": "🥠",
+                    "Schokolade": "🍫",
+                    "Tintenfisch": "🦑",
+                    "Sonnenblume": "🌻",
+                    "Pfannkuchen": "🥞",
+                    "Wassermelone": "🍉",
+                    "Süßkartoffel": "🍠",
                 },
                 matchingEmos: []
             }
@@ -131,6 +133,7 @@
             }
         },
         created() {
+            console.log(this.rowHeight);
             var winWidth = window.innerWidth;
             var winHeight = window.innerHeight;
 
@@ -140,42 +143,39 @@
                     const lowercasedWord = word.toLowerCase()
                     const capitalizedWord = lowercasedWord.replace(/^\w/, c => c.toUpperCase());
 
-                    // random position
-                    const randomTop = this.getRandomNumber(0, winHeight);
-                    const randomLeft = this.getRandomNumber(0, winWidth);
-
                     if (capitalizedWord in this.allEmos) {
                         // isMatching = true
-                        let matchingEmoArray = this.allEmos[capitalizedWord]
-                        const matchingEmojie = matchingEmoArray[Math.floor(Math.random() * matchingEmoArray
-                            .length)]
-                        this.matchingEmos.push({
-                            "text": matchingEmojie,
-                            "top": randomTop,
-                            "left": randomLeft
-                        })
+                        const matchingEmojie = this.allEmos[capitalizedWord]
+                        this.matchingEmos.push(matchingEmojie)
                     } else {
-                        if (word.length >= 4) {
+                        if (word.length >= 2) {
+                            let matchingEmojie = ''
                             for (const key in this.allEmos) {
                                 if (lowercasedWord.includes(key.toLowerCase()) || key.toLowerCase().includes(
                                         lowercasedWord)) {
-                                    // isMatching = true
-                                    let matchingEmoArray = this.allEmos[key]
-                                    const matchingEmojie = matchingEmoArray[Math.floor(Math.random() *
-                                        matchingEmoArray
-                                        .length)]
-                                    this.matchingEmos.push({
-                                        "text": matchingEmojie,
-                                        "top": randomTop,
-                                        "left": randomLeft
-                                    })
-                                    break
+                                    matchingEmojie = this.allEmos[key]
                                 }
+                            }
+
+                            // Take last match
+                            if (matchingEmojie !== '') {
+                                this.matchingEmos.push(matchingEmojie)
                             }
                         }
                     }
                 }
             })
+
+            // remove all duplicates
+            this.matchingEmos = [...new Set(this.matchingEmos)];
+            // for (i in 10) {
+            this.matchingEmos = this.matchingEmos.concat(this.matchingEmos)
+            this.matchingEmos = this.matchingEmos.concat(this.matchingEmos)
+            this.matchingEmos = this.matchingEmos.concat(this.matchingEmos)
+            this.matchingEmos = this.matchingEmos.concat(this.matchingEmos)
+            this.matchingEmos = this.matchingEmos.concat(this.matchingEmos)
+            this.matchingEmos = this.matchingEmos.concat(this.matchingEmos)
+            // }
         }
 
     }
@@ -183,10 +183,30 @@
 
 <style scoped>
     .background {
-        z-index: 0;
+        position: absolute;
+        top: 0em;
+        right: 0;
+        left: 0;
+        overflow: hidden;
+        bottom: 0px;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        padding: 0 2em 0 2em;
+    }
+
+    .emojie-batch {
+        width: 100vw;
+        
     }
 
     .emojie {
-        font-size: 4em;
+        opacity: 0.6;
+        float: left;
+        font-size: 6em;
+        width: 25%;
     }
 </style>

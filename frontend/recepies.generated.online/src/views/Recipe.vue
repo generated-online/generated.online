@@ -2,12 +2,15 @@
   <div>
     <div class="recipe-container">
       <div v-for="recipe in recipes" :key="recipe.id" class="recipe">
-        <div style="z-index: 1">
-          <div class="title-container" :style="'background:' + titleColor">
-            <div class="recipe-title dynamic-font-size">
-              <span>{{ recipe.title }}</span>
-            </div>
+        <div style="position: relative">
+          <EmojieBackground :recipe="recipe" :rowHeight="'200px'"/>
+
+          <div class="title-container">
+            <span class="recipe-title text-span">
+              {{ recipe.title }}
             <Voting class="recipe-vote dynamic-font-size" :recipe='recipe' />
+            </span>
+
           </div>
 
           <div class="recipe-body">
@@ -22,16 +25,18 @@
             <!--  Instructions -->
             <span class="instruction text-span">
               {{ recipe.instructions }}
-              <EmojieBackground :recipe="recipe" />
             </span>
           </div>
+
         </div>
 
         <!--  Postcard -->
+
         <div class="postcard" :style="resizedHeight">
           <Postcard :recipe='recipe' :color='titleColor' :style="resizeTransform" />
         </div>
         <Paypal :recipe='recipe' :color='titleColor' />
+
       </div>
     </div>
 
