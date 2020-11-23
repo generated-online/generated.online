@@ -2,15 +2,12 @@
   <div>
     <div class="recipe-container">
       <div v-for="recipe in recipes" :key="recipe.id" class="recipe">
-        <div style="position: relative">
-          <EmojieBackground :recipe="recipe" :rowHeight="'200px'"/>
-
-          <div class="title-container">
-            <span class="recipe-title text-span">
+        <div style="z-index: 1">
+          <div class="title-container" :style="'background:' + titleColor">
+            <span class="recipe-title text-span dynamic-font-size">
               {{ recipe.title }}
-            <Voting class="recipe-vote dynamic-font-size" :recipe='recipe' />
             </span>
-
+            <Voting class="recipe-vote dynamic-font-size" :recipe='recipe' />
           </div>
 
           <div class="recipe-body">
