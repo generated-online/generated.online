@@ -2,7 +2,7 @@
     <div class="background">
         <span class="emojie-batch">
             <div class="emojie" v-for="(e, idx) in matchingEmos" :key="idx"
-                :style='emojiCss + " " + (Math.floor(idx/emojieAmount) % 2 === 0) ? "padding-left: 3px; text-align: right" : "" '>
+                :style='emojiCss + " " + ((Math.floor(idx/emojieAmount) % 2 === 0) ? "padding-left: "+emojiPadding+"; text-align: right" : "")'>
                 {{e}}</div>
         </span>
     </div>
@@ -17,16 +17,20 @@
             },
             "rowHeight": {
                 type: String,
-                default: "70px"
+                default: "1.25em"
             },
             "emojieSize": {
-                type: String,
-                default: "2em"
+                type: Number,
+                default: 2
             },
             "emojieAmount": {
                 type: Number,
-                default: 4
+                default: 30
             },
+            "emojiPadding": {
+                type: String,
+                default: "0.65em"
+            }
 
         },
         data() {
@@ -182,28 +186,79 @@
 
             // remove all duplicates
             this.matchingEmos = [...new Set(this.matchingEmos)];
-            // for (i in 10) {
-            this.matchingEmos = this.matchingEmos.concat(this.matchingEmos)
-            this.matchingEmos = this.matchingEmos.concat(this.matchingEmos)
-            this.matchingEmos = this.matchingEmos.concat(this.matchingEmos)
-            this.matchingEmos = this.matchingEmos.concat(this.matchingEmos)
-            this.matchingEmos = this.matchingEmos.concat(this.matchingEmos)
-            this.matchingEmos = this.matchingEmos.concat(this.matchingEmos)
-            this.matchingEmos = this.matchingEmos.concat(this.matchingEmos)
-            this.matchingEmos = this.matchingEmos.concat(this.matchingEmos)
-            this.matchingEmos = this.matchingEmos.concat(this.matchingEmos)
-            this.matchingEmos = this.matchingEmos.concat(this.matchingEmos)
-            this.matchingEmos = this.matchingEmos.concat(this.matchingEmos)
-            this.matchingEmos = this.matchingEmos.concat(this.matchingEmos)
+
+            var line = new Array(Math.floor(this.emojieAmount / this.matchingEmos.length)).fill(this.matchingEmos)
+                .flat();
+
+            var diff = this.emojieAmount - line.length
+            if (diff > 0) {
+                line = line.concat(this.matchingEmos.slice(0, diff))
+            }
+            this.reverseLine = [...line].reverse()
+            this.line = line
+            this.matchingEmos = []
+
+            // if (this.emojieAmount % this.matchingEmos.length == 0){
+            //     var line = new Array(this.emojieAmount/this.matchingEmos.length).fill(this.matchingEmos).flat();
+            //     var line2 = new Array(this.emojieAmount/this.matchingEmos.length).fill(this.matchingEmos).flat();
+            //     console.log(this.emojieAmount, this.matchingEmos.length)
+            //     this.matchingEmos = line.concat(line2.reverse())
             // }
+            // for (i in 10) {
+            // this.matchingEmos = this.matchingEmos.concat(this.matchingEmos)
+            // this.matchingEmos = this.matchingEmos.concat(this.matchingEmos)
+            // this.matchingEmos = this.matchingEmos.concat(this.matchingEmos)
+            // this.matchingEmos = this.matchingEmos.concat(this.matchingEmos)
+            // this.matchingEmos = this.matchingEmos.concat(this.matchingEmos)
+            // this.matchingEmos = this.matchingEmos.concat(this.matchingEmos)
+            // this.matchingEmos = this.matchingEmos.concat(this.matchingEmos)
+            // this.matchingEmos = this.matchingEmos.concat(this.matchingEmos)
+            // this.matchingEmos = this.matchingEmos.concat(this.matchingEmos)
+            // this.matchingEmos = this.matchingEmos.concat(this.matchingEmos)
+            // this.matchingEmos = this.matchingEmos.concat(this.matchingEmos)
+            // this.matchingEmos = this.matchingEmos.concat(this.matchingEmos)
+            // }
+        },
+        mounted() {
+            var height = this.$parent.$el.offsetHeight;
+            var em = parseFloat(getComputedStyle(this.$parent.$el).fontSize);
+
+            var rowHeightInPx = parseFloat(this.rowHeight) * em * this.emojieSize;
+            var numRows = Math.floor(height / rowHeightInPx);
+            console.log(height, rowHeightInPx, numRows)
+
+            // this.matchingEmos
+            var i;
+            for (i = 0; i < numRows; i++) {
+                this.matchingEmos = this.matchingEmos.concat(i % 2 ? this.line : this.reverseLine)
+            }
+
+            window.addEventListener('resize', () => {
+                // in the paypal button rendering we trigger this
+                height = this.$parent.$el.offsetHeight;
+                var newNumRows = Math.floor(height / rowHeightInPx);
+
+                var i;
+                // add new rows depending on the difference in hight
+                for (i = 0; i < newNumRows - numRows; i++) {
+                    this.matchingEmos = this.matchingEmos.concat(i % 2 ? this.line : this.reverseLine)
+                }
+
+            })
         },
         computed: {
             emojiCss() {
-                return {
+                var d = {
                     "height": this.rowHeight,
-                    "font-size": this.emojieSize,
+                    "font-size": this.emojieSize + "em",
                     "width": 100 / this.emojieAmount + "%",
                 }
+                // this generates correct css string out of object
+                var s = ""
+                for (var key in d) {
+                    s += key + ": " + d[key] + "; "
+                }
+                return s
             }
         }
     }

@@ -1,7 +1,7 @@
 <template>
     <div class="postcard-container">
         <div class="postcard-body" :style="'background:'+ color ">
-            <EmojieBackground :recipe="recipe" :rowHeight="'260px'" />
+            <EmojieBackground :recipe="recipe" />
             <p class="ad text-span">gesendet von recipes.generated.online</p>
             <div class="postcard-inner">
                 <span>

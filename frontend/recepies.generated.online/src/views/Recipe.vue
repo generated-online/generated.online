@@ -2,7 +2,7 @@
   <div class="recipe-container">
     <div v-for="recipe in recipes" :key="recipe.id" class="recipe">
       <div style="z-index: 1">
-        <EmojieBackground :recipe="recipe" />
+        <EmojieBackground :recipe="recipe" :emojieSize='4' rowHeight="1.5em" emojiPadding="0.8em" :emojieAmount='8'/>
         <div class="title-container">
           <span class="recipe-title text-span dynamic-font-size">
             {{ recipe.title }}

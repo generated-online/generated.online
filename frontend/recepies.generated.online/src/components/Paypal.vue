@@ -49,6 +49,8 @@
         },
         mounted() {
             this.initPayPalButton();
+            // this makes sure we catch the event in the background rendering
+            window.dispatchEvent(new Event('resize'))
         }
     }
 </script>
