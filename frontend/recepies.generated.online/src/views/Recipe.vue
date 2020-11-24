@@ -166,6 +166,9 @@
 
 <style scoped>
   @media (max-width: 1100px) {
+    .address input {
+      width: 100%
+    }
     .recipe-title {
       width: 100% !important
     }
