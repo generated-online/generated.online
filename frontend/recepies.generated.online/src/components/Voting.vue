@@ -1,6 +1,6 @@
 <template>
     <span class="vote-container">
-        <v-card class="pb-1 vcard" elevation="0" :style='"background: "+ color + ";"'>
+        <v-card class="pb-1 vcard" elevation="0" :style='"background: transparent;"'>
             <span class="mx-4"> {{recipe.votes}} </span>
             <v-btn class="transparentButton mx-4" :disabled="!possibleToVote" :loading="buttonLoading" fab dark small
                 color="transparent" @click="upvote">
@@ -8,7 +8,6 @@
             </v-btn>
         </v-card>
     </span>
-
 </template>
 
 <script>
@@ -90,13 +89,12 @@
 
     .vote-container {
         text-align: center;
-        width: fit-content;
+        width: 400px;
         font-family: "Commissioner";
     }
 
     .vcard {
-        border: thin solid black;
-        margin: auto;
+        border: none;
     }
 
     @media (max-width: 800px) {
@@ -106,7 +104,7 @@
         }
 
         .vcard {
-            width: fit-content;
+            width: 400px;
         }
     }
 </style>

@@ -77,6 +77,7 @@
     }
 
     .text-span {
-        background: $softPink
+        // background: $softPink
+          text-shadow: 0px 0px 7px $softPink;
     }
 </style>
