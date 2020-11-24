@@ -1,8 +1,10 @@
 <template>
     <div class="info-container">
-        <h1><span class=text-span>Um was geht es bei dieser Website?</span></h1>
+        <EmojieBackground :emojieSize='4' rowHeight="1.5em" emojiPadding="0.8em" :emojieAmount='8' />
+
+        <h1 class=text-span style="font-size:3em">Was ist das hier?</h1>
         <br>
-        <div class="project-description">
+        <h2 class="project-description">
             <span class=text-span>
                 Stell dir vor jemand schaut sich alle Rezepte von chefkoch.de an,
                 filtert alle unbedeutenten und schlechten Rezepte raus und erstellt
@@ -29,19 +31,23 @@
             <br>
             <br>
             <span class=text-span>
-                Wenn dich unser Code interessiert schau doch mal auf unserem Github-Repo vorbei und lass einen Stern da:
+                Wenn dich unser Code interessiert schau doch mal auf unserem
+                <v-btn href="https://github.com/generated-online/generated.online">
+                    Github-Repo
+                </v-btn>
+                vorbei und lass einen Stern da!
             </span>
-        </div>
-        <div class="github-button">
-            <v-btn icon outlined large href="https://github.com/generated-online/generated.online">
-                <v-icon class="vue-icon" align="middle" size="40">mdi-github</v-icon>
-            </v-btn>
-        </div>
+        </h2>
     </div>
 </template>
 
 <script>
+    import EmojieBackground from "@/components/EmojieBackground"
+
     export default {
+        components: {
+            EmojieBackground
+        },
         name: "info",
         created() {
             this.$emit('shareText', "Schau dir diese coolen von einer KI generierten Rezepte an!");
@@ -54,7 +60,7 @@
     .info-container {
         text-align: left;
         height: 100% !important;
-        padding: 2em 0em 2em 0em;
+        padding: 10% 10%;
         max-width: 100vw !important;
         min-height: 100vh !important;
         margin: 0 0 25px 0;
@@ -63,10 +69,5 @@
     .project-description {
         text-align: justify;
         margin-bottom: 1em;
-    }
-
-    .github-button {
-        text-align: center;
-        margin-bottom: 1em
     }
 </style>

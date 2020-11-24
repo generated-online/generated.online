@@ -13,7 +13,7 @@
         props: {
             "recipe": {
                 type: Object,
-                default: {}
+                default: ''
             },
             "rowHeight": {
                 type: String,
@@ -152,10 +152,24 @@
         methods: {
             getRandomNumber(min, max) {
                 return Math.random() * (max - min) + min;
+            },
+            shuffleArray(a) {
+                for (let i = a.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [a[i], a[j]] = [a[j], a[i]];
+                }
+                return a;
             }
         },
         created() {
-            const words = this.recipe.ingredients.toString().replaceAll(",", " ").split(" ")
+            let words = []
+            if (this.recipe === '') {
+                // load random keys as words
+                words = this.shuffleArray(Object.keys(this.allEmos))
+            } else {
+                words = this.recipe.ingredients.toString().replaceAll(",", " ").split(" ")
+            }
+
             words.forEach(word => {
                 if (word !== "") {
                     const lowercasedWord = word.toLowerCase()
@@ -266,6 +280,8 @@
 
 <style scoped>
     .background {
+        pointer-events: none;
+
         position: absolute;
         top: 0em;
         right: 0;
