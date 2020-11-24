@@ -46,9 +46,19 @@
 </script>
 
 <style scoped>
+ @media (max-width: 1100px) {
+     .postcard-body {
+         float: left !important;
+     }
+     .postcard-container { 
+         height: 200% !important;
+         width: 600vw !important;
+     }
+
+ }
     .postcard-container {
-        width: 90%;
-        height: 90%;
+        width: 100vw;
+        height: 400%;
     }
 
     .instructions {
@@ -93,6 +103,8 @@
     }
 
     .postcard-body {
+        margin-right: 80px !important;
+        float: left;
         position: relative;
         margin-top: 50px !important;
         margin: auto;

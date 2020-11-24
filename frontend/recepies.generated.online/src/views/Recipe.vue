@@ -31,14 +31,15 @@
       <div>
         <h1 class="recipe-title text-span dynamic-font-size">Schicke das Rezept per Postkarte!</h1>
         <div class="postcard-paypal">
-          <div class="postcard" :style="resizedHeight" style="float:left">
-            <Postcard :recipe='recipe' :color='titleColor' :style="resizeTransform" :name='name' :street='street' :zip='zip' :country='country'/>
+          <div class="postcard postcard-paypal-item" :style="resizedHeight">
+            <Postcard :recipe='recipe' :color='titleColor' :style="resizeTransform" :name='name' :street='street'
+              :zip='zip' :country='country' />
           </div>
-          <div class="paypal-container" style="float:left">
+          <div class="paypal-container postcard-paypal-item">
             <h1>Sichere dir eine einzigartige Rezept-Karte jetzt!</h1>
             <br>
             <h3>Die Karte geht an:</h3>
-            <div class="address" >
+            <div class="address">
               <input type="text" placeholder="Name" v-model="name">
               <input type="text" placeholder="Straße" v-model="street">
               <br>
@@ -46,7 +47,8 @@
               <input type="text" placeholder="Land" v-model="country">
             </div>
             <br>
-            <Paypal :recipeID='recipe.id' :sendTo='{name: name, address: address, zip: zip, country: country}' style="padding-top: 10em"/>
+            <Paypal :recipeID='recipe.id' :sendTo='{name: name, address: address, zip: zip, country: country}'
+              style="padding: 5em 0" />
           </div>
         </div>
       </div>
@@ -76,8 +78,8 @@
       return {
         name: '',
         street: '',
-        zip:'',
-        country:'',
+        zip: '',
+        country: '',
         id: "",
         recipes: [],
         error: "",
@@ -142,38 +144,70 @@
     },
     computed: {
       resizeTransform() {
+        const scale = 0.25 * (window.innerWidth - 16 * 4) / 1440
+        const responsiveScale = window.innerWidth > 1100 ? scale : scale * 1.7
         return {
-          "transform": "scale(" + 0.25 * (window.innerWidth - 16 * 4) / 1440 + ")",
+          "transform": "scale(" + responsiveScale + ")",
           "transform-origin": "top left"
         }
       },
       resizedHeight() {
+        const scale = (1040 * 2 * ((window.innerWidth - 16 * 4) / 1440) + 100) / 3
+        const responsiveScaleNextToEachOther = window.innerWidth > 1100 ? scale : scale / 1.4 
+        const responsiveScale = window.innerWidth > 500 ? responsiveScaleNextToEachOther : responsiveScaleNextToEachOther *2;
         return {
-          "height": (1040 * 2 * ((window.innerWidth - 16 * 4) / 1440) + 100) / 3 + "px",
+          "height": responsiveScale + "px", 
           "overflow": "hidden"
         }
       }
-
     }
   };
 </script>
 
 <style scoped>
+  @media (max-width: 1100px) {
+    .recipe-title {
+      width: 100% !important
+    }
 
-.address input {
-  width: 48%;
-  float: left;
-  height: 2em;
-  border: 2px dashed black;
-  padding: 1em;
-  margin: 0.25em;
-}
-.address {
-  padding-bottom: 2em;
-}
+    .postcard-body {
+      float: none !important;
+    }
+
+    .postcard {
+      width: 100% !important
+    }
+
+    .paypal-container {
+      width: 100% !important
+    }
+  }
+
+  .postcard-paypal-item {
+    float: left
+  }
+
+  .postcard {
+    margin-left: 5%;
+    overflow: hidden;
+    width: 35%;
+  }
+
+  .address input {
+    width: 48%;
+    float: left;
+    height: 2em;
+    border: 2px dashed black;
+    padding: 1em;
+    margin: 0.25em;
+  }
+
+  .address {
+    padding-bottom: 2em;
+  }
 
   .paypal-container {
-    padding-left: 10%;
+    width: 60%;
     padding-top: 2.5em;
   }
 
@@ -196,7 +230,7 @@
 
   .recipe-title {
     word-wrap: break-word;
-    width: 80% !important;
+    width: 80%;
     display: inline-block;
   }
 
@@ -233,12 +267,6 @@
     width: calc(100% - 25% - 2%*4);
     text-align: justify;
     display: block
-  }
-
-  .postcard {
-    margin-left: 10%;
-    overflow: hidden;
-    width: 25%;
   }
 
   @media (max-width: 800px) {
