@@ -1,7 +1,7 @@
 <template>
   <div class="recipe-container">
     <div v-for="recipe in recipes" :key="recipe.id" class="recipe">
-      <div style="height: 100vh">
+      <div style="min-height: 100vh">
         <EmojieBackground :recipe="recipe" :emojieSize='4' rowHeight="1.5em" emojiPadding="0.8em" :emojieAmount='8' />
         <div class="title-container">
           <h1 class="recipe-title text-span dynamic-font-size">
