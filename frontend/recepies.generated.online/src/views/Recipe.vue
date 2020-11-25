@@ -47,7 +47,7 @@
               <input type="text" placeholder="Land" v-model="country">
             </div>
             <br>
-            <Paypal :recipeID='recipe.id' :sendTo='{name: name, address: address, zip: zip, country: country}'
+            <Paypal :recipeID='recipe.id' :sendTo='{name: name, street: street, zip: zip, country: country}'
               style="padding: 5em 0" />
           </div>
         </div>

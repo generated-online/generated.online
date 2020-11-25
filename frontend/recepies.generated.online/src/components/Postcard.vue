@@ -24,7 +24,7 @@
                         <input type="text" placeholder="Name" v-model="name" disabled>
                         <input type="text" placeholder="Straße" v-model="street" disabled>
                         <input type="text" placeholder="Postleitzahl und Ort" v-model="zip" disabled>
-                        <input type="text" placeholder="Land" v-model="country" disbled>
+                        <input type="text" placeholder="Land" v-model="country" disabled>
                         <!-- <p class="input">Deutschland</p> -->
                     </div>
                 </div>
