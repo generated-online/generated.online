@@ -1,15 +1,13 @@
 <template>
     <div id="smart-button-container">
-        <div style="text-align: center;">
-            <div id="paypal-button-container"></div>
-        </div>
+        <div id="paypal-button-container"></div>
     </div>
 
 </template>
 
 <script>
     export default {
-        props: ['recipe', 'color'],
+        props: ['recipeID', 'sendTo'],
         methods: {
             initPayPalButton() {
                 paypal.Buttons({
@@ -24,8 +22,8 @@
                     createOrder: (data, actions) => {
                         return actions.order.create({
                             purchase_units: [{
-                                "description": "Versende eine Postkarte mit einem Rezept! ID: " +
-                                    this.recipe.id,
+                                "description": "Postkarte " +
+                                    this.recipeID + ' an ' + this.sendTo.name + " " + this.sendTo.address + " " + this.senTo.ziz + " " + this.address.country,
                                 "amount": {
                                     "currency_code": "EUR",
                                     "value": 4
@@ -54,9 +52,3 @@
         }
     }
 </script>
-
-<style scoped>
-#smart-button-container {
-    padding: 10em;
-}
-</style>

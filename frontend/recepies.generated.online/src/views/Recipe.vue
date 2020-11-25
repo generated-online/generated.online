@@ -1,12 +1,12 @@
 <template>
   <div class="recipe-container">
     <div v-for="recipe in recipes" :key="recipe.id" class="recipe">
-      <div style="z-index: 1">
-        <EmojieBackground :recipe="recipe" :emojieSize='4' rowHeight="1.5em" emojiPadding="0.8em" :emojieAmount='8'/>
+      <div style="min-height: 100vh">
+        <EmojieBackground :recipe="recipe" :emojieSize='4' rowHeight="1.5em" emojiPadding="0.8em" :emojieAmount='8' />
         <div class="title-container">
-          <span class="recipe-title text-span dynamic-font-size">
+          <h1 class="recipe-title text-span dynamic-font-size">
             {{ recipe.title }}
-          </span>
+          </h1>
           <Voting class="recipe-vote dynamic-font-size" :recipe='recipe' />
         </div>
 
@@ -28,10 +28,31 @@
       </div>
 
       <!--  Postcard -->
-      <div class="postcard" :style="resizedHeight">
-        <Postcard :recipe='recipe' :color='titleColor' :style="resizeTransform" />
+      <div>
+        <h1 class="recipe-title text-span dynamic-font-size">Schicke das Rezept per Postkarte!</h1>
+        <div class="postcard-paypal">
+          <div class="postcard postcard-paypal-item" :style="resizedHeight">
+            <Postcard :recipe='recipe' :color='titleColor' :style="resizeTransform" :name='name' :street='street'
+              :zip='zip' :country='country' />
+          </div>
+          <div class="paypal-container postcard-paypal-item">
+            <h1>Sichere dir eine einzigartige Rezept-Karte jetzt!</h1>
+            <br>
+            <h3>Die Karte geht an:</h3>
+            <div class="address">
+              <input type="text" placeholder="Name" v-model="name">
+              <input type="text" placeholder="Straße" v-model="street">
+              <br>
+              <input type="text" placeholder="Postleitzahl und Ort" v-model="zip">
+              <input type="text" placeholder="Land" v-model="country">
+            </div>
+            <br>
+            <Paypal :recipeID='recipe.id' :sendTo='{name: name, address: address, zip: zip, country: country}'
+              style="padding: 5em 0" />
+          </div>
+        </div>
       </div>
-      <Paypal :recipe='recipe' :color='titleColor' />
+
 
     </div>
   </div>
@@ -55,6 +76,10 @@
     },
     data() {
       return {
+        name: '',
+        street: '',
+        zip: '',
+        country: '',
         id: "",
         recipes: [],
         error: "",
@@ -119,23 +144,73 @@
     },
     computed: {
       resizeTransform() {
+        const scale = 0.25 * (window.innerWidth - 16 * 4) / 1440
+        const responsiveScale = window.innerWidth > 1100 ? scale : scale * 1.7
         return {
-          "transform": "scale(" + (window.innerWidth - 16 * 4) / 1440 + ")",
+          "transform": "scale(" + responsiveScale + ")",
           "transform-origin": "top left"
         }
       },
       resizedHeight() {
+        const scale = (1040 * 2 * ((window.innerWidth - 16 * 4) / 1440) + 100) / 3
+        const responsiveScaleNextToEachOther = window.innerWidth > 1100 ? scale : scale / 1.4 
+        const responsiveScale = window.innerWidth > 500 ? responsiveScaleNextToEachOther : responsiveScaleNextToEachOther *2;
         return {
-          "height": 1040 * 2 * ((window.innerWidth - 16 * 4) / 1440) + 100 + "px",
+          "height": responsiveScale + "px", 
           "overflow": "hidden"
         }
       }
-
     }
   };
 </script>
 
 <style scoped>
+  @media (max-width: 1100px) {
+    .recipe-title {
+      width: 100% !important
+    }
+
+    .postcard-body {
+      float: none !important;
+    }
+
+    .postcard {
+      width: 100% !important
+    }
+
+    .paypal-container {
+      width: 100% !important
+    }
+  }
+
+  .postcard-paypal-item {
+    float: left
+  }
+
+  .postcard {
+    margin-left: 5%;
+    overflow: hidden;
+    width: 35%;
+  }
+
+  .address input {
+    width: 48%;
+    float: left;
+    height: 2em;
+    border: 2px dashed black;
+    padding: 1em;
+    margin: 0.25em;
+  }
+
+  .address {
+    padding-bottom: 2em;
+  }
+
+  .paypal-container {
+    width: 60%;
+    padding-top: 2.5em;
+  }
+
   .recipe-container {
     text-align: left;
     height: 100%;
@@ -155,14 +230,14 @@
 
   .recipe-title {
     word-wrap: break-word;
-    width: 80% !important;
+    width: 80%;
     display: inline-block;
   }
 
   .recipe-vote {
     position: absolute;
     right: 0;
-    width: fit-content;
+    width: 300px;
   }
 
   .recipe-body {
@@ -192,10 +267,6 @@
     width: calc(100% - 25% - 2%*4);
     text-align: justify;
     display: block
-  }
-
-  .postcard {
-    overflow: hidden;
   }
 
   @media (max-width: 800px) {

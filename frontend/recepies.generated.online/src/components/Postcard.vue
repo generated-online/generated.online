@@ -21,10 +21,11 @@
                 <div class="half-postcard">
                     <div class="stamp"></div>
                     <div class="address">
-                        <input type="text" placeholder="Name">
-                        <input type="text" placeholder="Straße">
-                        <input type="text" placeholder="Postleitzahl und Ort">
-                        <input type="text" placeholder="Land">
+                        <input type="text" placeholder="Name" v-model="name" disabled>
+                        <input type="text" placeholder="Straße" v-model="street" disabled>
+                        <input type="text" placeholder="Postleitzahl und Ort" v-model="zip" disabled>
+                        <input type="text" placeholder="Land" v-model="country" disbled>
+                        <!-- <p class="input">Deutschland</p> -->
                     </div>
                 </div>
             </div>
@@ -37,7 +38,7 @@
     import EmojieBackground from "@/components/EmojieBackground"
 
     export default {
-        props: ['recipe', 'color'],
+        props: ['recipe', 'color', 'name', 'street', 'zip', 'country'],
         components: {
             EmojieBackground,
         }
@@ -45,9 +46,19 @@
 </script>
 
 <style scoped>
+ @media (max-width: 1100px) {
+     .postcard-body {
+         float: left !important;
+     }
+     .postcard-container { 
+         height: 200% !important;
+         width: 600vw !important;
+     }
+
+ }
     .postcard-container {
-        width: 90%;
-        height: 90%;
+        width: 100vw;
+        height: 400%;
     }
 
     .instructions {
@@ -64,7 +75,8 @@
         right: 0;
     }
 
-    input {
+    input,
+    .input {
         padding-top: 10px;
         margin-top: 10px;
         width: 50%;
@@ -91,6 +103,8 @@
     }
 
     .postcard-body {
+        margin-right: 80px !important;
+        float: left;
         position: relative;
         margin-top: 50px !important;
         margin: auto;
