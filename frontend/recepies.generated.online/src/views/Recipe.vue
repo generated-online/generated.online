@@ -44,7 +44,14 @@
               <input type="text" placeholder="Straße" v-model="street">
               <br>
               <input type="text" placeholder="Postleitzahl und Ort" v-model="zip">
-              <input type="text" placeholder="Land" v-model="country">
+              <div class="countrySelect">
+                <label for="countries">Land: </label>
+                <select name="countries" id="countries" v-model="country">
+                  <option value="DE">Deutschland</option>
+                  <option value="AT">Österreich</option>
+                  <option value="CH">Schweiz</option>
+                </select>
+              </div>
             </div>
             <br>
             <Paypal :recipeID='recipe.id' :sendTo='{name: name, street: street, zip: zip, country: country}'
@@ -79,7 +86,7 @@
         name: '',
         street: '',
         zip: '',
-        country: '',
+        country: 'DE',
         id: "",
         recipes: [],
         error: "",
@@ -153,10 +160,11 @@
       },
       resizedHeight() {
         const scale = (1040 * 2 * ((window.innerWidth - 16 * 4) / 1440) + 100) / 3
-        const responsiveScaleNextToEachOther = window.innerWidth > 1100 ? scale : scale / 1.4 
-        const responsiveScale = window.innerWidth > 500 ? responsiveScaleNextToEachOther : responsiveScaleNextToEachOther *2;
+        const responsiveScaleNextToEachOther = window.innerWidth > 1100 ? scale : scale / 1.4
+        const responsiveScale = window.innerWidth > 500 ? responsiveScaleNextToEachOther :
+          responsiveScaleNextToEachOther * 2;
         return {
-          "height": responsiveScale + "px", 
+          "height": responsiveScale + "px",
           "overflow": "hidden"
         }
       }
@@ -193,13 +201,21 @@
     width: 35%;
   }
 
+  .countrySelect,
   .address input {
     width: 48%;
     float: left;
-    height: 2em;
+    height: 2.5em;
     border: 2px dashed black;
-    padding: 1em;
+    padding-left: 1em;
+    padding-top: 0.3em;
+    padding-bottom: 0.3em;
     margin: 0.25em;
+  }
+
+  .countrySelect select {
+    width: 80%;
+    padding-left: 0.25em;
   }
 
   .address {

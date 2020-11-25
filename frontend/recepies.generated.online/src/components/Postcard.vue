@@ -25,7 +25,6 @@
                         <input type="text" placeholder="Straße" v-model="street" disabled>
                         <input type="text" placeholder="Postleitzahl und Ort" v-model="zip" disabled>
                         <input type="text" placeholder="Land" v-model="country" disabled>
-                        <!-- <p class="input">Deutschland</p> -->
                     </div>
                 </div>
             </div>
@@ -46,16 +45,18 @@
 </script>
 
 <style scoped>
- @media (max-width: 1100px) {
-     .postcard-body {
-         float: left !important;
-     }
-     .postcard-container { 
-         height: 200% !important;
-         width: 600vw !important;
-     }
+    @media (max-width: 1100px) {
+        .postcard-body {
+            float: left !important;
+        }
 
- }
+        .postcard-container {
+            height: 200% !important;
+            width: 600vw !important;
+        }
+
+    }
+
     .postcard-container {
         width: 100vw;
         height: 400%;
@@ -94,6 +95,10 @@
         top: 300px;
         padding-top: 150px;
         left: 0;
+    }
+
+    .address input {
+        padding-left: 1em
     }
 
     .half-postcard {

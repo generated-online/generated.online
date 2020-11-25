@@ -25,7 +25,7 @@
                         return actions.order.create({
                             //intent: 'CAPTURE', // DEV ONLY
                             "application_context": {
-                                shipping_preference: "SET_PROVIDED_ADDRESS", 
+                                shipping_preference: "SET_PROVIDED_ADDRESS",
                             },
                             purchase_units: [{
                                 "description": "Postkarte " +
@@ -46,7 +46,7 @@
                                         "admin_area_2": this.sendTo.zip.split(" ")[1],
                                         // "admin_area_1": "CA",
                                         "postal_code": this.sendTo.zip.split(" ")[0],
-                                        "country_code": "DE"
+                                        "country_code": this.sendTo.country
                                     }
                                 }
                             }],
