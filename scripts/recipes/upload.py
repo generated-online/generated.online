@@ -55,7 +55,7 @@ def uploadData(filename, start_idx=0, onlyNonExisting=False, algolia=True, fireb
         recipe_list = json.load(f)
     
     for idx, recipe in enumerate(tqdm.tqdm(recipe_list[start_idx:])):
-        if idx < 3000:
+        if idx < start_idx:
             try:
                 # Upload to firebase
                 if firebase:
@@ -63,7 +63,7 @@ def uploadData(filename, start_idx=0, onlyNonExisting=False, algolia=True, fireb
                     doc = recipeRef.get()
                     if not doc.exists:
                         recipeRef.set(recipe["data"])
-                        # saveIngredients(data_dict["ingredients"], data_dict["id"])F
+                        # saveIngredients(data_dict["ingredients"], data_dict["id"])
 
                 # upload to algolia
                 if algolia:
@@ -113,7 +113,21 @@ def processRawFile(filename):
     with open(f"{filename}_filtered.json", 'w') as f:
         json.dump(processed, f, ensure_ascii=False)
 
+def analyzeData(filename):
+    from collections import Counter
+    with open(filename) as f:
+        recipe_list = json.load(f)
+    # empty set
+    allIngredients = []
+    for idx, recipe in enumerate(tqdm.tqdm(recipe_list)):
+        allIngredients += recipe["ingredients"]
+
+    print(list(dict.fromkeys(sorted(allIngredients, key=Counter(allIngredients).get, reverse=True))))
+
+
+
 if __name__ == "__main__":
-    filename = 'recipes/cassis.txt'
-    processRawFile(filename)
-    uploadData(filename + "_filtered.json", onlyNonExisting=True, algolia=True, firebase=True)
+    filename = 'recipes/1_200.txt'
+    # processRawFile(filename)
+    analyzeData(filename + "_filtered.json")
+    # uploadData(filename + "_filtered.json", onlyNonExisting=True, algolia=False, firebase=False)
