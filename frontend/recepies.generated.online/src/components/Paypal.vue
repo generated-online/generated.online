@@ -29,7 +29,7 @@
                             },
                             purchase_units: [{
                                 description: "Postkarte " +
-                                    this.recipeID + " an " + this.sendTo.name + " " + this
+                                    window.location.href + " an " + this.sendTo.name + " " + this
                                     .sendTo.street + " " + this.sendTo.zip + " " + this
                                     .sendTo.country,
                                 amount: {

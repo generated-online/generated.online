@@ -43,7 +43,7 @@
               <input type="text" placeholder="Name" v-model="name">
               <input type="text" placeholder="Straße" v-model="street">
               <br>
-              <input type="text" placeholder="Postleitzahl" v-model="plz">
+              <input type="number" placeholder="Postleitzahl" v-model="plz">
               <input type="text" placeholder="Ort" v-model="city">
               <div class="countrySelect">
                 <label for="countries">Land: </label>
@@ -179,6 +179,7 @@
     .address input {
       width: 100%
     }
+
     .recipe-title {
       width: 100% !important
     }
@@ -230,6 +231,16 @@
   .paypal-container {
     width: 60%;
     padding-top: 2.5em;
+  }
+
+  /* hide arrows in number input field */
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type=number] {
+    -moz-appearance: textfield;
   }
 
   .recipe-container {
