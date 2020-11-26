@@ -33,18 +33,18 @@
         <div class="postcard-paypal">
           <div class="postcard postcard-paypal-item" :style="resizedHeight">
             <Postcard :recipe='recipe' :color='titleColor' :style="resizeTransform" :name='name' :street='street'
-              :zip='plz + " " + city' :country='country' />
+              :zip='zipCode()' :country='country' />
           </div>
           <div class="paypal-container postcard-paypal-item">
             <h1>Sichere dir eine einzigartige Rezept-Karte jetzt!</h1>
             <br>
             <h3>Die Karte geht an:</h3>
             <div class="address">
-              <input type="text" placeholder="Name" v-model="name">
-              <input type="text" placeholder="Straße" v-model="street">
+              <input type="text" placeholder="❌ Name" v-model="name">
+              <input type="text" placeholder="❌ Straße" v-model="street">
               <br>
-              <input type="number" placeholder="Postleitzahl" v-model="plz">
-              <input type="text" placeholder="Ort" v-model="city">
+              <input type="number" placeholder="❌ Postleitzahl" v-model="plz">
+              <input type="text" placeholder="❌ Ort" v-model="city">
               <div class="countrySelect">
                 <label for="countries">Land: </label>
                 <select name="countries" id="countries" v-model="country">
@@ -53,10 +53,12 @@
                   <option value="CH">Schweiz</option>
                 </select>
               </div>
+              <br>
+              <div class="addressError" v-if='!showPaypalButton()'>❌<b>Bitte alle Felder ausfüllen!</b></div>
             </div>
-            <br>
-            <Paypal :recipeID='recipe.id' :sendTo='{name: name, street: street, plz: plz,city:city, country: country}'
-              style="padding: 5em 0" />
+
+            <Paypal v-if='showPaypalButton()' :recipeID='recipe.id'
+              :sendTo='{name: name, street: street, plz: plz, city:city, country: country}' />
           </div>
         </div>
       </div>
@@ -150,6 +152,14 @@
           this.$router.replace("/recipe/" + doc.id);
         }
       },
+      showPaypalButton() {
+        console.log(this.name)
+        console.log(this.name.length)
+        return this.name.length > 0 && this.street.length > 0 && this.plz > 0 && this.city.length > 0;
+      },
+      zipCode() {
+        return !(this.plz.length + this.city.length === 0) ? this.plz + " " + this.city : ""
+      }
     },
     computed: {
       resizeTransform() {
@@ -178,10 +188,6 @@
   @media (max-width: 1100px) {
     .address input {
       width: 100%
-    }
-
-    .recipe-title {
-      width: 100% !important
     }
 
     .postcard-body {
@@ -219,6 +225,18 @@
     margin: 0.25em;
   }
 
+  .addressError {
+    float: left;
+    width: 100%;
+    height: 2.5em;
+    padding-left: 1em;
+    padding-top: 1em;
+    padding-bottom: 0.3em;
+    margin: 0.25em;
+    text-align: center;
+    color: red;
+  }
+
   .countrySelect select {
     width: 80%;
     padding-left: 0.25em;
@@ -226,6 +244,7 @@
 
   .address {
     padding-bottom: 2em;
+    overflow: hidden;
   }
 
   .paypal-container {
@@ -239,6 +258,7 @@
     -webkit-appearance: none;
     margin: 0;
   }
+
   input[type=number] {
     -moz-appearance: textfield;
   }
