@@ -101,7 +101,7 @@
                     "Paprika": "🫑",
                     "Avocado": "🥑",
                     "Zitrone": "🍋",
-                    "Annanas": "🍍",
+                    "Ananas": "🍍",
                     "Kirsche": "🍒",
                     "Avocado": "🥑",
                     "Karotte": "🥕",
