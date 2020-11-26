@@ -28,25 +28,25 @@
                                 shipping_preference: "SET_PROVIDED_ADDRESS",
                             },
                             purchase_units: [{
-                                "description": "Postkarte " +
+                                description: "Postkarte " +
                                     this.recipeID + " an " + this.sendTo.name + " " + this
                                     .sendTo.street + " " + this.sendTo.zip + " " + this
                                     .sendTo.country,
-                                "amount": {
-                                    "currency_code": "EUR",
-                                    "value": 4
+                                amount: {
+                                    currency_code: "EUR",
+                                    value: 4
                                 },
-                                "shipping": {
+                                shipping: {
                                     name: {
                                         full_name: this.sendTo.name
                                     },
-                                    "address": {
-                                        "address_line_1": this.sendTo.street,
+                                    address: {
+                                        address_line_1: this.sendTo.street,
                                         // "address_line_2": "Floor 6",
-                                        "admin_area_2": this.sendTo.zip.split(" ")[1],
+                                        admin_area_2: this.sendTo.zip.split(" ")[1],
                                         // "admin_area_1": "CA",
-                                        "postal_code": this.sendTo.zip.split(" ")[0],
-                                        "country_code": this.sendTo.country
+                                        postal_code: this.sendTo.zip.split(" ")[0],
+                                        country_code: this.sendTo.country
                                     }
                                 }
                             }],
