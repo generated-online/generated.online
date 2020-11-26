@@ -33,7 +33,7 @@
         <div class="postcard-paypal">
           <div class="postcard postcard-paypal-item" :style="resizedHeight">
             <Postcard :recipe='recipe' :color='titleColor' :style="resizeTransform" :name='name' :street='street'
-              :zip='zip' :country='country' />
+              :zip='plz + " " + city' :country='country' />
           </div>
           <div class="paypal-container postcard-paypal-item">
             <h1>Sichere dir eine einzigartige Rezept-Karte jetzt!</h1>
@@ -43,7 +43,8 @@
               <input type="text" placeholder="Name" v-model="name">
               <input type="text" placeholder="Straße" v-model="street">
               <br>
-              <input type="text" placeholder="Postleitzahl und Ort" v-model="zip">
+              <input type="text" placeholder="Postleitzahl" v-model="plz">
+              <input type="text" placeholder="Ort" v-model="city">
               <div class="countrySelect">
                 <label for="countries">Land: </label>
                 <select name="countries" id="countries" v-model="country">
@@ -54,7 +55,7 @@
               </div>
             </div>
             <br>
-            <Paypal :recipeID='recipe.id' :sendTo='{name: name, street: street, zip: zip, country: country}'
+            <Paypal :recipeID='recipe.id' :sendTo='{name: name, street: street, plz: plz,city:city, country: country}'
               style="padding: 5em 0" />
           </div>
         </div>
@@ -85,7 +86,8 @@
       return {
         name: '',
         street: '',
-        zip: '',
+        plz: '',
+        city: '',
         country: 'DE',
         id: "",
         recipes: [],

@@ -34,7 +34,7 @@
                                     .sendTo.country,
                                 amount: {
                                     currency_code: "EUR",
-                                    value: 4
+                                    value: 3.5
                                 },
                                 shipping: {
                                     name: {
@@ -42,10 +42,8 @@
                                     },
                                     address: {
                                         address_line_1: this.sendTo.street,
-                                        // "address_line_2": "Floor 6",
-                                        admin_area_2: this.sendTo.zip.split(" ")[1],
-                                        // "admin_area_1": "CA",
-                                        postal_code: this.sendTo.zip.split(" ")[0],
+                                        postal_code: this.sendTo.plz,
+                                        admin_area_2: this.sendTo.city,
                                         country_code: this.sendTo.country
                                     }
                                 }
