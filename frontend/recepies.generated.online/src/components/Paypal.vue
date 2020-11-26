@@ -7,7 +7,7 @@
 
 <script>
     export default {
-        props: ['recipeID', 'sendTo', 'sendTo'],
+        props: ['recipeID', 'sendTo', 'amount'],
         methods: {
             initPayPalButton() {
                 paypal.Buttons({
@@ -34,7 +34,7 @@
                                     .sendTo.country,
                                 amount: {
                                     currency_code: "EUR",
-                                    value: 3.5
+                                    value: this.amount
                                 },
                                 shipping: {
                                     name: {

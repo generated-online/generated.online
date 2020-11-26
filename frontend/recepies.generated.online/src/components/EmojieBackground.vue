@@ -239,7 +239,6 @@
 
             var rowHeightInPx = parseFloat(this.rowHeight) * em * this.emojieSize;
             var numRows = Math.floor(height / rowHeightInPx);
-            console.log(height, rowHeightInPx, numRows)
 
             // this.matchingEmos
             var i;

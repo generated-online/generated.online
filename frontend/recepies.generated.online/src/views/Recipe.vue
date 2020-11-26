@@ -36,7 +36,7 @@
               :zip='zipCode()' :country='country' />
           </div>
           <div class="paypal-container postcard-paypal-item">
-            <h1>Sichere dir eine einzigartige Rezept-Karte jetzt!</h1>
+            <h1>Sichere dir eine einzigartige Rezept-Karte jetzt ab {{price}}€!</h1>
             <br>
             <h3>Die Karte geht an:</h3>
             <div class="address">
@@ -55,10 +55,17 @@
               </div>
               <br>
               <div class="addressError" v-if='!showPaypalButton()'>❌<b>Bitte alle Felder ausfüllen!</b></div>
+              <h3 class="moneyAsking">Du unsterützt uns mit:</h3>
+              <div class="moneySpan">
+                <div>{{price}}€ +</div>
+                <input class="moneyInput" type="number" :placeholder='0.5' :min='0.00' :step='0.01' v-model="money">
+                <div>€ = <b>{{price+parseFloat(money)}}€</b></div>
+              </div>
+              <h3 class="moneyAsking" v-if='showPaypalButton()'>Jetzt {{price+parseFloat(money)}}€ bezahlen:</h3>
             </div>
-
             <Paypal v-if='showPaypalButton()' :recipeID='recipe.id'
-              :sendTo='{name: name, street: street, plz: plz, city:city, country: country}' />
+              :sendTo='{name: name, street: street, plz: plz, city:city, country: country}'
+              :amount='price+parseFloat(money)' />
           </div>
         </div>
       </div>
@@ -95,6 +102,8 @@
         recipes: [],
         error: "",
         titleColor: "",
+        price: 3.5,
+        money: 0.5,
         scale: window.innerWidth / 1480 * 0.7
       };
     },
@@ -153,8 +162,6 @@
         }
       },
       showPaypalButton() {
-        console.log(this.name)
-        console.log(this.name.length)
         return this.name.length > 0 && this.street.length > 0 && this.plz > 0 && this.city.length > 0;
       },
       zipCode() {
@@ -245,6 +252,40 @@
   .address {
     padding-bottom: 2em;
     overflow: hidden;
+  }
+
+  .moneyAsking {
+    width: 100%;
+    float: left;
+    margin-top: 1em
+  }
+
+  .moneySpan {
+    width: 48%;
+    float: left;
+    overflow: hidden;
+    align-items: center;
+    vertical-align: baseline;
+    height: 2.5em
+      /* margin-top: 1em */
+  }
+
+  .moneySpan div {
+    margin: 0.5em;
+    height: 2.5em;
+    float: left;
+  }
+
+  .moneyInput {
+    width: 15% !important;
+    /* height:auto !important; */
+    /* border: none !important; */
+    padding-left: 1em;
+    padding-right: 1em;
+    padding-top: 0em !important;
+    padding-bottom: 0em !important;
+    margin: 0em !important;
+    text-align: center;
   }
 
   .paypal-container {
