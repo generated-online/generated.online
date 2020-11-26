@@ -15,7 +15,9 @@
                 <div class="half-postcard instructions">
                     <h2>{{recipe.title}}</h2>
                     <p v-for="ingredient in recipe.ingredients" v-bind:key="ingredient">{{ingredient}}</p>
-                    <p>{{recipe.instructions}}</p>
+                    <br>
+                    <p style="text-align: justify">{{recipe.instructions}}</p>
+                    <br>
                     <p>Gesendet von recipes.generated.online</p>
                 </div>
                 <div class="half-postcard">
@@ -45,6 +47,10 @@
 </script>
 
 <style scoped>
+p {
+    margin: 0 !important;
+    padding: 0 !important
+}
     @media (max-width: 1100px) {
         .postcard-body {
             float: left !important;
@@ -63,8 +69,7 @@
     }
 
     .instructions {
-        padding-top: 70px;
-        padding-right: 10px;
+        padding-right: 30px;
     }
 
     .stamp {

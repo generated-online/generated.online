@@ -180,15 +180,16 @@
                         const matchingEmojie = this.allEmos[capitalizedWord]
                         this.matchingEmos.push(matchingEmojie)
                     } else {
-                        if (word.length >= 2) {
+                        if (word.length > 3) {
                             let matchingEmojie = ''
+                            console.log(word);
                             for (const key in this.allEmos) {
                                 if (lowercasedWord.includes(key.toLowerCase()) || key.toLowerCase().includes(
                                         lowercasedWord)) {
                                     matchingEmojie = this.allEmos[key]
+                                    console.log('added ', matchingEmojie);
                                 }
                             }
-
                             // Take last match
                             if (matchingEmojie !== '') {
                                 this.matchingEmos.push(matchingEmojie)

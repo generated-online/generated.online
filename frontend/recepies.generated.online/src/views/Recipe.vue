@@ -36,7 +36,7 @@
               :zip='zipCode()' :country='country' />
           </div>
           <div class="paypal-container postcard-paypal-item">
-            <h1>Sichere dir eine einzigartige Rezept-Karte jetzt ab {{price}}€!</h1>
+            <h1>Sichere dir eine einzigartige Rezept-Karte jetzt ab {{price.toFixed(2)}} €!</h1>
             <br>
             <h3>Die Karte geht an:</h3>
             <div class="address">
@@ -55,12 +55,12 @@
               </div>
               <br>
               <div class="addressError" v-if='!showPaypalButton()'>❌<b>Bitte alle Felder ausfüllen!</b></div>
-              <h3 class="moneyAsking">Du unsterützt uns mit:</h3>
-              <div class="moneySpan">
-                <div>{{price}}€ +</div>
-                <input class="moneyInput" type="number" :placeholder='0.5' :min='0.00' :step='0.01' v-model="money">
-                <div>€ = <b>{{price+parseFloat(money)}}€</b></div>
-              </div>
+              <h3 class="moneyAsking">Du unterstützt uns mit:</h3>
+              <span class="moneySpan">
+                <div>{{price.toFixed(2)}} € + </div>
+                <input class="moneyInput" type="number" :placeholder='0.50' :min='0' :step='0.5' v-model="money">
+                <div>€ = <b>{{parseFloat(money) ? (price + parseFloat(money)).toFixed(2) : price.toFixed(2)}} €</b></div>
+              </span>
               <h3 class="moneyAsking" v-if='showPaypalButton()'>Jetzt {{price+parseFloat(money)}}€ bezahlen:</h3>
             </div>
             <Paypal v-if='showPaypalButton()' :recipeID='recipe.id'
@@ -102,10 +102,15 @@
         recipes: [],
         error: "",
         titleColor: "",
-        price: 3.5,
+        price: 3.50,
         money: 0.5,
         scale: window.innerWidth / 1480 * 0.7
       };
+    },
+    watch: {
+      money: function (newVal, oldVal) {
+        newVal < 0 ? this.money = 0 : null
+      }
     },
     created() {
       let db = firebase.firestore();
@@ -192,6 +197,9 @@
 </script>
 
 <style scoped>
+h3 {
+  padding-bottom: 1em;
+}
   @media (max-width: 1100px) {
     .address input {
       width: 100%
@@ -250,7 +258,7 @@
   }
 
   .address {
-    padding-bottom: 2em;
+    padding-bottom: 6em;
     overflow: hidden;
   }
 
@@ -260,7 +268,11 @@
     margin-top: 1em
   }
 
+.inline {
+      display: inline;
+}
   .moneySpan {
+
     width: 48%;
     float: left;
     overflow: hidden;
