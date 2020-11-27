@@ -54,13 +54,18 @@
                 </select>
               </div>
               <br>
-              <div class="addressError" v-if='!showPaypalButton()'>❌<b>Bitte alle Felder ausfüllen!</b></div>
+              <div class="addressError" v-if='!showPaypalButton()'>
+                ❌<b>Bitte alle Felder
+                  ausfüllen!</b>
+              </div>
               <h3 class="moneyAsking">Du unterstützt uns mit:</h3>
-              <span class="moneySpan">
+              <div class="moneySpan">
                 <div>{{price.toFixed(2)}} € + </div>
-                <input class="moneyInput" type="number" :min='0' :step='0.5' v-model.number="money">
-                <div>€ = <b>{{money ? (price + money).toFixed(2) : price.toFixed(2)}} €</b></div>
-              </span>
+                <div class="ml-1" style="width: min-content">
+                  <input class="moneyInput" type="number" :min='0' :step='0.5' v-model.number="money">
+                </div>
+                <div>€ <b> = {{money ? (price + money).toFixed(2) : price.toFixed(2)}} €</b></div>
+              </div>
               <h3 class="moneyAsking" v-if='showPaypalButton()'>Jetzt {{(price+money).toFixed(2)}}€ bezahlen:</h3>
             </div>
             <Paypal v-if='showPaypalButton()' :recipeID='recipe.id'
@@ -243,18 +248,19 @@
   .addressError {
     float: left;
     width: 100%;
-    height: 2.5em;
     padding-left: 1em;
     padding-top: 1em;
     padding-bottom: 0.3em;
     margin: 0.25em;
     text-align: center;
     color: red;
+    background: black
   }
 
   .countrySelect select {
-    width: 80%;
+    /* width: 80%; */
     padding-left: 0.25em;
+    padding-right: 0.25em;
   }
 
   .address {
@@ -273,32 +279,24 @@
   }
 
   .moneySpan {
-
-    width: 48%;
+    width: 100%;
     float: left;
-    overflow: hidden;
-    align-items: center;
-    vertical-align: baseline;
-    height: 2.5em
-      /* margin-top: 1em */
+    overflow: visible;
   }
 
   .moneySpan div {
-    margin: 0.5em;
-    height: 2.5em;
-    float: left;
+    display: inline-flex;
   }
 
   .moneyInput {
-    width: 15% !important;
-    /* height:auto !important; */
-    /* border: none !important; */
+    min-width: 4em;
     padding-left: 1em;
     padding-right: 1em;
     padding-top: 0em !important;
     padding-bottom: 0em !important;
     margin: 0em !important;
     text-align: center;
+
   }
 
   .paypal-container {
