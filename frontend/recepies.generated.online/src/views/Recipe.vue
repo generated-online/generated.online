@@ -58,14 +58,13 @@
               <h3 class="moneyAsking">Du unterstützt uns mit:</h3>
               <span class="moneySpan">
                 <div>{{price.toFixed(2)}} € + </div>
-                <input class="moneyInput" type="number" :placeholder='0.50' :min='0' :step='0.5' v-model="money">
-                <div>€ = <b>{{parseFloat(money) ? (price + parseFloat(money)).toFixed(2) : price.toFixed(2)}} €</b></div>
+                <input class="moneyInput" type="number" :min='0' :step='0.5' v-model.number="money">
+                <div>€ = <b>{{money ? (price + money).toFixed(2) : price.toFixed(2)}} €</b></div>
               </span>
-              <h3 class="moneyAsking" v-if='showPaypalButton()'>Jetzt {{price+parseFloat(money)}}€ bezahlen:</h3>
+              <h3 class="moneyAsking" v-if='showPaypalButton()'>Jetzt {{(price+money).toFixed(2)}}€ bezahlen:</h3>
             </div>
             <Paypal v-if='showPaypalButton()' :recipeID='recipe.id'
-              :sendTo='{name: name, street: street, plz: plz, city:city, country: country}'
-              :amount='price+parseFloat(money)' />
+              :sendTo='{name: name, street: street, plz: plz, city:city, country: country}' :amount='price+money' />
           </div>
         </div>
       </div>
@@ -197,9 +196,10 @@
 </script>
 
 <style scoped>
-h3 {
-  padding-bottom: 1em;
-}
+  h3 {
+    padding-bottom: 1em;
+  }
+
   @media (max-width: 1100px) {
     .address input {
       width: 100%
@@ -268,9 +268,10 @@ h3 {
     margin-top: 1em
   }
 
-.inline {
-      display: inline;
-}
+  .inline {
+    display: inline;
+  }
+
   .moneySpan {
 
     width: 48%;
