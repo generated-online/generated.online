@@ -1,5 +1,5 @@
 <template>
-    <div class="background">
+    <div class="background" style="background: var(--bg-color)">
         <span class="emojie-batch">
             <div class="emojie" v-for="(e, idx) in matchingEmos" :key="idx"
                 :style='emojiCss + " " + ((Math.floor(idx/emojieAmount) % 2 === 0) ? "padding-left: "+emojiPadding+"; text-align: right" : "")'>
@@ -274,7 +274,6 @@
 <style scoped>
     .background {
         pointer-events: none;
-
         position: absolute;
         top: 0em;
         right: 0;
@@ -287,6 +286,7 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
+        z-index: -1;
     }
 
     .emojie-batch {
@@ -296,5 +296,6 @@
     .emojie {
         opacity: 0.3;
         float: left;
+        /* z-index: 100; */
     }
 </style>

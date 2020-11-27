@@ -57,13 +57,9 @@
 
 <style lang="scss">
     $softPink: var(--bg-color);
-    $yellow: #F9A734;
-    $DarkYellow: #FB8B24;
-    $green: #36964C;
-    $DarkGreen: #286E38;
 
     #inspire {
-        background-color: $softPink;
+        background-color: transparent;
     }
 
 
@@ -77,7 +73,8 @@
     }
 
     .text-span {
-        // background: $softPink
-          text-shadow: 0px 0px 7px $softPink;
+        // background: $softPink;
+        background: rgba(0, 0, 0, 0.05);
+        text-shadow: 0px 0px 20px $softPink;
     }
 </style>

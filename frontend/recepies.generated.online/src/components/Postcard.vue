@@ -1,11 +1,11 @@
 <template>
     <div class="postcard-container">
-        <div class="postcard-body" :style="'background:'+ color ">
+        <div class="postcard-body">
             <EmojieBackground :recipe="recipe" />
             <p class="ad text-span">gesendet von recipes.generated.online</p>
             <div class="postcard-inner">
                 <span>
-                    <h1 class="text-span">{{recipe.title}}</h1>
+                    <h1>{{recipe.title}}</h1>
                 </span>
             </div>
         </div>
@@ -47,11 +47,12 @@
 </script>
 
 <style scoped>
-p {
-    margin: 0 !important;
-    padding: 0 !important
-}
-    @media (max-width: 1100px) {
+    p {
+        margin: 0 !important;
+        padding: 0 !important
+    }
+
+    @media (max-width: 800px) {
         .postcard-body {
             float: left !important;
         }

@@ -1,8 +1,10 @@
 <template>
   <div class="recipe-container">
+    <EmojieBackground v-if='recipes.length != 0' :recipe="recipes[0]" :emojieSize='4' rowHeight="1.5em"
+      emojiPadding="0.8em" :emojieAmount='8' />
+
     <div v-for="recipe in recipes" :key="recipe.id" class="recipe">
       <div style="min-height: 100vh">
-        <EmojieBackground :recipe="recipe" :emojieSize='4' rowHeight="1.5em" emojiPadding="0.8em" :emojieAmount='8' />
         <div class="title-container">
           <h1 class="recipe-title text-span dynamic-font-size">
             {{ recipe.title }}
@@ -25,55 +27,54 @@
           </span>
         </div>
 
-      </div>
-
-      <!--  Postcard -->
-      <div>
-        <h1 class="recipe-title text-span dynamic-font-size">Schicke das Rezept per Postkarte!</h1>
-        <div class="postcard-paypal">
-          <div class="postcard postcard-paypal-item" :style="resizedHeight">
-            <Postcard :recipe='recipe' :color='titleColor' :style="resizeTransform" :name='name' :street='street'
-              :zip='zipCode()' :country='country' />
-          </div>
-          <div class="paypal-container postcard-paypal-item">
-            <h1>Sichere dir eine einzigartige Rezept-Karte jetzt ab {{price.toFixed(2)}} €!</h1>
-            <br>
-            <h3>Die Karte geht an:</h3>
-            <div class="address">
-              <input type="text" placeholder="❌ Name" v-model="name">
-              <input type="text" placeholder="❌ Straße" v-model="street">
-              <br>
-              <input type="number" placeholder="❌ Postleitzahl" v-model="plz">
-              <input type="text" placeholder="❌ Ort" v-model="city">
-              <div class="countrySelect">
-                <label for="countries">Land: </label>
-                <select name="countries" id="countries" v-model="country">
-                  <option value="DE">Deutschland</option>
-                  <option value="AT">Österreich</option>
-                  <option value="CH">Schweiz</option>
-                </select>
-              </div>
-              <br>
-              <div class="addressError" v-if='!showPaypalButton()'>
-                ❌<b>Bitte alle Felder
-                  ausfüllen!</b>
-              </div>
-              <h3 class="moneyAsking">Du unterstützt uns mit:</h3>
-              <div class="moneySpan">
-                <div>{{price.toFixed(2)}} € + </div>
-                <div class="ml-1" style="width: min-content">
-                  <input class="moneyInput" type="number" :min='0' :step='0.5' v-model.number="money">
-                </div>
-                <div>€ <b> = {{money ? (price + money).toFixed(2) : price.toFixed(2)}} €</b></div>
-              </div>
-              <h3 class="moneyAsking" v-if='showPaypalButton()'>Jetzt {{(price+money).toFixed(2)}}€ bezahlen:</h3>
+        <!--  Postcard -->
+        <div>
+          <h1 class="text-span dynamic-font-size">Schicke das Rezept per Postkarte!</h1>
+          <div>
+            <div class="postcard postcard-paypal-item" :style="resizedHeight">
+              <Postcard :recipe='recipe' :color='titleColor' :style="resizeTransform" :name='name' :street='street'
+                :zip='zipCode()' :country='country' />
             </div>
-            <Paypal v-if='showPaypalButton()' :recipeID='recipe.id'
-              :sendTo='{name: name, street: street, plz: plz, city:city, country: country}' :amount='price+money' />
+            <div class="paypal-container postcard-paypal-item text-span ">
+              <h1>Sichere dir eine einzigartige Rezept-Karte jetzt ab {{price.toFixed(2)}} €!</h1>
+              <br>
+              <h3>Die Karte geht an:</h3>
+              <div class="address">
+                <input type="text" placeholder="❌ Name" v-model="name">
+                <input type="text" placeholder="❌ Straße" v-model="street">
+                <br>
+                <input type="number" placeholder="❌ Postleitzahl" v-model="plz">
+                <input type="text" placeholder="❌ Ort" v-model="city">
+                <div class="countrySelect">
+                  <label for="countries">Land: </label>
+                  <select name="countries" id="countries" v-model="country">
+                    <option value="DE">Deutschland</option>
+                    <option value="AT">Österreich</option>
+                    <option value="CH">Schweiz</option>
+                  </select>
+                </div>
+                <br>
+                <div class="addressError" v-if='!showPaypalButton()'>
+                  <div> ❌<b>Bitte alle Felder
+                      ausfüllen!</b></div>
+
+                </div>
+                <h3 class="moneyAsking">Du unterstützt uns mit:</h3>
+                <div class="moneySpan">
+                  <div>{{price.toFixed(2)}} € + </div>
+                  <div class="ml-1" style="width: min-content">
+                    <input class="moneyInput" type="number" :min='0' :step='0.5' v-model.number="money">
+                  </div>
+                  <div>€ <b> = {{money ? (price + money).toFixed(2) : price.toFixed(2)}} €</b></div>
+                </div>
+                <h3 class="moneyAsking" v-if='showPaypalButton()'>Jetzt {{(price+money).toFixed(2)}}€ bezahlen:</h3>
+              </div>
+              <Paypal v-if='showPaypalButton()' :recipeID='recipe.id'
+                :sendTo='{name: name, street: street, plz: plz, city:city, country: country}' :amount='price+money' />
+            </div>
           </div>
         </div>
       </div>
-
 
     </div>
   </div>
@@ -179,18 +180,26 @@
     },
     computed: {
       resizeTransform() {
-        const scale = 0.25 * (window.innerWidth - 16 * 4) / 1440
-        const responsiveScale = window.innerWidth > 1100 ? scale : scale * 1.7
+        const width_percentage_of_parent = 0.33;
+        const scale = width_percentage_of_parent * (window.innerWidth - 16 * 4) / 1440
+        // on mobile we need to make it bigger
+        var responsiveScale = window.innerWidth > 800 ? scale : scale * 1.375
+
+        // somehow there is again a switch happening at 500 px
+        if (window.innerWidth < 507) {
+          responsiveScale *= 2
+        }
         return {
           "transform": "scale(" + responsiveScale + ")",
           "transform-origin": "top left"
         }
       },
       resizedHeight() {
-        const scale = (1040 * 2 * ((window.innerWidth - 16 * 4) / 1440) + 100) / 3
-        const responsiveScaleNextToEachOther = window.innerWidth > 1100 ? scale : scale / 1.4
+        // this cuts of the hight that is produced by using the transform function to make the postcard smaller
+        const scale = (1040 * 2 * ((window.innerWidth - 16 * 4) / 1440) + 200) / 3
+        const responsiveScaleNextToEachOther = window.innerWidth > 800 ? scale : scale / 1.4
         const responsiveScale = window.innerWidth > 500 ? responsiveScaleNextToEachOther :
-          responsiveScaleNextToEachOther * 2;
+          responsiveScaleNextToEachOther * 4;
         return {
           "height": responsiveScale + "px",
           "overflow": "hidden"
@@ -205,32 +214,23 @@
     padding-bottom: 1em;
   }
 
-  @media (max-width: 1100px) {
-    .address input {
-      width: 100%
-    }
-
-    .postcard-body {
-      float: none !important;
-    }
-
-    .postcard {
-      width: 100% !important
-    }
-
-    .paypal-container {
-      width: 100% !important
-    }
-  }
-
   .postcard-paypal-item {
-    float: left
+    float: left;
+    /* width: 65% */
   }
 
   .postcard {
-    margin-left: 5%;
-    overflow: hidden;
-    width: 35%;
+    /* margin-left: 5%; */
+    /* overflow: hidden; */
+    /* float: left; */
+    width: 33%;
+    margin-right: 2%
+  }
+
+  .paypal-container {
+    width: 63%;
+    margin-left: 2%;
+    /* padding-top: 2.5em; */
   }
 
   .countrySelect,
@@ -248,13 +248,10 @@
   .addressError {
     float: left;
     width: 100%;
-    padding-left: 1em;
-    padding-top: 1em;
-    padding-bottom: 0.3em;
-    margin: 0.25em;
+    padding: 0.5em;
     text-align: center;
     color: red;
-    background: black
+    background: black;
   }
 
   .countrySelect select {
@@ -264,8 +261,8 @@
   }
 
   .address {
-    padding-bottom: 6em;
-    overflow: hidden;
+    /* padding-bottom: 6em; */
+    overflow: auto;
   }
 
   .moneyAsking {
@@ -295,11 +292,6 @@
     text-align: center;
   }
 
-  .paypal-container {
-    width: 60%;
-    padding-top: 2.5em;
-  }
-
   /* hide arrows in number input field */
   input::-webkit-outer-spin-button,
   input::-webkit-inner-spin-button {
@@ -315,6 +307,7 @@
     text-align: left;
     height: 100%;
     padding: 2em 2em 2em 2em;
+    margin-bottom: 2em;
   }
 
   .title-container {
@@ -407,6 +400,25 @@
       padding-left: 0 !important;
       margin: 0 0 2em 0 !important;
       width: 100% !important;
+    }
+
+    .countrySelect,
+    .address input {
+      width: 100% !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    .postcard-body {
+      float: none !important;
+    }
+
+    .postcard {
+      width: 100% !important
+    }
+
+    .paypal-container {
+      width: 100% !important
     }
   }
 </style>
