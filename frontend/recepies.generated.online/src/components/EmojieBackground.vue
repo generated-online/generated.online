@@ -36,7 +36,7 @@
         data() {
             return {
                 width: window.innerWidth,
-                allEmos: {                
+                allEmos: {
                     "Ei": "🥚",
                     "Tee": "☕",
                     "Kuh": "🐄",
@@ -160,7 +160,8 @@
                     "Pfannkuchen": "🥞",
                     "Schnittlauch": "🎋",
                     "Wassermelone": "🍉",
-                    "Süßkartoffel": "🍠",},
+                    "Süßkartoffel": "🍠",
+                },
                 matchingEmos: []
             }
         },
@@ -197,12 +198,10 @@
                     } else {
                         if (word.length > 3) {
                             let matchingEmojie = ''
-                            console.log(word);
                             for (const key in this.allEmos) {
                                 if (lowercasedWord.includes(key.toLowerCase()) || key.toLowerCase().includes(
                                         lowercasedWord)) {
                                     matchingEmojie = this.allEmos[key]
-                                    console.log('added ', matchingEmojie);
                                 }
                             }
                             // Take last match
@@ -227,27 +226,6 @@
             this.reverseLine = [...line].reverse()
             this.line = line
             this.matchingEmos = []
-
-            // if (this.emojieAmount % this.matchingEmos.length == 0){
-            //     var line = new Array(this.emojieAmount/this.matchingEmos.length).fill(this.matchingEmos).flat();
-            //     var line2 = new Array(this.emojieAmount/this.matchingEmos.length).fill(this.matchingEmos).flat();
-            //     console.log(this.emojieAmount, this.matchingEmos.length)
-            //     this.matchingEmos = line.concat(line2.reverse())
-            // }
-            // for (i in 10) {
-            // this.matchingEmos = this.matchingEmos.concat(this.matchingEmos)
-            // this.matchingEmos = this.matchingEmos.concat(this.matchingEmos)
-            // this.matchingEmos = this.matchingEmos.concat(this.matchingEmos)
-            // this.matchingEmos = this.matchingEmos.concat(this.matchingEmos)
-            // this.matchingEmos = this.matchingEmos.concat(this.matchingEmos)
-            // this.matchingEmos = this.matchingEmos.concat(this.matchingEmos)
-            // this.matchingEmos = this.matchingEmos.concat(this.matchingEmos)
-            // this.matchingEmos = this.matchingEmos.concat(this.matchingEmos)
-            // this.matchingEmos = this.matchingEmos.concat(this.matchingEmos)
-            // this.matchingEmos = this.matchingEmos.concat(this.matchingEmos)
-            // this.matchingEmos = this.matchingEmos.concat(this.matchingEmos)
-            // this.matchingEmos = this.matchingEmos.concat(this.matchingEmos)
-            // }
         },
         mounted() {
             var height = this.$parent.$el.offsetHeight;
