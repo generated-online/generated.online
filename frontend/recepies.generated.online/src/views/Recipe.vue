@@ -290,13 +290,9 @@
 
   .moneyInput {
     min-width: 4em;
-    padding-left: 1em;
-    padding-right: 1em;
-    padding-top: 0em !important;
-    padding-bottom: 0em !important;
-    margin: 0em !important;
+    padding: 0 !important;
+    margin: 0 !important;
     text-align: center;
-
   }
 
   .paypal-container {
