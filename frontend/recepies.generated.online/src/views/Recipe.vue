@@ -31,8 +31,8 @@
         <div>
           <h1 class="text-span dynamic-font-size">Schicke das Rezept per Postkarte!</h1>
           <div>
-            <div class="postcard postcard-paypal-item" :style="resizedHeight">
-              <Postcard :recipe='recipe' :color='titleColor' :style="resizeTransform" :name='name' :street='street'
+            <div class="postcard postcard-paypal-item" :style="resizedHeightValue">
+              <Postcard :recipe='recipe' :color='titleColor' :style="resizeTransformValue" :name='name' :street='street'
                 :zip='zipCode()' :country='country' />
             </div>
             <div class="paypal-container postcard-paypal-item text-span ">
@@ -109,7 +109,8 @@
         titleColor: "",
         price: 3.50,
         money: 0.5,
-        scale: window.innerWidth / 1480 * 0.7
+        resizeTransformValue: this.resizeTransform(),
+        resizedHeightValue: this.resizedHeight(),
       };
     },
     watch: {
@@ -153,6 +154,10 @@
             this.error = err;
           });
       }
+      window.addEventListener('resize', () => {
+        this.resizeTransformValue = this.resizeTransform();
+        this.resizedHeightValue = this.resizedHeight();
+      })
     },
     methods: {
       loadData(doc) {
@@ -176,9 +181,7 @@
       },
       zipCode() {
         return !(this.plz.length + this.city.length === 0) ? this.plz + " " + this.city : ""
-      }
-    },
-    computed: {
+      },
       resizeTransform() {
         const width_percentage_of_parent = 0.33;
         const scale = width_percentage_of_parent * (window.innerWidth - 16 * 4) / 1440
@@ -189,6 +192,7 @@
         if (window.innerWidth < 507) {
           responsiveScale *= 2
         }
+        console.log("new scale: " + responsiveScale);
         return {
           "transform": "scale(" + responsiveScale + ")",
           "transform-origin": "top left"
@@ -199,7 +203,7 @@
         const scale = (1040 * 2 * ((window.innerWidth - 16 * 4) / 1440) + 200) / 3
         const responsiveScaleNextToEachOther = window.innerWidth > 800 ? scale : scale / 1.4
         const responsiveScale = window.innerWidth > 500 ? responsiveScaleNextToEachOther :
-          responsiveScaleNextToEachOther * 4;
+          responsiveScaleNextToEachOther * 3.1;
         return {
           "height": responsiveScale + "px",
           "overflow": "hidden"
@@ -252,6 +256,7 @@
     text-align: center;
     color: red;
     background: black;
+    margin-top: 1em;
   }
 
   .countrySelect select {
