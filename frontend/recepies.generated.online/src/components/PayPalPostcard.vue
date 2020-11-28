@@ -121,7 +121,10 @@
                     width_percentage_of_parent = 0.33
                 }
 
-                var scale = width_percentage_of_parent * (window.innerWidth - 16 * 4) / (1440 + postcard_margin / 2)
+                var padding_in_width_direction = 4 * em;
+
+                var scale = width_percentage_of_parent * (window.innerWidth - padding_in_width_direction) / (1440 +
+                    postcard_margin / 2)
 
                 return {
                     "transform": "scale(" + scale + ")",
@@ -260,10 +263,6 @@
     @media (max-width: 800px) {
         .dynamic-font-size {
             font-size: calc(70vw / 8);
-        }
-
-        .postcard-body {
-            float: none !important;
         }
 
         .postcard {

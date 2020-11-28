@@ -1,6 +1,6 @@
 <template>
     <div class="postcard-container">
-        <div class="postcard-body">
+        <div class="postcard-body postcard-cover">
             <EmojieBackground :recipe="recipe" />
             <p class="ad text-span">gesendet von recipes.generated.online</p>
             <div class="postcard-inner">
@@ -52,23 +52,6 @@
         padding: 0 !important
     }
 
-    @media (max-width: 800px) {
-        .postcard-body {
-            float: left !important;
-        }
-
-        .postcard-container {
-            height: 200% !important;
-            width: 600vw !important;
-        }
-
-    }
-
-    .postcard-container {
-        width: 100vw;
-        height: 400%;
-    }
-
     .instructions {
         padding-right: 30px;
     }
@@ -114,10 +97,8 @@
     }
 
     .postcard-body {
-        margin-right: 80px !important;
         float: left;
         position: relative;
-        margin-top: 50px !important;
         margin: auto;
         border: solid black 40px;
         width: 1440px;
@@ -150,5 +131,31 @@
 
     h2 {
         padding-bottom: 10px;
+    }
+
+    @media (max-width: 507px) {
+        .postcard-cover {
+            margin-bottom: 50px;
+        }
+
+        .postcard-container {
+            width: min-content !important;
+        }
+    }
+
+    @media (max-width: 800px) {
+        .postcard-body {
+            float: left !important;
+        }
+
+        .postcard-cover {
+            margin-right: 80px;
+        }
+
+        .postcard-container {
+            /* height: 200% !important; */
+            width: max-content;
+        }
+
     }
 </style>
