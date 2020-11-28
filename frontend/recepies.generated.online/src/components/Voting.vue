@@ -1,16 +1,19 @@
 <template>
     <span class="vote-container">
-        <span>{{recipe.votes}}</span>
-        <v-btn class="transparentButton" :disabled="!possibleToVote" :loading="buttonLoading" fab dark small
-            color="transparent" @click="upvote">
-            <span class="womanCook">👩‍🍳</span>
-        </v-btn>
+        <v-card class="pb-1 vcard" elevation="0" :style='"background: transparent;"'>
+            <span class="mx-4"> {{recipe.votes}} </span>
+            <v-btn class="transparentButton mx-4" :disabled="!possibleToVote" :loading="buttonLoading" fab dark small
+                color="transparent" @click="upvote">
+                <span class="womanCook">👩‍🍳</span>
+            </v-btn>
+        </v-card>
     </span>
-
 </template>
 
 <script>
     import firebase from "firebase";
+    import recipeToColor from "@/functions/recipe_to_color";
+
     export default {
         props: {
             "recipe": {
@@ -22,12 +25,13 @@
             return {
                 possibleToVote: !this.$cookies.isKey(this.recipe.id),
                 buttonLoading: false,
+                color: recipeToColor(this.recipe.id),
             };
 
         },
         methods: {
             upvote() {
-                if (!this.$cookies.isKey(this.recipe.id) || true) {
+                if (!this.$cookies.isKey(this.recipe.id)) {
 
                     // this makes sure the button is not pressed multiple times
                     this.buttonLoading = true
@@ -76,25 +80,31 @@
 
 <style scoped>
     .transparentButton {
-        vertical-align: baseline;
         margin-left: 20px;
         width: calc(70vw / 15*1.3);
         height: calc(70vw / 15*1.3);
-        vertical-align: center;
+        vertical-align: baseline;
         font-size: inherit;
     }
 
     .vote-container {
-        text-align: right;
-        width: fit-content;
+        text-align: center;
+        width: 400px;
         font-family: "Commissioner";
-        white-space: nowrap;
+    }
+
+    .vcard {
+        border: none;
     }
 
     @media (max-width: 800px) {
         .transparentButton {
             width: calc(70vw / 8*1.3);
             height: calc(70vw / 8*1.3);
+        }
+
+        .vcard {
+            width: 400px;
         }
     }
 </style>

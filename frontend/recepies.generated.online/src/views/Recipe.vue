@@ -1,42 +1,34 @@
 <template>
-  <div>
-    <div class="recipe-container">
-      <div v-for="recipe in recipes" :key="recipe.id" class="recipe">
-        <div style="z-index: 1">
-          <div class="title-container" :style="'background:' + titleColor">
-            <span class="recipe-title text-span dynamic-font-size">
-              {{ recipe.title }}
-            </span>
-            <Voting class="recipe-vote dynamic-font-size" :recipe='recipe' />
-          </div>
+  <div class="recipe-container">
+    <div v-if='recipe'>
+      <EmojieBackground :recipe="recipe" :emojieSize='4' rowHeight="1.5em" emojiPadding="0.8em" :emojieAmount='8' />
+      <div style="min-height: 100vh">
+        <div class="title-container">
+          <h1 class="recipe-title text-span dynamic-font-size">
+            {{ recipe.title }}
+          </h1>
+          <Voting class="recipe-vote dynamic-font-size" :recipe='recipe' />
+        </div>
 
-          <div class="recipe-body">
-            <!-- ZUTATEN -->
-            <div class="ingredients">
-              <div class="ingredient" :key="ingredient+String(Math.floor(Math.random() * 100))" justify="center"
-                v-for="ingredient in recipe.ingredients">
-                <span class="text-span">{{ ingredient }}</span>
-              </div>
+        <div class="recipe-body">
+          <!-- ZUTATEN -->
+          <div class="ingredients">
+            <div class="ingredient" :key="ingredient+String(Math.floor(Math.random() * 100))" justify="center"
+              v-for="ingredient in recipe.ingredients">
+              <span class="text-span">{{ ingredient }}</span>
             </div>
-
-            <!--  Instructions -->
-            <span class="instruction text-span">
-              {{ recipe.instructions }}
-            </span>
           </div>
 
+          <!--  Instructions -->
+          <span class="instruction text-span">
+            {{ recipe.instructions }}
+          </span>
         </div>
 
         <!--  Postcard -->
-
-        <div class="postcard" :style="resizedHeight">
-          <Postcard :recipe='recipe' :color='titleColor' :style="resizeTransform" />
-        </div>
-        <Paypal :recipe='recipe' :color='titleColor' />
-
+        <PayPalPostcard :recipe='recipe' />
       </div>
     </div>
-
   </div>
 </template>
 
@@ -44,25 +36,21 @@
   import firebase from "firebase";
   import recipeToColor from "@/functions/recipe_to_color";
   import Voting from "@/components/Voting"
-  import Postcard from "@/components/Postcard"
-  import Paypal from "@/components/Paypal"
   import EmojieBackground from "@/components/EmojieBackground"
+  import PayPalPostcard from "@/components/PayPalPostcard"
 
   export default {
     name: "recipe",
     components: {
       Voting,
-      Postcard,
       EmojieBackground,
-      Paypal
+      PayPalPostcard
     },
     data() {
       return {
         id: "",
-        recipes: [],
+        recipe: undefined,
         error: "",
-        titleColor: "",
-        scale: window.innerWidth / 1480 * 0.7
       };
     },
     created() {
@@ -104,36 +92,20 @@
     },
     methods: {
       loadData(doc) {
-        this.recipes.push({
+        this.recipe = {
           id: doc.id,
           ingredients: doc.data().ingredients,
           title: doc.data().title,
           instructions: doc.data().instructions,
           votes: doc.data().votes || 0,
-        });
+        };
 
-        this.$emit('shareText', 'Schau dir dieses coole KI generierte Rezept an: ' + this.recipes[0]['title']);
-        this.$emit('recipeId', this.recipes[0].id);
-        this.titleColor = recipeToColor(doc.id);
+        this.$emit('shareText', 'Schau dir dieses coole KI generierte Rezept an: ' + this.recipe['title']);
+        this.$emit('recipeId', this.recipe.id);
         if (this.id === undefined) {
           this.$router.replace("/recipe/" + doc.id);
         }
       },
-    },
-    computed: {
-      resizeTransform() {
-        return {
-          "transform": "scale(" + (window.innerWidth - 16 * 4) / 1440 + ")",
-          "transform-origin": "top left"
-        }
-      },
-      resizedHeight() {
-        return {
-          "height": 1040 * 2 * ((window.innerWidth - 16 * 4) / 1440) + 100 + "px",
-          "overflow": "hidden"
-        }
-      }
-
     }
   };
 </script>
@@ -142,7 +114,8 @@
   .recipe-container {
     text-align: left;
     height: 100%;
-    padding: 2em 0em 2em 0em;
+    padding: 2em 2em 2em 2em;
+    margin-bottom: 2em;
   }
 
   .title-container {
@@ -158,14 +131,14 @@
 
   .recipe-title {
     word-wrap: break-word;
-    width: 80% !important;
+    width: 80%;
     display: inline-block;
   }
 
   .recipe-vote {
     position: absolute;
     right: 0;
-    width: 20%;
+    width: 300px;
   }
 
   .recipe-body {
@@ -197,18 +170,9 @@
     display: block
   }
 
-  .postcard {
-    overflow: hidden;
-  }
-
   @media (max-width: 800px) {
     .dynamic-font-size {
       font-size: calc(70vw / 8);
-    }
-
-    .recipe-container {
-      padding: 2em 0em 2em 0em !important;
-      /* margin: 0 0 2em 0 !important; // this breaks things! */
     }
 
     .ingredients {
@@ -223,6 +187,10 @@
 
     .recipe-vote {
       position: relative;
+      display: inline-table;
+      width: 100%;
+      text-align: center;
+      align-items: center;
     }
 
     .title-container {

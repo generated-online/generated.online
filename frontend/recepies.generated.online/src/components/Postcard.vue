@@ -1,10 +1,12 @@
 <template>
     <div class="postcard-container">
-        <div class="postcard-body" :style="'background:'+ color ">
-            <EmojieBackground :recipe="recipe" :rowHeight="'260px'" />
-            <p class="ad">recipes.generated.online</p>
+        <div class="postcard-body postcard-cover">
+            <EmojieBackground :recipe="recipe" />
+            <p class="ad text-span">gesendet von recipes.generated.online</p>
             <div class="postcard-inner">
-                <h1>{{recipe.title}}</h1>
+                <span>
+                    <h1>{{recipe.title}}</h1>
+                </span>
             </div>
         </div>
 
@@ -13,16 +15,18 @@
                 <div class="half-postcard instructions">
                     <h2>{{recipe.title}}</h2>
                     <p v-for="ingredient in recipe.ingredients" v-bind:key="ingredient">{{ingredient}}</p>
-                    <p>{{recipe.instructions}}</p>
+                    <br>
+                    <p style="text-align: justify">{{recipe.instructions}}</p>
+                    <br>
                     <p>Gesendet von recipes.generated.online</p>
                 </div>
                 <div class="half-postcard">
                     <div class="stamp"></div>
                     <div class="address">
-                        <input type="text" placeholder="Name">
-                        <input type="text" placeholder="Straße">
-                        <input type="text" placeholder="Postleitzahl und Ort">
-                        <input type="text" placeholder="Land">
+                        <input type="text" placeholder="Name" v-model="name" disabled>
+                        <input type="text" placeholder="Straße" v-model="street" disabled>
+                        <input type="text" placeholder="Postleitzahl und Ort" v-model="zip" disabled>
+                        <input type="text" placeholder="Land" v-model="country" disabled>
                     </div>
                 </div>
             </div>
@@ -35,7 +39,28 @@
     import EmojieBackground from "@/components/EmojieBackground"
 
     export default {
-        props: ['recipe', 'color'],
+        props: {
+            "recipe": {
+                type: Object,
+                default: {}
+            },
+            "name": {
+                type: String,
+                default: ""
+            },
+            "street": {
+                type: String,
+                default: ""
+            },
+            "zip": {
+                type: String,
+                default: ""
+            },
+            "country": {
+                type: String,
+                default: "DE"
+            }
+        },
         components: {
             EmojieBackground,
         }
@@ -43,14 +68,13 @@
 </script>
 
 <style scoped>
-    .postcard-container {
-        width: 90%;
-        height: 90%;
+    p {
+        margin: 0 !important;
+        padding: 0 !important
     }
 
     .instructions {
-        padding-top: 70px;
-        padding-right: 10px;
+        padding-right: 30px;
     }
 
     .stamp {
@@ -62,7 +86,8 @@
         right: 0;
     }
 
-    input {
+    input,
+    .input {
         padding-top: 10px;
         margin-top: 10px;
         width: 50%;
@@ -82,16 +107,23 @@
         left: 0;
     }
 
+    .address input {
+        padding-left: 1em
+    }
+
     .half-postcard {
         position: relative;
         width: 50%;
         float: left;
     }
 
+    .postcard-cover {
+        margin-bottom: 50px;
+    }
+
     .postcard-body {
+        float: left;
         position: relative;
-        margin-top: 50px !important;
-        margin: auto;
         border: solid black 40px;
         width: 1440px;
         height: 1040px;
@@ -123,5 +155,31 @@
 
     h2 {
         padding-bottom: 10px;
+    }
+
+    @media (max-width: 507px) {
+        .postcard-cover {
+            margin-bottom: 50px !important;
+        }
+
+        .postcard-container {
+            width: min-content !important;
+        }
+    }
+
+    @media (max-width: 800px) {
+        .postcard-body {
+            float: left !important;
+        }
+
+        .postcard-cover {
+            margin-right: 80px;
+            margin-bottom: 0;
+        }
+
+        .postcard-container {
+            width: max-content;
+        }
+
     }
 </style>
