@@ -1,9 +1,7 @@
 <template>
   <div class="recipe-container">
-    <EmojieBackground v-if='recipes.length != 0' :recipe="recipes[0]" :emojieSize='4' rowHeight="1.5em"
-      emojiPadding="0.8em" :emojieAmount='8' />
-
-    <div v-for="recipe in recipes" :key="recipe.id" class="recipe">
+    <div v-if='recipe'>
+      <EmojieBackground :recipe="recipe" :emojieSize='4' rowHeight="1.5em" emojiPadding="0.8em" :emojieAmount='8' />
       <div style="min-height: 100vh">
         <div class="title-container">
           <h1 class="recipe-title text-span dynamic-font-size">
@@ -51,7 +49,7 @@
     data() {
       return {
         id: "",
-        recipes: [],
+        recipe: undefined,
         error: "",
       };
     },
@@ -94,16 +92,16 @@
     },
     methods: {
       loadData(doc) {
-        this.recipes.push({
+        this.recipe = {
           id: doc.id,
           ingredients: doc.data().ingredients,
           title: doc.data().title,
           instructions: doc.data().instructions,
           votes: doc.data().votes || 0,
-        });
+        };
 
-        this.$emit('shareText', 'Schau dir dieses coole KI generierte Rezept an: ' + this.recipes[0]['title']);
-        this.$emit('recipeId', this.recipes[0].id);
+        this.$emit('shareText', 'Schau dir dieses coole KI generierte Rezept an: ' + this.recipe['title']);
+        this.$emit('recipeId', this.recipe.id);
         if (this.id === undefined) {
           this.$router.replace("/recipe/" + doc.id);
         }
