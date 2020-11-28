@@ -96,17 +96,35 @@
                 return !(this.plz.length + this.city.length === 0) ? this.plz + " " + this.city : ""
             },
             resizeTransform() {
-                const width_percentage_of_parent = 0.33;
-                const scale = width_percentage_of_parent * (window.innerWidth - 16 * 4) / 1440
-                // on mobile we need to make it bigger
-                var responsiveScale = window.innerWidth > 800 ? scale : scale * 1.375
 
-                // somehow there is again a switch happening at 500 px
-                if (window.innerWidth < 507) {
-                    responsiveScale *= 2
+                // one postcards size is:
+                // [0-506]      100% - 4em
+                // [507 - 800]  (100% - 4em) / 2 (be sure of the space between them)
+                // [801 -> ]    (100% - 4em) / 3
+
+                var em = parseFloat(getComputedStyle(this.$parent.$el).fontSize);
+
+                // this is the percentage of the space the postcards should take
+                var width_percentage_of_parent = 0;
+
+                // this is the space between both postcards (80 when next to each other)
+                var postcard_margin = 0;
+
+                var curr_width = window.innerWidth;
+
+                if (curr_width < 507) {
+                    width_percentage_of_parent = 1.
+                } else if (curr_width < 801) {
+                    width_percentage_of_parent = 0.5
+                    postcard_margin = 80;
+                } else {
+                    width_percentage_of_parent = 0.33
                 }
+
+                var scale = width_percentage_of_parent * (window.innerWidth - 16 * 4) / (1440 + postcard_margin / 2)
+
                 return {
-                    "transform": "scale(" + responsiveScale + ")",
+                    "transform": "scale(" + scale + ")",
                     "transform-origin": "top left"
                 }
             },
@@ -114,7 +132,7 @@
                 // this cuts of the hight that is produced by using the transform function to make the postcard smaller
                 const scale = (1040 * 2 * ((window.innerWidth - 16 * 4) / 1440) + 200) / 3
                 const responsiveScaleNextToEachOther = window.innerWidth > 800 ? scale : scale / 1.4
-                const responsiveScale = window.innerWidth > 500 ? responsiveScaleNextToEachOther :
+                const responsiveScale = window.innerWidth > 506 ? responsiveScaleNextToEachOther :
                     responsiveScaleNextToEachOther * 3.1;
                 return {
                     "height": responsiveScale + "px",
@@ -229,10 +247,7 @@
         display: inline-block;
     }
 
-    @media (max-width: 800px) {
-        .dynamic-font-size {
-            font-size: calc(70vw / 8);
-        }
+    @media (max-width: 507px) {
 
         .countrySelect,
         .address input {
@@ -240,17 +255,26 @@
             margin-left: 0 !important;
             margin-right: 0 !important;
         }
+    }
+
+    @media (max-width: 800px) {
+        .dynamic-font-size {
+            font-size: calc(70vw / 8);
+        }
 
         .postcard-body {
             float: none !important;
         }
 
         .postcard {
-            width: 100% !important
+            width: 100% !important;
+            margin: 0 !important;
         }
 
         .paypal-container {
-            width: 100% !important
+            width: 100% !important;
+            margin: 0 !important
         }
+
     }
 </style>
