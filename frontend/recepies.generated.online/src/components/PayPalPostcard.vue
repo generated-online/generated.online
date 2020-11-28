@@ -1,6 +1,7 @@
 <template>
     <div>
-        <h1 class="text-span dynamic-font-size" style="margin-bottom:0.5em">Schicke das Rezept per Postkarte!</h1>
+        <h1 class="text-span dynamic-font-size" style="margin-bottom:0.5em">
+            Verschicke das Rezept als Postkarte!</h1>
         <div>
             <div class="postcard postcard-paypal-item" :style="resizedHeightValue">
                 <Postcard :recipe='recipe' :style="resizeTransformValue" :name='name' :street='street' :zip='zipCode()'

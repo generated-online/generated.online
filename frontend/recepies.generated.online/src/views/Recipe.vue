@@ -12,11 +12,12 @@
 
         <div class="recipe-body">
           <!-- ZUTATEN -->
-          <div class="ingredients">
+          <div class="ingredients text-span">
             <div class="ingredient" :key="ingredient+String(Math.floor(Math.random() * 100))" justify="center"
               v-for="ingredient in recipe.ingredients">
-              <span class="text-span">{{ ingredient }}</span>
+              <span>{{ ingredient }}</span>
             </div>
+            <div class="divider"></div>
           </div>
 
           <!--  Instructions -->
@@ -155,8 +156,9 @@
   .ingredients {
     float: left;
     width: 25%;
-    margin-left: 2%;
-    margin-right: 2%
+    padding-left: 2%;
+    padding-right: 2%;
+    padding-top: 2%
   }
 
   .instruction {
@@ -173,12 +175,6 @@
   @media (max-width: 800px) {
     .dynamic-font-size {
       font-size: calc(70vw / 8);
-    }
-
-    .ingredients {
-      float: none;
-      width: 100% !important;
-      padding-bottom: 2em;
     }
 
     .recipe-title {
@@ -198,16 +194,57 @@
     }
 
     .ingredient {
-      padding-bottom: 0.5em !important;
-      width: 90vw !important;
-      padding-left: 0 !important;
+      padding-bottom: 0.5em;
+      width: 50%;
+      float: left;
+    }
+
+    .ingredients {
+      width: 100%;
+      margin-bottom: 2em;
     }
 
     .instruction {
-      float: none !important;
-      padding-left: 0 !important;
-      margin: 0 0 2em 0 !important;
-      width: 100% !important;
+      float: left;
+      padding: 2%;
+      margin: 0 0 2em 0;
+      width: 100%;
+    }
+
+    .divider {
+      position: absolute;
+      left: 48%;
+      top: 5%;
+      bottom: 60%;
+      border-left: 2px solid rgb(0, 0, 0);
+    }
+  }
+
+  @media (min-width: 500px) and (max-width: 600px) {
+    .ingredient {
+      font-size: 1em;
+      padding-bottom: 0.5em;
+      width: 50%;
+      float: left;
+    }
+
+    .divider {
+      bottom: 75%;
+    }
+  }
+
+  @media (max-width: 500px) {
+    .ingredient {
+      font-size: 1.4em;
+      padding-bottom: 0.5em;
+
+      width: 100%;
+      float: none;
+
+    }
+
+    .divider {
+      border-left: none;
     }
   }
 </style>
