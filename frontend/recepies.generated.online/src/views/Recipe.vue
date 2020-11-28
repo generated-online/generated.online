@@ -229,7 +229,7 @@
       float: left;
     }
 
-    .divider{
+    .divider {
       border-left: 1.5px solid black
     }
   }

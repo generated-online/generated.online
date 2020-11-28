@@ -47,7 +47,7 @@
                 <Paypal v-if='showPaypalButton()' :recipeID='recipe.id'
                     :sendTo='{name: name, street: street, plz: plz, city:city, country: country}'
                     :amount='price+money' />
-                <div v-if="showButtons" class="center-button">
+                <div v-if="showButtons" class="center-button" style="margin-top: 1em">
                     <v-btn @click="showMore=!showMore">Weniger</v-btn>
                 </div>
             </div>

@@ -2,23 +2,22 @@
     <div class="postcard-container">
         <div class="postcard-body postcard-cover">
             <EmojieBackground :recipe="recipe" />
-            <p class="ad text-span">gesendet von recipes.generated.online</p>
             <div class="postcard-inner">
                 <span>
                     <h1>{{recipe.title}}</h1>
                 </span>
+                <span class="ad adPositionFront">gesendet mit recipes.generated.online</span>
             </div>
         </div>
 
         <div class="postcard-body" style="background:white ">
             <div class="postcard-inner-back">
-                <div class="half-postcard instructions">
+                <div class="half-postcard">
                     <h2>{{recipe.title}}</h2>
                     <p v-for="ingredient in recipe.ingredients" v-bind:key="ingredient">{{ingredient}}</p>
                     <br>
                     <p style="text-align: justify">{{recipe.instructions}}</p>
                     <br>
-                    <p>Gesendet von recipes.generated.online</p>
                 </div>
                 <div class="half-postcard">
                     <div class="stamp"></div>
@@ -29,6 +28,7 @@
                         <input type="text" placeholder="Land" v-model="country" disabled>
                     </div>
                 </div>
+                <p class="ad adPositionBack">gesendet mit recipes.generated.online</p>
             </div>
         </div>
     </div>
@@ -73,30 +73,27 @@
         padding: 0 !important
     }
 
-    .instructions {
-        padding-right: 30px;
-    }
-
     .stamp {
         position: absolute;
         width: 145px;
         height: 190px;
         border: dashed black 2px;
         background: whitesmoke;
-        right: 0;
+        right: 4%;
     }
 
     input,
     .input {
         padding-top: 10px;
         margin-top: 10px;
-        width: 50%;
-        margin-right: 40%;
+        width: 70%;
+        margin-right: 20%;
         margin-left: 10%;
         background: whitesmoke;
         border: dashed black 2px;
         float: right;
         display: block;
+        font-size: 2em;
     }
 
     .address {
@@ -115,6 +112,8 @@
         position: relative;
         width: 50%;
         float: left;
+        height: 100%;
+        padding: 2%;
     }
 
     .postcard-cover {
@@ -130,18 +129,37 @@
     }
 
     .postcard-inner {
-        position: relative;
         padding: 140px;
+        height: 100%;
     }
 
     .postcard-inner-back {
-        padding: 30px;
+        float: left;
+        height: 100%;
     }
 
     .ad {
+        font-size: 1.5em;
+        padding: 0 0.5em 0 0.5em !important;
+        background-color: black;
+        color: var(--bg-color);
+        display: inline;
+
+        -webkit-box-decoration-break: clone;
+        box-decoration-break: clone;
+    }
+
+    .adPositionFront {
         position: absolute;
-        left: 140px;
-        bottom: 0;
+        bottom: 45%;
+        margin-left: 0.35em;
+    }
+
+    .adPositionBack {
+        position: absolute;
+        bottom: 0%;
+        left: 5%;
+        margin-left: 0.35em;
     }
 
     h1 {
@@ -155,6 +173,7 @@
 
     h2 {
         padding-bottom: 10px;
+        font-size: 3em;
     }
 
     @media (max-width: 507px) {
