@@ -7,9 +7,9 @@
                     :country='country' />
             </div>
             <div class="center-button">
-                <v-btn v-if='!showMore' @click="showMore=!showMore">Erfahre mehr!</v-btn>
+                <v-btn v-if='!showMore && showButtons' @click="showMore=!showMore">Erfahre mehr!</v-btn>
             </div>
-            <div v-if='showMore' class="paypal-container postcard-paypal-item text-span ">
+            <div v-if='showMore || !showButtons' class="paypal-container postcard-paypal-item text-span ">
                 <h1>Sichere dir eine einzigartige Rezept-Karte jetzt ab {{price.toFixed(2)}} €!</h1>
                 <br>
                 <h3>Die Karte geht an:</h3>
@@ -46,7 +46,7 @@
                 <Paypal v-if='showPaypalButton()' :recipeID='recipe.id'
                     :sendTo='{name: name, street: street, plz: plz, city:city, country: country}'
                     :amount='price+money' />
-                <div class="center-button">
+                <div v-if="showButtons" class="center-button">
                     <v-btn @click="showMore=!showMore">Weniger</v-btn>
                 </div>
             </div>
@@ -81,13 +81,15 @@
                 money: 0.5,
                 resizeTransformValue: this.resizeTransform(),
                 resizedHeightValue: this.resizedHeight(),
-                showMore: false
+                showMore: false,
+                showButtons: window.innerWidth < 800
             };
         },
         created() {
             window.addEventListener('resize', () => {
                 this.resizeTransformValue = this.resizeTransform();
                 this.resizedHeightValue = this.resizedHeight();
+                this.showButtons = window.innerWidth < 800;
             })
         },
         watch: {
@@ -270,7 +272,7 @@
 
     .center-button {
         width: 100%;
-        float: left;
+        /* float: left; */
         text-align: center
     }
 
