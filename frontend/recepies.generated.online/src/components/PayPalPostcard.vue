@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1 class="text-span dynamic-font-size">Schicke das Rezept per Postkarte!</h1>
+        <h1 class="text-span dynamic-font-size" style="margin-bottom:0.5em">Schicke das Rezept per Postkarte!</h1>
         <div>
             <div class="postcard postcard-paypal-item" :style="resizedHeightValue">
                 <Postcard :recipe='recipe' :style="resizeTransformValue" :name='name' :street='street' :zip='zipCode()'
@@ -19,9 +19,9 @@
                     <div class="countrySelect">
                         <label for="countries">Land: </label>
                         <select name="countries" id="countries" v-model="country">
-                            <option value="DE">Deutschland</option>
-                            <option value="AT">Österreich</option>
-                            <option value="CH">Schweiz</option>
+                            <option scaling_factor="DE">Deutschland</option>
+                            <option scaling_factor="AT">Österreich</option>
+                            <option scaling_factor="CH">Schweiz</option>
                         </select>
                     </div>
                     <br>
@@ -95,8 +95,7 @@
             zipCode() {
                 return !(this.plz.length + this.city.length === 0) ? this.plz + " " + this.city : ""
             },
-            resizeTransform() {
-
+            calculatePostcardScalingFactor() {
                 // one postcards size is:
                 // [0-506]      100% - 4em
                 // [507 - 800]  (100% - 4em) / 2 (be sure of the space between them)
@@ -123,20 +122,38 @@
 
                 var padding_in_width_direction = 4 * em;
 
-                var scale = width_percentage_of_parent * (window.innerWidth - padding_in_width_direction) / (1440 +
-                    postcard_margin / 2)
+                var postcard_width = 1440;
 
+                var scale = width_percentage_of_parent * (window.innerWidth - padding_in_width_direction) / (
+                    postcard_width +
+                    postcard_margin / 2)
+                return scale
+            },
+            resizeTransform() {
                 return {
-                    "transform": "scale(" + scale + ")",
+                    "transform": "scale(" + this.calculatePostcardScalingFactor() + ")",
                     "transform-origin": "top left"
                 }
             },
             resizedHeight() {
-                // this cuts of the hight that is produced by using the transform function to make the postcard smaller
-                const scale = (1040 * 2 * ((window.innerWidth - 16 * 4) / 1440) + 200) / 3
-                const responsiveScaleNextToEachOther = window.innerWidth > 800 ? scale : scale / 1.4
-                const responsiveScale = window.innerWidth > 506 ? responsiveScaleNextToEachOther :
-                    responsiveScaleNextToEachOther * 3.1;
+
+                var scaling_factor = this.calculatePostcardScalingFactor();
+                // when the postcards are above each other this will be set to 2 -> double the height
+                var heightMultiplier = 1;
+                // this is the space between both postcards when above each other
+                var postcard_margin = 0;
+
+                var curr_width = window.innerWidth;
+
+                // postcards are only above each other in these ranges
+                if (curr_width < 507 || curr_width > 800) {
+                    heightMultiplier = 2.
+                    postcard_margin = 50;
+                }
+
+                var postcard_height = 1040;
+
+                var responsiveScale = scaling_factor * (postcard_height * heightMultiplier + postcard_margin);
                 return {
                     "height": responsiveScale + "px",
                     "overflow": "hidden"
@@ -154,21 +171,17 @@
 
     .postcard-paypal-item {
         float: left;
-        /* width: 65% */
     }
 
     .postcard {
-        /* margin-left: 5%; */
-        /* overflow: hidden; */
-        /* float: left; */
         width: 33%;
-        margin-right: 2%
+        margin-right: 2%;
+        margin-bottom: 1.5em;
     }
 
     .paypal-container {
-        width: 63%;
-        margin-left: 2%;
-        /* padding-top: 2.5em; */
+        width: 65%;
+        padding: 1em;
     }
 
     .countrySelect,
@@ -194,13 +207,11 @@
     }
 
     .countrySelect select {
-        /* width: 80%; */
         padding-left: 0.25em;
         padding-right: 0.25em;
     }
 
     .address {
-        /* padding-bottom: 6em; */
         overflow: auto;
     }
 
@@ -267,7 +278,6 @@
 
         .postcard {
             width: 100% !important;
-            margin: 0 !important;
         }
 
         .paypal-container {

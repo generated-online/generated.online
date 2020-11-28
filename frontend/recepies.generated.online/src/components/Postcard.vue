@@ -96,10 +96,13 @@
         float: left;
     }
 
+    .postcard-cover {
+        margin-bottom: 50px;
+    }
+
     .postcard-body {
         float: left;
         position: relative;
-        margin: auto;
         border: solid black 40px;
         width: 1440px;
         height: 1040px;
@@ -135,7 +138,7 @@
 
     @media (max-width: 507px) {
         .postcard-cover {
-            margin-bottom: 50px;
+            margin-bottom: 50px !important;
         }
 
         .postcard-container {
@@ -150,10 +153,10 @@
 
         .postcard-cover {
             margin-right: 80px;
+            margin-bottom: 0;
         }
 
         .postcard-container {
-            /* height: 200% !important; */
             width: max-content;
         }
 
