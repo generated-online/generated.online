@@ -154,6 +154,7 @@
   }
 
   .ingredients {
+    position: relative;
     float: left;
     width: 25%;
     padding-left: 2%;
@@ -215,8 +216,8 @@
       position: absolute;
       left: 48%;
       top: 5%;
-      bottom: 60%;
-      border-left: 2px solid rgb(0, 0, 0);
+      bottom: 5%;
+      border-left: 3px solid black;
     }
   }
 
@@ -228,8 +229,8 @@
       float: left;
     }
 
-    .divider {
-      bottom: 75%;
+    .divider{
+      border-left: 1.5px solid black
     }
   }
 
