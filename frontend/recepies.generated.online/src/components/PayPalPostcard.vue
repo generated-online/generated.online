@@ -6,7 +6,10 @@
                 <Postcard :recipe='recipe' :style="resizeTransformValue" :name='name' :street='street' :zip='zipCode()'
                     :country='country' />
             </div>
-            <div class="paypal-container postcard-paypal-item text-span ">
+            <div class="center-button">
+                <v-btn v-if='!showMore' @click="showMore=!showMore">Erfahre mehr!</v-btn>
+            </div>
+            <div v-if='showMore' class="paypal-container postcard-paypal-item text-span ">
                 <h1>Sichere dir eine einzigartige Rezept-Karte jetzt ab {{price.toFixed(2)}} €!</h1>
                 <br>
                 <h3>Die Karte geht an:</h3>
@@ -43,6 +46,9 @@
                 <Paypal v-if='showPaypalButton()' :recipeID='recipe.id'
                     :sendTo='{name: name, street: street, plz: plz, city:city, country: country}'
                     :amount='price+money' />
+                <div class="center-button">
+                    <v-btn @click="showMore=!showMore">Zeige weniger</v-btn>
+                </div>
             </div>
         </div>
     </div>
@@ -75,6 +81,7 @@
                 money: 0.5,
                 resizeTransformValue: this.resizeTransform(),
                 resizedHeightValue: this.resizedHeight(),
+                showMore: false
             };
         },
         created() {
@@ -259,6 +266,12 @@
         word-wrap: break-word;
         width: 80%;
         display: inline-block;
+    }
+
+    .center-button {
+        width: 100%;
+        float: left;
+        text-align: center
     }
 
     @media (max-width: 507px) {
