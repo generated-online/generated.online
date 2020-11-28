@@ -185,7 +185,6 @@
             } else {
                 words = this.recipe.ingredients.toString().replaceAll(",", " ").split(" ")
             }
-
             words.forEach(word => {
                 if (word !== "") {
                     const lowercasedWord = word.toLowerCase()
@@ -228,7 +227,7 @@
             this.matchingEmos = []
         },
         mounted() {
-            var height = this.$parent.$el.offsetHeight;
+            var height = this.$el.offsetHeight;
             var em = parseFloat(getComputedStyle(this.$parent.$el).fontSize);
 
             var rowHeightInPx = parseFloat(this.rowHeight) * em * this.emojieSize;

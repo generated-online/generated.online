@@ -17,7 +17,7 @@
                     <input type="text" placeholder="❌ Name" v-model="name">
                     <input type="text" placeholder="❌ Straße" v-model="street">
                     <br>
-                    <input type="number" placeholder="❌ Postleitzahl" v-model="plz">
+                    <input type="number" placeholder="❌ Postleitzahl" v-model.number="plz">
                     <input type="text" placeholder="❌ Ort" v-model="city">
                     <div class="countrySelect">
                         <label for="countries">Land: </label>
@@ -47,7 +47,7 @@
                     :sendTo='{name: name, street: street, plz: plz, city:city, country: country}'
                     :amount='price+money' />
                 <div class="center-button">
-                    <v-btn @click="showMore=!showMore">Zeige weniger</v-btn>
+                    <v-btn @click="showMore=!showMore">Weniger</v-btn>
                 </div>
             </div>
         </div>
@@ -67,7 +67,7 @@
         props: {
             "recipe": {
                 type: Object,
-                default: {}
+                default: undefined
             },
         },
         data() {

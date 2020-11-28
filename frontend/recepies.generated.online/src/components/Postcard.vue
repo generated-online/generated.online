@@ -39,7 +39,28 @@
     import EmojieBackground from "@/components/EmojieBackground"
 
     export default {
-        props: ['recipe', 'color', 'name', 'street', 'zip', 'country'],
+        props: {
+            "recipe": {
+                type: Object,
+                default: {}
+            },
+            "name": {
+                type: String,
+                default: ""
+            },
+            "street": {
+                type: String,
+                default: ""
+            },
+            "zip": {
+                type: String,
+                default: ""
+            },
+            "country": {
+                type: String,
+                default: "DE"
+            }
+        },
         components: {
             EmojieBackground,
         }
