@@ -2,9 +2,9 @@
     <div class="vote-container">
         <div style="font-size: 0.5em; vertical-align:top">Bewertungen</div>
         <div class="horizontalLine" />
-        <div style="width:max-content">
-            <div class="mx-4 mt-1" style="width:fit-content; float:left;"> {{recipe.votes}} </div>
-            <v-btn class="transparentButton mx-4 mt-2" :disabled="!possibleToVote" :loading="buttonLoading" fab dark
+        <div style="width:max-content; display:flex">
+            <div class="mx-4 mt-2" style="width:fit-content; float:left;"> {{recipe.votes}} </div>
+            <v-btn class="transparentButton mx-4 mt-3" :disabled="!possibleToVote" :loading="buttonLoading" fab dark
                 small color="transparent" @click="upvote">
                 <span class="womanCook">👩‍🍳</span>
             </v-btn>
@@ -84,10 +84,9 @@
     .transparentButton {
         margin-left: 20px;
         width: calc(70vw / 15*1.3);
-        height: calc(70vw / 15*1.3);
+        height: calc(70vw / 15*1.3) ;
         font-size: inherit;
         float: right;
-        height: inherit;
     }
 
     .vote-container {

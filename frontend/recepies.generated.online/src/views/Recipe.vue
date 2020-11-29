@@ -173,20 +173,26 @@
       font-size: calc(70vw / 8);
     }
 
-    .recipe-title {
-      text-align: center !important;
-    }
-
-    .recipe-vote {
-      position: relative;
-      display: inline-table;
-      width: 100%;
+    .title-container {
       text-align: center;
+      display: block;
       align-items: center;
     }
 
-    .title-container {
-      text-align: center;
+    .recipe-title {
+      word-wrap: break-word;
+      flex-grow: 0;
+      margin-right: 0;
+      width: 80%;
+      margin: auto;
+      margin-bottom: 0.5em;
+    }
+
+    .recipe-vote {
+      float: unset;
+      width: fit-content;
+      height: fit-content;
+      margin: auto;
     }
 
     .recipe-body {
