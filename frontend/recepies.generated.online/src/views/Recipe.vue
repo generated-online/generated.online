@@ -7,7 +7,7 @@
           <h1 class="recipe-title text-span dynamic-font-size">
             {{ recipe.title }}
           </h1>
-          <Voting class="recipe-vote dynamic-font-size" :recipe='recipe' />
+          <Voting class="recipe-vote dynamic-font-size text-span" :recipe='recipe' />
         </div>
 
         <div class="recipe-body">
@@ -120,8 +120,10 @@
   }
 
   .title-container {
-    position: relative;
-    width: 100%
+    width: 100%;
+    overflow: hidden;
+    margin-bottom: 1.5em;
+    display: flex;
   }
 
   .dynamic-font-size {
@@ -132,15 +134,13 @@
 
   .recipe-title {
     word-wrap: break-word;
-    width: 80%;
-    display: inline-block;
-    margin-bottom: 0.5em;
+    flex-grow: 1;
+    margin-right: 0.5em
   }
 
   .recipe-vote {
-    position: absolute;
-    right: 0;
-    width: 300px;
+    float: right;
+    height: fit-content;
   }
 
   .recipe-body {
