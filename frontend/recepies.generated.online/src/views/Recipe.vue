@@ -134,6 +134,7 @@
     word-wrap: break-word;
     width: 80%;
     display: inline-block;
+    margin-bottom: 0.5em;
   }
 
   .recipe-vote {
@@ -143,34 +144,31 @@
   }
 
   .recipe-body {
-    margin-top: calc(70vw / 15);
     position: relative;
     overflow: hidden;
+    padding-bottom: 1.5em;
   }
 
   .ingredient {
-    padding-bottom: 1em;
-    font-size: 1.4em;
+    padding-bottom: 0.5em;
+    font-size: 1.2em;
   }
 
   .ingredients {
     position: relative;
     float: left;
-    width: 25%;
-    padding-left: 2%;
-    padding-right: 2%;
-    padding-top: 2%
+    width: 28%;
+    padding: 2%
   }
 
   .instruction {
-    margin-left: 2%;
-    margin-right: 2%;
     float: right;
     font-size: 1.5em;
     /* this should be exactly the space left */
-    width: calc(100% - 25% - 2%*4);
+    width: 70%;
     text-align: justify;
-    display: block
+    display: block;
+    padding: 2%
   }
 
   @media (max-width: 800px) {
@@ -207,8 +205,6 @@
 
     .instruction {
       float: left;
-      padding: 2%;
-      margin: 0 0 2em 0;
       width: 100%;
     }
 
