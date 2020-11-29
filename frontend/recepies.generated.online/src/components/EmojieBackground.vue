@@ -175,17 +175,8 @@
                     [a[i], a[j]] = [a[j], a[i]];
                 }
                 return a;
-            }
-        },
-        created() {
-            let words = []
-            if (this.recipe === '') {
-                // load random keys as words
-                words = this.shuffleArray(Object.keys(this.allEmos))
-            } else {
-                words = this.recipe.ingredients.toString().replaceAll(",", " ").split(" ")
-            }
-            words.forEach(word => {
+            },
+            wordToEmoji(word) {
                 if (word !== "") {
                     const lowercasedWord = word.toLowerCase()
                     const capitalizedWord = lowercasedWord.replace(/^\w/, c => c.toUpperCase());
@@ -210,7 +201,24 @@
                         }
                     }
                 }
-            })
+            }
+
+        },
+        created() {
+            let words = []
+            if (this.recipe === '') {
+                // load random keys as words
+                words = this.shuffleArray(Object.keys(this.allEmos))
+            } else {
+                words = this.recipe.ingredients.toString().replaceAll(",", " ").split(" ")
+            }
+            words.forEach(this.wordToEmoji)
+
+            // if we dit not find any emojis
+            if (this.matchingEmos.length == 0) {
+                words = this.shuffleArray(Object.keys(this.allEmos))
+                words.forEach(this.wordToEmoji)
+            }
 
             // remove all duplicates
             this.matchingEmos = [...new Set(this.matchingEmos)];
