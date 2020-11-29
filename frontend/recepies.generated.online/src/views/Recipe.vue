@@ -144,31 +144,28 @@
   }
 
   .recipe-body {
-    position: relative;
-    overflow: hidden;
     padding-bottom: 1.5em;
+    display: flex;
   }
 
   .ingredient {
     padding-bottom: 0.5em;
     font-size: 1.2em;
+    white-space: nowrap
   }
 
   .ingredients {
-    position: relative;
-    float: left;
-    width: 28%;
+    width: fit-content;
     padding: 2%
   }
 
   .instruction {
-    float: right;
     font-size: 1.5em;
-    /* this should be exactly the space left */
-    width: 70%;
+    flex-grow: 1;
     text-align: justify;
     display: block;
-    padding: 2%
+    padding: 2%;
+    margin-left: 2%;
   }
 
   @media (max-width: 800px) {
@@ -192,6 +189,12 @@
       text-align: center;
     }
 
+    .recipe-body {
+      position: relative;
+      overflow: hidden;
+      display: block;
+    }
+
     .ingredient {
       padding-bottom: 0.5em;
       width: 50%;
@@ -201,11 +204,13 @@
     .ingredients {
       width: 100%;
       margin-bottom: 2em;
+      float: left;
+      position: relative;
     }
 
     .instruction {
       float: left;
-      width: 100%;
+      margin-left: 0;
     }
 
     .divider {
