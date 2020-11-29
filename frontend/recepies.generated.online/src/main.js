@@ -27,14 +27,14 @@ const firebaseConfig = {
   measurementId: "G-P84D64G1BB"
 };
 
-firebase.initializeApp(firebaseConfig);
-firebase.analytics();
+firebase.default.initializeApp(firebaseConfig);
+firebase.default.analytics();
 
 Vue.config.productionTip = false;
 
-Vue.prototype.$analytics = firebase.analytics();
+Vue.prototype.$analytics = firebase.default.analytics();
 
-firebase.auth().onAuthStateChanged(() => {
+firebase.default.auth().onAuthStateChanged(() => {
   new Vue({
     router,
     store,
