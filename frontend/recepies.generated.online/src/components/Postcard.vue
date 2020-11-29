@@ -144,9 +144,6 @@
         background-color: black;
         color: var(--bg-color);
         display: inline;
-
-        -webkit-box-decoration-break: clone;
-        box-decoration-break: clone;
     }
 
     .adPositionFront {
