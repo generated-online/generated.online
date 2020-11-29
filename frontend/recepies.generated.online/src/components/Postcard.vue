@@ -146,12 +146,6 @@
         display: inline;
     }
 
-    .adPositionFront {
-        position: absolute;
-        bottom: 45%;
-        margin-left: 0.35em;
-    }
-
     .adPositionBack {
         position: absolute;
         bottom: 0%;
@@ -161,7 +155,6 @@
 
     h1 {
         font-size: 120px;
-        position: absolute;
     }
 
     p {
