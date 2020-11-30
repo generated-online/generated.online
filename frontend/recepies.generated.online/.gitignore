@@ -88,6 +88,6 @@ node_modules/
 .env
 
 # npm lock
-*package-lock.json
+# *package-lock.json
 
 build

@@ -1,6 +1,6 @@
 {
   "hosting": {
-  	"site": "recipes-generated-online",
+    "site": "recipes-generated-online",
     "public": "dist",
     "ignore": [
       "firebase.json",

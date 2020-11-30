@@ -13,7 +13,8 @@
                     </v-btn>
                     <v-btn class="mx-3 my-0" icon>
                         <!-- show whatsapp share button, when not loaded yet just an empty button -->
-                        <ShareNetwork class="inline-block" network="whatsapp" :url="url" :title="shareText">
+                        <ShareNetwork class="inline-block" network="whatsapp" style="text-decoration: unset" :url="url"
+                            :title="shareText">
                             <v-icon class="vue-icon" size="30">mdi-whatsapp</v-icon>
                         </ShareNetwork>
                     </v-btn>
