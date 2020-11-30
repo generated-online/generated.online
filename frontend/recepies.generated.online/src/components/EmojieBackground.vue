@@ -1,11 +1,30 @@
 <template>
     <div class="background" style="background: var(--bg-color)">
-        <span class="emojie-batch">
-            <div class="emojie" v-for="(e, idx) in matchingEmos" :key="idx"
-                :style='emojiCss + " " + ((Math.floor(idx/emojieAmount) % 2 === 0) ? "padding-left: "+emojiPadding+"; text-align: right" : "")'>
-                {{e}}</div>
-        </span>
+        <div v-for='_row in numRow' :key="_row">
+            <!-- uneven rows vue starts indexing at 1 lol-->
+            <div :style="row">
+                <div v-if="_row % 2 == 0" :style="uneven">
+                    <!-- <div :style="halfSpacer"></div> -->
+                    <div class="emojie-container" :style="emojiContainer" v-for='element in elementsInRow+2'
+                        :key="element">
+                        <div class="emoji" :style="emoji">{{line[element-1]}}</div>
+                        <!-- <div class="emoji" :style="emoji">💯{{element}}</div> -->
+                    </div>
+                    <!-- <div :style="halfSpacer"></div> -->
+                </div>
+                <!-- even rows -->
+                <div v-else :style="even">
+                    <div class="emojie-container" :style="emojiContainer" v-for='element in (elementsInRow+1)'
+                        :key="element">
+                        <div class="emoji" :style="emoji">{{reverseLine[element-1]}}</div>
+                        <!-- <div class="emoji" :style="emoji">✅{{element-1}}</div> -->
+                    </div>
+                    <!-- {{reverseLine}} -->
+                </div>
+            </div>
+        </div>
     </div>
+
 </template>
 
 <script>
@@ -15,27 +34,23 @@
                 type: Object,
                 default: ''
             },
-            "rowHeight": {
+            "emojiContainerSize": {
                 type: String,
-                default: "1.25em"
+                default: "5em"
             },
             "emojieSize": {
-                type: Number,
-                default: 2
-            },
-            "emojieAmount": {
-                type: Number,
-                default: 30
-            },
-            "emojiPadding": {
                 type: String,
-                default: "0.65em"
+                default: "3em"
             }
-
         },
         data() {
             return {
                 width: window.innerWidth,
+                elementsInRow: 1,
+                numRow: 1,
+                rowMargin: "5px",
+                line: [],
+                reverseLine: [],
                 allEmos: {
                     "Ei": "🥚",
                     "Tee": "☕",
@@ -201,78 +216,110 @@
                         }
                     }
                 }
-            }
-
-        },
-        created() {
-            let words = []
-            if (this.recipe === '') {
-                // load random keys as words
-                words = this.shuffleArray(Object.keys(this.allEmos))
-            } else {
-                words = this.recipe.ingredients.toString().replaceAll(",", " ").split(" ")
-            }
-            words.forEach(this.wordToEmoji)
-
-            // if we dit not find any emojis
-            if (this.matchingEmos.length == 0) {
-                words = this.shuffleArray(Object.keys(this.allEmos))
-                words.forEach(this.wordToEmoji)
-            }
-
-            // remove all duplicates
-            this.matchingEmos = [...new Set(this.matchingEmos)];
-
-            var line = new Array(Math.floor(this.emojieAmount / this.matchingEmos.length)).fill(this.matchingEmos)
-                .flat();
-
-            var diff = this.emojieAmount - line.length
-            if (diff > 0) {
-                line = line.concat(this.matchingEmos.slice(0, diff))
-            }
-            this.reverseLine = [...line].reverse()
-            this.line = line
-            this.matchingEmos = []
-        },
-        mounted() {
-            var height = this.$el.offsetHeight;
-            var em = parseFloat(getComputedStyle(this.$parent.$el).fontSize);
-
-            var rowHeightInPx = parseFloat(this.rowHeight) * em * this.emojieSize;
-            var numRows = Math.floor(height / rowHeightInPx);
-
-            // this.matchingEmos
-            var i;
-            for (i = 0; i < numRows; i++) {
-                this.matchingEmos = this.matchingEmos.concat(i % 2 ? this.line : this.reverseLine)
-            }
-
-            window.addEventListener('resize', () => {
-                // in the paypal button rendering we trigger this
-                height = this.$parent.$el.offsetHeight;
-                var newNumRows = Math.floor(height / rowHeightInPx);
-
-                var i;
-                // add new rows depending on the difference in hight
-                for (i = 0; i < newNumRows - numRows; i++) {
-                    this.matchingEmos = this.matchingEmos.concat(i % 2 ? this.line : this.reverseLine)
-                }
-
-            })
-        },
-        computed: {
-            emojiCss() {
-                var d = {
-                    "height": this.rowHeight,
-                    "font-size": this.emojieSize + "em",
-                    "width": 100 / this.emojieAmount + "%",
-                }
+            },
+            calculateElementsInRow() {
+                var width = this.$el.offsetWidth;
+                var elementWidthInPx = this.emToPixle(this.emojiContainerSize);
+                this.elementsInRow = Math.floor(width / elementWidthInPx) - 1;
+                this.rowMargin = (width - (this.elementsInRow + 1) * elementWidthInPx) / 2 + "px"
+            },
+            calculateNumRows() {
+                var height = this.$el.offsetHeight;
+                var rowHeight = this.emToPixle(this.emojiContainerSize);
+                this.numRow = Math.floor(height / rowHeight);
+            },
+            dictToCssString(d) {
                 // this generates correct css string out of object
                 var s = ""
                 for (var key in d) {
                     s += key + ": " + d[key] + "; "
                 }
                 return s
+            },
+            emToPixle(emValue) {
+                var em = parseFloat(getComputedStyle(this.$parent.$el).fontSize);
+                return parseFloat(emValue) * em
+            },
+            setupMatchinEmos() {
+                let words = []
+                if (this.recipe === '') {
+                    // load random keys as words
+                    words = this.shuffleArray(Object.keys(this.allEmos))
+                } else {
+                    words = this.recipe.ingredients.toString().replaceAll(",", " ").split(" ")
+                }
+                words.forEach(this.wordToEmoji)
+
+                // if we dit not find any emojis
+                if (this.matchingEmos.length == 0) {
+                    words = this.shuffleArray(Object.keys(this.allEmos))
+                    words.forEach(this.wordToEmoji)
+                }
+
+                // remove all duplicates
+                this.matchingEmos = [...new Set(this.matchingEmos)];
+
+                var line = new Array(Math.floor((this.elementsInRow + 2) / this.matchingEmos.length)).fill(this
+                        .matchingEmos)
+                    .flat();
+
+                var diff = this.elementsInRow - line.length + 2
+                if (diff > 0) {
+                    line = line.concat(this.matchingEmos.slice(0, diff))
+                }
+                this.reverseLine = [...line].reverse()
+                this.line = line
+                this.matchingEmos = []
+            },
+
+        },
+
+        mounted() {
+
+            this.calculateElementsInRow()
+            this.calculateNumRows()
+            this.setupMatchinEmos()
+
+            window.addEventListener('resize', () => {
+                this.calculateElementsInRow()
+                this.calculateNumRows()
+                this.setupMatchinEmos()
+
+            })
+        },
+        computed: {
+            emojiContainer() {
+                var d = {
+                    "height": this.emojiContainerSize,
+                    "width": this.emojiContainerSize,
+                }
+                return this.dictToCssString(d)
+            },
+            emoji() {
+                var d = {
+                    "font-size": this.emojieSize,
+                }
+                return this.dictToCssString(d)
+            },
+            row() {
+                return this.dictToCssString({
+                    "margin-left": this.rowMargin,
+                    "margin-right": this.rowMargin
+                })
+            },
+            even() {
+                return ""
+            },
+            uneven() {
+                return this.dictToCssString({
+                    "margin-left": "-" + this.emToPixle(this.emojiContainerSize) / 2 + "px",
+                    "margin-right": "-" + this.emToPixle(this.emojiContainerSize) / 2 + "px",
+                    // "margin-right": -this.rowMargin
+                })
+            },
+            halfSpacer() {
+                return "float: left; width:" + parseFloat(this.emojiContainerSize) / 2 +
+                    "em; background: transparent; height: " + this.emojiContainerSize
             }
         }
     }
@@ -294,15 +341,21 @@
         -ms-user-select: none;
         user-select: none;
         z-index: -1;
+        /* opacity: 0.8; */
     }
 
-    .emojie-batch {
-        width: 100vw;
-    }
-
-    .emojie {
-        opacity: 0.3;
+    .emojie-container {
+        opacity: 0.2;
         float: left;
-        /* z-index: 100; */
+        /* width: 4em;
+        height: 4em; */
+        text-align: center;
+        display: table;
+    }
+
+    .emoji {
+        /* font-size: 3em; */
+        display: table-cell;
+        vertical-align: middle;
     }
 </style>
