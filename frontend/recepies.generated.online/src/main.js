@@ -14,7 +14,7 @@ Vue.use(InstantSearch)
 
 import VueCookies from 'vue-cookies'
 Vue.use(VueCookies)
-Vue.$cookies.config('Infinitiy')
+Vue.$cookies.config('1y')
 
 const firebaseConfig = {
   apiKey: "AIzaSyDmmSPNA_lC7rtpuS3-Yx4dmy4BegppYIw",
