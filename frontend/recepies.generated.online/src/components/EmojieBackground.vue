@@ -1,5 +1,5 @@
 <template>
-    <div class="background" style="background: var(--bg-color)">
+    <div class="background" :style="background+' background: var(--bg-color)'">
         <div v-for='_row in numRow' :key="_row">
             <!-- uneven rows vue starts indexing at 1 lol-->
             <div :style="row">
@@ -226,7 +226,7 @@
             calculateNumRows() {
                 var height = this.$el.offsetHeight;
                 var rowHeight = this.emToPixle(this.emojiContainerSize);
-                this.numRow = Math.floor(height / rowHeight);
+                this.numRow = Math.floor(height / rowHeight) + 1; // +1 because of negative margin top and bottom
             },
             dictToCssString(d) {
                 // this generates correct css string out of object
@@ -320,7 +320,15 @@
             halfSpacer() {
                 return "float: left; width:" + parseFloat(this.emojiContainerSize) / 2 +
                     "em; background: transparent; height: " + this.emojiContainerSize
+            },
+            background() {
+                return this.dictToCssString({
+                    "margin-top": "-" + this.emToPixle(this.emojiContainerSize) / 2 + "px",
+                    "margin-bottom": "-" + this.emToPixle(this.emojiContainerSize) / 2 + "px",
+                    // "margin-right": -this.rowMargin
+                })
             }
+
         }
     }
 </script>
