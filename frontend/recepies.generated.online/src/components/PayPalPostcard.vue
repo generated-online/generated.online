@@ -30,20 +30,49 @@
                     </div>
                     <br>
                     <div class="addressError" v-if='!showPaypalButton()'>
-                        <div> ❌<b>Bitte alle Felder
-                                ausfüllen!</b></div>
-
+                        <div> ❌<b>Bitte alle Felder ausfüllen!</b></div>
                     </div>
                     <h3 class="moneyAsking">Du unterstützt uns mit:</h3>
+
+
                     <div class="moneySpan">
                         <div>{{price.toFixed(2)}} € + </div>
                         <div class="ml-1" style="width: min-content">
                             <input class="moneyInput" type="number" :min='0' :step='0.5' v-model.number="money">
                         </div>
                         <div>€ <b> = {{money ? (price + money).toFixed(2) : price.toFixed(2)}} €</b></div>
+
+                        <div
+                            style="width: 100%; margin-top: 1em; height: 100%; padding: 11px; vertical-align: center; text-shadow: none !important">
+                            <div
+                                style="width: 100%; height: 1.5em; border-radius: 5px; overflow: hidden; box-shadow: 0px 0px 10px black; background: rgba(1,1,1,0.8); color: white;">
+                                <div class="progress-item" :style="'width:' +  100* 2.20 / (price + money) + '%'">
+                                    <b> 🖨 Druck
+                                    </b>
+                                </div>
+                                <div class="progress-item" :style="'width:' +  100*0.70 / (price + money) + '%'">
+                                    <b> 📪 Versand
+                                    </b>
+                                </div>
+                                <div class="progress-item" :style="'width:' +  100* 0.35 / (price + money) + '%'">
+                                    <b> 🏦 Paypal
+                                    </b>
+                                </div>
+                                <div class="progress-item" :style="'width:' + 100* 0.25 / (price + money) + '%'">
+                                    <b> 💻 Etc.
+                                    </b>
+                                </div>
+                                <div v-show="money > 0" class="progress-item" style="border: none !important"
+                                    :style="'width:' + 100* money / (price + money) + '%'">
+                                    <b> 🤩 Spenden
+                                    </b>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <h3 class="moneyAsking" v-if='showPaypalButton()'>Jetzt {{(price+money).toFixed(2)}}€ bezahlen:</h3>
                 </div>
+
                 <Paypal v-if='showPaypalButton()' :recipeID='recipe.id'
                     :sendTo='{name: name, street: street, plz: plz, city:city, country: country}'
                     :amount='price+money' />
@@ -175,9 +204,16 @@
 
 
 <style scoped>
-input::placeholder {
- color: black
-}
+    .progress-item {
+        min-width: 1.4em;
+        border-right: 1px solid white;
+        padding-left: 0.5em
+    }
+
+    input::placeholder {
+        color: black
+    }
+
     h3 {
         padding-bottom: 1em;
     }
