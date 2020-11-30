@@ -1,13 +1,15 @@
 <template>
-    <span class="vote-container">
-        <v-card class="pb-1 vcard" elevation="0" :style='"background: transparent;"'>
-            <span class="mx-4"> {{recipe.votes}} </span>
-            <v-btn class="transparentButton mx-4" :disabled="!possibleToVote" :loading="buttonLoading" fab dark small
-                color="transparent" @click="upvote">
+    <div class="vote-container">
+        <div style="font-size: 0.5em; vertical-align:top">Bewertungen</div>
+        <div class="horizontalLine" />
+        <div style="width:max-content; display:flex">
+            <div class="mx-4 mt-2" style="width:fit-content; float:left;"> {{recipe.votes}} </div>
+            <v-btn class="transparentButton mx-4 mt-3" :disabled="!possibleToVote" :loading="buttonLoading" fab dark
+                small color="transparent" @click="upvote">
                 <span class="womanCook">👩‍🍳</span>
             </v-btn>
-        </v-card>
-    </span>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -82,19 +84,27 @@
     .transparentButton {
         margin-left: 20px;
         width: calc(70vw / 15*1.3);
-        height: calc(70vw / 15*1.3);
-        vertical-align: baseline;
+        height: calc(70vw / 15*1.3) ;
         font-size: inherit;
+        float: right;
     }
 
     .vote-container {
         text-align: center;
-        width: 400px;
         font-family: "Commissioner";
+
     }
 
     .vcard {
         border: none;
+    }
+
+    .horizontalLine {
+        width: 100%;
+        background-color: black;
+        opacity: 0.6;
+        height: 1px;
+        font-size: 1px;
     }
 
     @media (max-width: 800px) {
