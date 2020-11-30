@@ -77,7 +77,7 @@
                 street: '',
                 plz: '',
                 city: '',
-                country: 'DE',
+                country: 'Deutschland',
                 price: 3.50,
                 money: 0.5,
                 resizeTransformValue: this.resizeTransform(),
@@ -175,6 +175,9 @@
 
 
 <style scoped>
+input::placeholder {
+ color: black
+}
     h3 {
         padding-bottom: 1em;
     }
