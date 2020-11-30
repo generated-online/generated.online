@@ -1,7 +1,7 @@
 <template>
     <div class="postcard-container">
         <div class="postcard-body postcard-cover">
-            <EmojieBackground :recipe="recipe" />
+            <EmojieBackground :recipe="recipe" :opacity="1" />
             <div class="postcard-inner">
                 <span>
                     <h1>{{recipe.title}}</h1>

@@ -1,25 +1,20 @@
 <template>
-    <div class="background" :style="background+' background: var(--bg-color)'">
+    <div class="background" :style="backgroundMargin+' background: var(--bg-color)'">
         <div v-for='_row in numRow' :key="_row">
             <!-- uneven rows vue starts indexing at 1 lol-->
             <div :style="row">
                 <div v-if="_row % 2 == 0" :style="uneven">
-                    <!-- <div :style="halfSpacer"></div> -->
                     <div class="emojie-container" :style="emojiContainer" v-for='element in elementsInRow+2'
                         :key="element">
                         <div class="emoji" :style="emoji">{{line[element-1]}}</div>
-                        <!-- <div class="emoji" :style="emoji">💯{{element}}</div> -->
                     </div>
-                    <!-- <div :style="halfSpacer"></div> -->
                 </div>
                 <!-- even rows -->
                 <div v-else :style="even">
                     <div class="emojie-container" :style="emojiContainer" v-for='element in (elementsInRow+1)'
                         :key="element">
                         <div class="emoji" :style="emoji">{{reverseLine[element-1]}}</div>
-                        <!-- <div class="emoji" :style="emoji">✅{{element-1}}</div> -->
                     </div>
-                    <!-- {{reverseLine}} -->
                 </div>
             </div>
         </div>
@@ -41,6 +36,10 @@
             "emojieSize": {
                 type: String,
                 default: "3em"
+            },
+            "opacity": {
+                type: Number,
+                default: 0.2
             }
         },
         data() {
@@ -292,6 +291,7 @@
                 var d = {
                     "height": this.emojiContainerSize,
                     "width": this.emojiContainerSize,
+                    "opacity": this.opacity
                 }
                 return this.dictToCssString(d)
             },
@@ -321,11 +321,10 @@
                 return "float: left; width:" + parseFloat(this.emojiContainerSize) / 2 +
                     "em; background: transparent; height: " + this.emojiContainerSize
             },
-            background() {
+            backgroundMargin() {
                 return this.dictToCssString({
-                    "margin-top": "-" + this.emToPixle(this.emojiContainerSize) / 2 + "px",
-                    "margin-bottom": "-" + this.emToPixle(this.emojiContainerSize) / 2 + "px",
-                    // "margin-right": -this.rowMargin
+                    "margin-top": "-" + parseFloat(this.emojiContainerSize) / 2 + "em",
+                    "margin-bottom": "-" + parseFloat(this.emojiContainerSize) / 2 + "em",
                 })
             }
 
@@ -349,20 +348,15 @@
         -ms-user-select: none;
         user-select: none;
         z-index: -1;
-        /* opacity: 0.8; */
     }
 
     .emojie-container {
-        opacity: 0.2;
         float: left;
-        /* width: 4em;
-        height: 4em; */
         text-align: center;
         display: table;
     }
 
     .emoji {
-        /* font-size: 3em; */
         display: table-cell;
         vertical-align: middle;
     }

@@ -1,7 +1,7 @@
 <template>
   <div class="recipe-container">
     <div v-if='recipe'>
-      <EmojieBackground :recipe="recipe" emojiContainerSize='7em' />
+      <EmojieBackground :recipe="recipe" emojiContainerSize='7em' opacity="0.3" />
       <div style="min-height: 100vh">
         <div class="title-container">
           <h1 class="recipe-title text-span dynamic-font-size">
