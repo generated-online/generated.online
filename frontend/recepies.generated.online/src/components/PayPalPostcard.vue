@@ -96,6 +96,14 @@
         watch: {
             money: function (newVal, oldVal) {
                 newVal < 0 ? this.money = 0 : null
+            },
+            showMore: function (newVal, oldVal) {
+                if (newVal) {
+                    // need timeout otherwise the size is not changed yet :/
+                    setTimeout(() => {
+                        window.dispatchEvent(new Event('resize'))
+                    }, 10);
+                }
             }
         },
         methods: {
