@@ -1,7 +1,6 @@
 <template>
     <div class="info-container">
-        <EmojieBackground :emojieSize='4' rowHeight="1.5em" emojiPadding="0.8em" :emojieAmount='8' />
-
+        <EmojieBackground :opacity="0.5" />
         <h1 class=text-span style="font-size:3em">Was ist das hier?</h1>
         <br>
         <h2 class="project-description">

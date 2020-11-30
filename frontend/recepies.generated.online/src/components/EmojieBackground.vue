@@ -27,7 +27,7 @@
         props: {
             "recipe": {
                 type: Object,
-                default: ''
+                default: () => {}
             },
             "emojiContainerSize": {
                 type: String,
@@ -241,7 +241,7 @@
             },
             setupMatchinEmos() {
                 let words = []
-                if (this.recipe === '') {
+                if (!this.recipe) {
                     // load random keys as words
                     words = this.shuffleArray(Object.keys(this.allEmos))
                 } else {
