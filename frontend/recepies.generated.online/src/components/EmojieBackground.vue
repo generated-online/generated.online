@@ -324,7 +324,6 @@
             backgroundMargin() {
                 return this.dictToCssString({
                     "margin-top": "-" + parseFloat(this.emojiContainerSize) / 2 + "em",
-                    "margin-bottom": "-" + parseFloat(this.emojiContainerSize) / 2 + "em",
                 })
             }
 
