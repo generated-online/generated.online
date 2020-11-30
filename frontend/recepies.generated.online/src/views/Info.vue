@@ -31,8 +31,8 @@
             <br>
             <span class=text-span>
                 Wenn dich unser Code interessiert schau doch mal auf unserem
-                <v-btn href="https://github.com/generated-online/generated.online">
-                    Github-Repo
+                <v-btn class="black-button" href="https://github.com/generated-online/generated.online">
+                    <v-icon class="mr-2" size="30"> mdi-github </v-icon> Github-Repo
                 </v-btn>
                 vorbei und lass einen Stern da!
             </span>

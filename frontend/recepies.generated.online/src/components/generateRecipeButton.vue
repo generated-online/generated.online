@@ -1,8 +1,8 @@
 <template>
     <span>
         <!-- if there is text we want to have a real button -->
-        <v-btn v-if="buttonText !== ''" to="/recipe" large depressed style="background: white; opacity: 0.8"
-            class="mx-3 my-0">
+        <v-btn v-if="buttonText !== ''" to="/recipe" large depressed
+            style="background: black; color: white; opacity: 0.8" class="mx-3 my-0">
             <h2> {{buttonText}}</h2>
 
             <v-icon style="padding-left:0.5em">shuffle</v-icon>

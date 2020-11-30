@@ -77,4 +77,10 @@
         // background: rgba(255, 255, 255, 0.05);
         text-shadow: 0px 0px 20px $softPink;
     }
+
+    .black-button {
+        background: rgba(1, 1, 1, 0.8) !important;
+        color: white !important;
+        box-shadow: unset !important;
+    }
 </style>

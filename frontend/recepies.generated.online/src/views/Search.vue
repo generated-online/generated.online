@@ -151,4 +151,23 @@
   .showMore-button--disabled:hover {
     display: none;
   }
+
+  .ais-SearchBox-input {
+    background: rgba(1, 1, 1, 0.8);
+    border: 1px solid rgba(1, 1, 1, 0.8);
+    color: white;
+    user-select: none;
+  }
+
+  input:focus {
+    outline: none;
+  }
+
+  input::placeholder {
+    color: white !important;
+  }
+
+  path {
+    fill: white !important;
+  }
 </style>

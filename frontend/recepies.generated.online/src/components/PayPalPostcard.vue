@@ -8,7 +8,8 @@
                     :country='country' />
             </div>
             <div class="center-button">
-                <v-btn v-if='!showMore && showButtons' @click="showMore=!showMore">Erfahre mehr!</v-btn>
+                <v-btn v-if='!showMore && showButtons' @click="showMore=!showMore" class="black-button">Erfahre mehr
+                </v-btn>
             </div>
             <div v-if='showMore || !showButtons' class="paypal-container postcard-paypal-item text-span ">
                 <h1>Sichere dir eine einzigartige Rezept-Karte jetzt ab {{price.toFixed(2)}} €!</h1>
@@ -77,7 +78,7 @@
                     :sendTo='{name: name, street: street, plz: plz, city:city, country: country}'
                     :amount='price+money' />
                 <div v-if="showButtons" class="center-button" style="margin-top: 1em">
-                    <v-btn @click="showMore=!showMore">Weniger</v-btn>
+                    <v-btn @click="showMore=!showMore" class="black-button">Weniger</v-btn>
                 </div>
             </div>
         </div>
@@ -125,6 +126,14 @@
         watch: {
             money: function (newVal, oldVal) {
                 newVal < 0 ? this.money = 0 : null
+            },
+            showMore: function (newVal, oldVal) {
+                if (newVal) {
+                    // need timeout otherwise the size is not changed yet :/
+                    setTimeout(() => {
+                        window.dispatchEvent(new Event('resize'))
+                    }, 10);
+                }
             }
         },
         methods: {
