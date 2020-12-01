@@ -24,9 +24,9 @@
                     <div class="countrySelect">
                         <label for="countries">Land: </label>
                         <select name="countries" id="countries" v-model="country">
-                            <option scaling_factor="DE">Deutschland</option>
-                            <option scaling_factor="AT">Österreich</option>
-                            <option scaling_factor="CH">Schweiz</option>
+                            <option value="DE">Deutschland</option>
+                            <option value="AT">Österreich</option>
+                            <option value="CH">Schweiz</option>
                         </select>
                     </div>
                     <br>
@@ -46,7 +46,7 @@
                         <div
                             style="width: 100%; margin-top: 1em; height: 100%; padding: 11px; vertical-align: center; text-shadow: none !important">
                             <div
-                                style="width: 100%; height: 1.5em; border-radius: 5px; overflow: hidden; box-shadow: 0px 0px 10px black; background: rgba(1,1,1,0.8); color: white;">
+                                style="width: 100%; height: 1.5em; border-radius: 5px; overflow: hidden; box-shadow: 0 0 10px black; background: rgba(1,1,1,0.8); color: white;">
                                 <div class="progress-item" :style="'width:' +  100* 2.20 / (price + money) + '%'">
                                     <b> 🖨 Druck
                                     </b>
@@ -107,7 +107,7 @@
                 street: '',
                 plz: '',
                 city: '',
-                country: 'Deutschland',
+                country: 'DE',
                 price: 3.50,
                 money: 0.5,
                 resizeTransformValue: this.resizeTransform(),
@@ -124,10 +124,10 @@
             })
         },
         watch: {
-            money: function (newVal, oldVal) {
+            money: function (newVal) {
                 newVal < 0 ? this.money = 0 : null
             },
-            showMore: function (newVal, oldVal) {
+            showMore: function (newVal) {
                 if (newVal) {
                     // need timeout otherwise the size is not changed yet :/
                     setTimeout(() => {
@@ -172,10 +172,9 @@
 
                 var postcard_width = 1440;
 
-                var scale = width_percentage_of_parent * (window.innerWidth - padding_in_width_direction) / (
+                return width_percentage_of_parent * (window.innerWidth - padding_in_width_direction) / (
                     postcard_width +
                     postcard_margin / 2)
-                return scale
             },
             resizeTransform() {
                 return {
@@ -309,14 +308,8 @@
 
     .dynamic-font-size {
         font-size: calc(70vw / 15);
-        font-family: "Commissioner";
+        font-family: "Commissioner",serif;
         padding: 0.2em 0.2em 0.2em 0.2em;
-    }
-
-    .recipe-title {
-        word-wrap: break-word;
-        width: 80%;
-        display: inline-block;
     }
 
     .center-button {
