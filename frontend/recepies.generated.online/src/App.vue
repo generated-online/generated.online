@@ -1,8 +1,8 @@
 <template>
     <v-app id="inspire" :style="cssVars">
-        <v-main>
+        <v-main >
+            <EmojieBackground :recipe="recipe" :opacity="1" :color="backgroundColor"/>
             <v-container>
-                    <EmojieBackground :recipe="recipe" :opacity="0.5" :color="backgroundColor" />
                 <router-view :key="$route.path" @shareText="updateTitle($event)" @recipe="updateRecipe($event)">
                 </router-view>
             </v-container>
@@ -29,10 +29,9 @@ export default {
         },
         updateRecipe(recipe) {
             this.recipe = recipe;
-            if (!recipe){
+            if (!recipe) {
                 this.recipeID = null
-            }
-            else{
+            } else {
                 this.recipeID = recipe.id
             }
             this.backgroundColor = recipeToColor(this.recipeID);
@@ -61,6 +60,7 @@ export default {
         cssVars() {
             return {
                 '--bg-color': this.backgroundColor,
+                "background-color": "transparent"
             }
         }
     }
@@ -70,10 +70,6 @@ export default {
 
 <style lang="scss">
 $softPink: var(--bg-color);
-
-#inspire {
-  background-color: transparent;
-}
 
 
 #app {

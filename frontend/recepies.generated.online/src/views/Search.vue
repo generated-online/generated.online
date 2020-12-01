@@ -31,7 +31,7 @@
 
           <!-- hide pagination if 1 or less pages -->
           <ais-pagination v-if="nbPages > 1" />
-          <div v-if="hits.length == 0" style="text-align:center; padding: 2em 0 0 0">
+          <div v-if="hits.length == 0" style="text-align:center">
             <generateRecipeButton />
           </div>
         </template>
