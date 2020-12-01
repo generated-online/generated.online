@@ -190,7 +190,7 @@ export default {
 <style scoped>
 
 input::placeholder {
-    color: black
+    color: black !important
 }
 
 h3 {
