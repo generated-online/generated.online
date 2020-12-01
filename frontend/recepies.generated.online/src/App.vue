@@ -1,6 +1,6 @@
 <template>
     <v-app id="inspire" :style="cssVars">
-        <v-main >
+        <v-main>
             <EmojieBackground :recipe="recipe" :opacity="1" :color="backgroundColor"/>
             <v-container>
                 <router-view :key="$route.path" @shareText="updateTitle($event)" @recipe="updateRecipe($event)">
@@ -82,14 +82,19 @@ $softPink: var(--bg-color);
 }
 
 .text-span {
-  // background: $softPink;
-  // background: rgba(255, 255, 255, 0.05);
-  text-shadow: 0px 0px 20px $softPink;
+  //background: $softPink;
+  //background: rgba(255, 255, 255, 0.05);
+  //text-shadow: 0px 0px 20px $softPink;
 }
 
 .black-button {
   background: rgba(1, 1, 1, 0.8) !important;
   color: white !important;
   box-shadow: unset !important;
+}
+
+.info-container {
+  margin: 4em 0em 2em 0em;
+  background-color: rgba(255, 255, 255, 0.85) !important;
 }
 </style>

@@ -1,14 +1,12 @@
 <template>
-    <div>
-        <v-card class="info-container py-4 px-2">
-            <div class="text-sm-h2 text-md-h1 text-h4 pb-12 text-center">
-                <b>KI generierte Rezepte!</b>
-            </div>
-            <div :style="searchWidth">
-                <Search/>
-            </div>
-        </v-card>
-    </div>
+    <v-card class="info-container py-4 px-2">
+        <div class="text-sm-h2 text-md-h1 text-h4 pb-12 text-center">
+            <b>KI generierte Rezepte!</b>
+        </div>
+        <div :style="searchWidth">
+            <Search/>
+        </div>
+    </v-card>
 </template>
 
 <script>
@@ -36,12 +34,3 @@ export default {
     }
 };
 </script>
-
-<style scoped>
-.info-container {
-    margin: 4em 0em 2em 0em;
-    background-color: rgba(255, 255, 255, 0.8);
-}
-
-
-</style>

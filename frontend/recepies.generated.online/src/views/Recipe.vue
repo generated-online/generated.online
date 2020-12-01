@@ -1,34 +1,48 @@
 <template>
-    <div class="recipe-container">
+    <v-card class="info-container recipe-container">
         <div v-if='recipe'>
-<!--            <EmojieBackground :recipe="recipe" emojiContainerSize='7em' :opacity="0.3"/>-->
-            <div style="min-height: 100vh">
-                <div class="title-container">
-                    <h1 class="recipe-title text-span dynamic-font-size">
-                        {{ recipe.title }}
-                    </h1>
-                    <Voting class="recipe-vote dynamic-font-size text-span" :recipe='recipe'/>
-                </div>
-
-                <div class="recipe-body">
-                    <!-- ZUTATEN -->
-                    <div class="ingredients text-span">
-                        <div class="ingredient" :key="ingredient+String(Math.floor(Math.random() * 100))"
-                             v-for="ingredient in recipe.ingredients">
-                            <span>{{ ingredient }}</span>
+            <v-container>
+                <v-row
+                        no-gutters
+                >
+                    <v-col>
+                        <div :class="['text-sm-h3', 'text-md-h2', 'text-h4', 'pb-12', {'text-center': $vuetify.breakpoint.xs}]"
+                             style="word-break: break-word">
+                            {{ recipe.title }}
                         </div>
-                        <div class="divider"></div>
+                    </v-col>
+                    <v-col cols="12" sm="auto">
+                        <div :style="{'width': $vuetify.breakpoint.xs? '30%':'100%', 'margin': 'auto'}">
+                            <Voting style="border: 1px solid black" :recipe='recipe'/>
+                        </div>
+                    </v-col>
+                </v-row>
+            </v-container>
+            <!--            <div class="title-container">-->
+            <!--                <h1 class="recipe-title text-span dynamic-font-size">-->
+            <!--                    {{ recipe.title }}-->
+            <!--                </h1>-->
+            <!--                <Voting class="recipe-vote dynamic-font-size text-span" :recipe='recipe'/>-->
+            <!--            </div>-->
+
+            <div class="recipe-body">
+                <!-- ZUTATEN -->
+                <div class="ingredients text-span">
+                    <div class="ingredient" :key="ingredient+String(Math.floor(Math.random() * 100))"
+                         v-for="ingredient in recipe.ingredients">
+                        <span>{{ ingredient }}</span>
                     </div>
-                    <!--  Instructions -->
-                    <span class="instruction text-span">
+                    <div class="divider"></div>
+                </div>
+                <!--  Instructions -->
+                <span class="instruction text-span">
             {{ recipe.instructions }}
           </span>
-                </div>
-                <!--  Postcard -->
-                <PayPalPostcard :recipe='recipe'/>
             </div>
+            <!--  Postcard -->
+            <PayPalPostcard :recipe='recipe'/>
         </div>
-    </div>
+    </v-card>
 </template>
 
 <script>
@@ -111,29 +125,19 @@ export default {
 
 <style scoped>
 .recipe-container {
-    text-align: left;
-    height: 100%;
-    padding: 2em 2em 2em 2em;
-    margin-bottom: 2em;
-}
-
-.title-container {
-    width: 100%;
-    overflow: hidden;
-    margin-bottom: 1.5em;
-    display: flex;
+    padding: 2em
 }
 
 .dynamic-font-size {
     font-size: calc(70vw / 15);
-    font-family: "Commissioner",serif;
+    font-family: "Commissioner", serif;
     padding: 0.2em 0.2em 0.2em 0.2em;
 }
 
 .recipe-title {
     word-wrap: break-word;
-    flex-grow: 1;
-    margin-right: 0.5em
+    /*flex-grow: 1;*/
+    /*margin-right: 0.5em*/
 }
 
 .recipe-vote {
@@ -178,11 +182,12 @@ export default {
     }
 
     .recipe-title {
-        word-wrap: break-word;
-        flex-grow: 0;
-        width: 80%;
-        margin: auto;
-        margin-bottom: 0.5em;
+        /*word-wrap: break-word;*/
+        /*text-align: center;*/
+        /*flex-grow: 0;*/
+        /*width: 80%;*/
+        /*margin: auto;*/
+        /*margin-bottom: 0.5em;*/
     }
 
     .recipe-vote {
