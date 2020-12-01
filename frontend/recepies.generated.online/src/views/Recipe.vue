@@ -1,19 +1,19 @@
 <template>
     <v-card class="info-container recipe-container">
         <div v-if='recipe'>
-            <v-container>
+            <v-container class="pb-6">
                 <v-row
                         no-gutters
                 >
                     <v-col>
-                        <div :class="['text-sm-h3', 'text-md-h2', 'text-h4', 'pb-12', {'text-center': $vuetify.breakpoint.xs}]"
+                        <div :class="['text-sm-h3', 'text-md-h2', 'text-h4', {'text-center': $vuetify.breakpoint.xs}]"
                              style="word-break: break-word">
                             {{ recipe.title }}
                         </div>
                     </v-col>
                     <v-col cols="12" sm="auto">
-                        <div :style="{'width': $vuetify.breakpoint.xs? '30%':'100%', 'margin': 'auto'}">
-                            <Voting style="border: 1px solid black" :recipe='recipe'/>
+                        <div :style="{'width': $vuetify.breakpoint.xs? '30%':'100%', 'margin': 'auto', 'padding-top': $vuetify.breakpoint.xs? '1em':'0'}">
+                            <Voting :recipe='recipe'/>
                         </div>
                     </v-col>
                 </v-row>
@@ -128,23 +128,6 @@ export default {
     padding: 2em
 }
 
-.dynamic-font-size {
-    font-size: calc(70vw / 15);
-    font-family: "Commissioner", serif;
-    padding: 0.2em 0.2em 0.2em 0.2em;
-}
-
-.recipe-title {
-    word-wrap: break-word;
-    /*flex-grow: 1;*/
-    /*margin-right: 0.5em*/
-}
-
-.recipe-vote {
-    float: right;
-    height: fit-content;
-}
-
 .recipe-body {
     padding-bottom: 1.5em;
     display: flex;
@@ -171,32 +154,6 @@ export default {
 }
 
 @media (max-width: 800px) {
-    .dynamic-font-size {
-        font-size: calc(70vw / 8);
-    }
-
-    .title-container {
-        text-align: center;
-        display: block;
-        align-items: center;
-    }
-
-    .recipe-title {
-        /*word-wrap: break-word;*/
-        /*text-align: center;*/
-        /*flex-grow: 0;*/
-        /*width: 80%;*/
-        /*margin: auto;*/
-        /*margin-bottom: 0.5em;*/
-    }
-
-    .recipe-vote {
-        float: unset;
-        width: fit-content;
-        height: fit-content;
-        margin: auto;
-    }
-
     .recipe-body {
         position: relative;
         overflow: hidden;

@@ -1,19 +1,19 @@
 <template>
-    <div class="vote-container">
-        <div style="font-size: 0.5em; vertical-align:top">Bewertungen</div>
+    <v-container class="text-sm-subtitle-1 text-md-h5 text-subtitle-2 text-center">
+        <div class=" pb-2">Bewertungen</div>
         <div class="horizontalLine"/>
-        <div style="width:max-content; display:flex">
-            <div class="mx-4 mt-2" style="width:fit-content; float:left;"> {{ recipe.votes }}</div>
-            <v-btn class="transparentButton mx-4 mt-3" :disabled="!possibleToVote" :loading="buttonLoading" fab dark
+        <div class="mt-4" style="width:max-content; display:flex; margin: auto">
+            <div class="mx-4 verticalCenter"> {{ recipe.votes }}
+            </div>
+            <v-btn class="transparentButton mx-4 verticalCenter" :disabled="!possibleToVote" :loading="buttonLoading" fab dark
                    small color="transparent" @click="upvote">
                 <span class="womanCook">👩‍🍳</span>
             </v-btn>
         </div>
-    </div>
+    </v-container>
 </template>
 
 <script>
-import firebase from "firebase";
 import recipeToColor from "@/functions/recipe_to_color";
 
 export default {
@@ -82,20 +82,9 @@ export default {
 
 <style scoped>
 .transparentButton {
-    margin-left: 20px;
-    width: calc(70vw / 15 * 1.3);
-    height: calc(70vw / 15 * 1.3);
-    font-size: inherit;
-    float: right;
-}
-
-.vote-container {
-    text-align: center;
-    font-family: "Commissioner";
-}
-
-.vcard {
-    border: none;
+    width: 1.5em;
+    height: 1.5em;
+    font-size: 2em;
 }
 
 .horizontalLine {
@@ -106,14 +95,8 @@ export default {
     font-size: 1px;
 }
 
-/*@media (max-width: 800px) {*/
-/*    .transparentButton {*/
-/*        width: calc(70vw / 8*1.3);*/
-/*        height: calc(70vw / 8*1.3);*/
-/*    }*/
-
-/*    .vcard {*/
-/*        width: 400px;*/
-/*    }*/
-/*}*/
+.verticalCenter{
+    display: flex;
+    align-items: center;
+}
 </style>
