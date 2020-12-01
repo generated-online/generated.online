@@ -10,21 +10,23 @@ import "firebase/firestore";
 import "firebase/analytics";
 
 import InstantSearch from 'vue-instantsearch'
+
 Vue.use(InstantSearch)
 
 import VueCookies from 'vue-cookies'
+
 Vue.use(VueCookies)
 Vue.$cookies.config('1y')
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDmmSPNA_lC7rtpuS3-Yx4dmy4BegppYIw",
-  authDomain: "generatedonline-a1cb0.firebaseapp.com",
-  databaseURL: "https://generatedonline-a1cb0.firebaseio.com",
-  projectId: "generatedonline-a1cb0",
-  storageBucket: "generatedonline-a1cb0.appspot.com",
-  messagingSenderId: "988309438314",
-  appId: "1:988309438314:web:0db27d9fa52f9108172f13",
-  measurementId: "G-P84D64G1BB"
+    apiKey: "AIzaSyDmmSPNA_lC7rtpuS3-Yx4dmy4BegppYIw",
+    authDomain: "generatedonline-a1cb0.firebaseapp.com",
+    databaseURL: "https://generatedonline-a1cb0.firebaseio.com",
+    projectId: "generatedonline-a1cb0",
+    storageBucket: "generatedonline-a1cb0.appspot.com",
+    messagingSenderId: "988309438314",
+    appId: "1:988309438314:web:0db27d9fa52f9108172f13",
+    measurementId: "G-P84D64G1BB"
 };
 
 firebase.default.initializeApp(firebaseConfig);
@@ -34,11 +36,18 @@ Vue.config.productionTip = false;
 
 Vue.prototype.$analytics = firebase.default.analytics();
 
+
+// vue dev plugin
+Vue.config.devtools = process.env.NODE_ENV === 'development'
+
 firebase.default.auth().onAuthStateChanged(() => {
-  new Vue({
-    router,
-    store,
-    render: h => h(App),
-    vuetify
-  }).$mount('#app')
+    new Vue({
+        router,
+        store,
+        render: h => h(App),
+        vuetify
+    }).$mount('#app')
 })
+
+// vue dev plugin
+window.__VUE_DEVTOOLS_GLOBAL_HOOK__.Vue = app.constructor
