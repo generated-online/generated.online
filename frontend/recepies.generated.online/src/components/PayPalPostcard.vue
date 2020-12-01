@@ -189,7 +189,7 @@ export default {
 
 <style scoped>
 
-input::placeholder {
+address input::placeholder {
     color: black !important
 }
 
