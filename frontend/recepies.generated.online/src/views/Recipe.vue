@@ -1,7 +1,7 @@
 <template>
     <div class="recipe-container">
         <div v-if='recipe'>
-            <EmojieBackground :recipe="recipe" emojiContainerSize='7em' :opacity="0.3"/>
+<!--            <EmojieBackground :recipe="recipe" emojiContainerSize='7em' :opacity="0.3"/>-->
             <div style="min-height: 100vh">
                 <div class="title-container">
                     <h1 class="recipe-title text-span dynamic-font-size">
@@ -99,7 +99,8 @@ export default {
             };
 
             this.$emit('shareText', 'Schau dir dieses coole KI generierte Rezept an: ' + this.recipe['title']);
-            this.$emit('recipeId', this.recipe.id);
+            // this.$emit('recipeId', this.recipe.id);
+            this.$emit('recipe', this.recipe);
             if (this.id === undefined) {
                 this.$router.replace("/recipe/" + doc.id);
             }

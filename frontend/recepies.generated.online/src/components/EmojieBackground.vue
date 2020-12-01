@@ -1,5 +1,5 @@
 <template>
-    <div class="background" :style="backgroundMargin+' background: var(--bg-color)'">
+    <div class="background" :style="backgroundMargin+' background: '+color">
         <div v-for='_row in numRow' :key="_row">
             <!-- uneven rows vue starts indexing at 1 lol-->
             <div :style="row">
@@ -40,6 +40,10 @@
             "opacity": {
                 type: Number,
                 default: 0.2
+            },
+            "color": {
+                type: String,
+                default: "lightblue"
             }
         },
         data() {
@@ -180,9 +184,6 @@
             }
         },
         methods: {
-            getRandomNumber(min, max) {
-                return Math.random() * (max - min) + min;
-            },
             shuffleArray(a) {
                 for (let i = a.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
@@ -285,6 +286,14 @@
                 this.setupMatchinEmos()
 
             })
+        },
+        watch:{
+            "recipe": function (){
+                console.log("recipe found")
+                this.calculateElementsInRow()
+                this.calculateNumRows()
+                this.setupMatchinEmos()
+            }
         },
         computed: {
             emojiContainer() {

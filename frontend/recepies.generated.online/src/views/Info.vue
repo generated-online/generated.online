@@ -1,6 +1,5 @@
 <template>
     <div class="info-container">
-        <EmojieBackground :opacity="0.5" />
         <h1 class=text-span style="font-size:3em">Was ist das hier?</h1>
         <br>
         <h2 class="project-description">
@@ -50,7 +49,7 @@
         name: "info",
         created() {
             this.$emit('shareText', "Schau dir diese coolen von einer KI generierten Rezepte an!");
-            this.$emit('recipeId', null);
+            this.$emit('recipe', null);
         }
     };
 </script>

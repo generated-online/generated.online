@@ -1,6 +1,5 @@
 <template>
     <div>
-        <EmojieBackground :opacity="0.5" />
         <div class="info-container">
             <h1 style="text-align:center; margin-bottom:2em; font-size: 5em"> <span class="text-span">
                     KI generierte Rezepte!</span>
@@ -23,7 +22,7 @@
         },
         created() {
             this.$emit('shareText', "Schau dir diese coolen von einer KI generierten Rezepte an!");
-            this.$emit('recipeId', null);
+            this.$emit('recipe', null);
         }
     };
 </script>
