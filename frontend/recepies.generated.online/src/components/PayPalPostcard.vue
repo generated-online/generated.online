@@ -189,8 +189,8 @@ export default {
 
 <style scoped>
 
-input::placeholder {
-    color: black
+address input::placeholder {
+    color: black !important
 }
 
 h3 {
