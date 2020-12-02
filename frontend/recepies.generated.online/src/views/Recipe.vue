@@ -18,20 +18,39 @@
                     </v-col>
                 </v-row>
             </v-container>
-            <div class="recipe-body">
-                <!-- ZUTATEN -->
-                <div class="ingredients text-span">
-                    <div class="ingredient" :key="ingredient+String(Math.floor(Math.random() * 100))"
-                         v-for="ingredient in recipe.ingredients">
-                        <span>{{ ingredient }}</span>
-                    </div>
-                    <div class="divider"></div>
-                </div>
-                <!--  Instructions -->
-                <span class="instruction text-span">
+            <v-container class="pb-6">
+                <v-row
+                        no-gutters
+                >
+                    <v-col cols="12" md="auto">
+                        <!-- ZUTATEN -->
+                        <div class="text-sm-h5 text-md-h5 subtitle-2">
+                            <v-container>
+                                <!--                                starting from md the ingredients should only have the width of min content-->
+                                <v-row no-gutters :style="{'width': !$vuetify.breakpoint.md? 'auto':'min-content'}">
+                                    <template v-for="(ingredient, n) in recipe.ingredients">
+                                        <v-col :key="n" style="width: max-content">
+                                            {{ ingredient }}
+                                        </v-col>
+                                        <v-responsive
+                                                v-if="n%2 === 1 || !$vuetify.breakpoint.smOnly"
+                                                :key="`width-${n}`"
+                                                width="100%"
+                                        ></v-responsive>
+                                    </template>
+                                </v-row>
+                            </v-container>
+                        </div>
+                    </v-col>
+                    <v-divider vertical inset v-if="$vuetify.breakpoint.md"></v-divider>
+                    <v-col>
+                        <!--  Instructions -->
+                        <span class="instruction text-span">
             {{ recipe.instructions }}
           </span>
-            </div>
+                    </v-col>
+                </v-row>
+            </v-container>
             <!--  Postcard -->
             <PayPalPostcard :recipe='recipe'/>
         </div>

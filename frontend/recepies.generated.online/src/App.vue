@@ -97,4 +97,9 @@ $softPink: var(--bg-color);
   margin: 4em 0em 2em 0em;
   background-color: rgba(255, 255, 255, 0.85) !important;
 }
+
+.v-divider {
+  border-color: rgba(0, 0, 0, 0.3) !important;
+}
+
 </style>
