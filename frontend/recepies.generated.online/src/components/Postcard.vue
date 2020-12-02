@@ -68,6 +68,7 @@
 </script>
 
 <style scoped>
+
     p {
         margin: 0 !important;
         padding: 0 !important
@@ -94,6 +95,8 @@
         float: right;
         display: block;
         font-size: 2em;
+                padding-left: 1em;
+
     }
 
     .address {
@@ -104,8 +107,8 @@
         left: 0;
     }
 
-    .address input {
-        padding-left: 1em
+    input::placeholder {
+        color: black !important;
     }
 
     .half-postcard {
@@ -136,6 +139,7 @@
     .postcard-inner-back {
         float: left;
         height: 100%;
+        width: 100%;
     }
 
     .ad {
