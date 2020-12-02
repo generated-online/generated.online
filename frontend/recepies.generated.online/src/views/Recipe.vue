@@ -22,14 +22,21 @@
                 <v-row
                         no-gutters
                 >
-                    <v-col cols="12" md="auto">
+                    <v-col cols="12" md="auto" lg="auto">
                         <!-- ZUTATEN -->
-                        <div class="text-sm-h5 text-md-h5 subtitle-2">
+                        <div :class="['text-sm-h6', 'text-md-h6', 'text-h6']"
+                             :style="{'margin':$vuetify.breakpoint.xs?'auto': '0'}">
                             <v-container>
                                 <!--                                starting from md the ingredients should only have the width of min content-->
-                                <v-row no-gutters :style="{'width': !$vuetify.breakpoint.md? 'auto':'min-content'}">
+                                <v-row no-gutters
+                                       :style="{'width': ($vuetify.breakpoint.sm)? 'auto':'min-content'}">
                                     <template v-for="(ingredient, n) in recipe.ingredients">
-                                        <v-col :key="n" style="width: max-content">
+                                        <v-col :key="n"
+                                               :style="{
+                                            'width': 'max-content',
+                                            'border-left': (n%2 === 1 && $vuetify.breakpoint.smOnly)?'1px solid rgba(0,0,0, 0.3)':'',
+                                            'padding-left': (n%2 === 1 && $vuetify.breakpoint.smOnly) ?'1em':'0'
+                                        }">
                                             {{ ingredient }}
                                         </v-col>
                                         <v-responsive
@@ -42,7 +49,8 @@
                             </v-container>
                         </div>
                     </v-col>
-                    <v-divider vertical inset v-if="$vuetify.breakpoint.md"></v-divider>
+                    <v-divider vertical inset v-if="!$vuetify.breakpoint.smAndDown"
+                               style="margin-right: 1em"></v-divider>
                     <v-col>
                         <!--  Instructions -->
                         <span class="instruction text-span">
@@ -51,6 +59,8 @@
                     </v-col>
                 </v-row>
             </v-container>
+            <v-divider></v-divider>
+
             <!--  Postcard -->
             <PayPalPostcard :recipe='recipe'/>
         </div>
@@ -140,90 +150,14 @@ export default {
     padding: 2em
 }
 
-.recipe-body {
-    padding-bottom: 1.5em;
-    display: flex;
-}
-
-.ingredient {
-    padding-bottom: 0.5em;
-    font-size: 1.2em;
-    white-space: nowrap
-}
-
-.ingredients {
-    width: fit-content;
-    padding: 2%
-}
 
 .instruction {
     font-size: 1.5em;
-    flex-grow: 1;
+    /*flex-grow: 1;*/
     text-align: justify;
     display: block;
-    padding: 2%;
-    margin-left: 2%;
+    /*padding: 2%;*/
+    /*margin-left: 2%;*/
 }
 
-@media (max-width: 800px) {
-    .recipe-body {
-        position: relative;
-        overflow: hidden;
-        display: block;
-    }
-
-    .ingredient {
-        padding-bottom: 0.5em;
-        width: 50%;
-        float: left;
-    }
-
-    .ingredients {
-        width: 100%;
-        margin-bottom: 2em;
-        float: left;
-        position: relative;
-    }
-
-    .instruction {
-        float: left;
-        margin-left: 0;
-    }
-
-    .divider {
-        position: absolute;
-        left: 48%;
-        top: 5%;
-        bottom: 5%;
-        border-left: 3px solid black;
-    }
-}
-
-@media (min-width: 500px) and (max-width: 600px) {
-    .ingredient {
-        font-size: 1em;
-        padding-bottom: 0.5em;
-        width: 50%;
-        float: left;
-    }
-
-    .divider {
-        border-left: 1.5px solid black
-    }
-}
-
-@media (max-width: 500px) {
-    .ingredient {
-        font-size: 1.4em;
-        padding-bottom: 0.5em;
-
-        width: 100%;
-        float: none;
-
-    }
-
-    .divider {
-        border-left: none;
-    }
-}
 </style>
