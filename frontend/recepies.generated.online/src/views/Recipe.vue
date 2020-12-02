@@ -12,19 +12,12 @@
                         </div>
                     </v-col>
                     <v-col cols="12" sm="auto">
-                        <div :style="{'width': $vuetify.breakpoint.xs? '30%':'100%', 'margin': 'auto', 'padding-top': $vuetify.breakpoint.xs? '1em':'0'}">
+                        <div :style="{'width': 'fit-content', 'margin': 'auto', 'padding-top': $vuetify.breakpoint.xs? '1em':'0'}">
                             <Voting :recipe='recipe'/>
                         </div>
                     </v-col>
                 </v-row>
             </v-container>
-            <!--            <div class="title-container">-->
-            <!--                <h1 class="recipe-title text-span dynamic-font-size">-->
-            <!--                    {{ recipe.title }}-->
-            <!--                </h1>-->
-            <!--                <Voting class="recipe-vote dynamic-font-size text-span" :recipe='recipe'/>-->
-            <!--            </div>-->
-
             <div class="recipe-body">
                 <!-- ZUTATEN -->
                 <div class="ingredients text-span">
