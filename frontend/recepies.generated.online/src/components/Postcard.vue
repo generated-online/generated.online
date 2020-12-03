@@ -1,17 +1,18 @@
 <template>
-    <div class="postcard-container" :style="'transform: scale(' + scaling()+'); transform-origin: top left'">
-        <div class="postcard-body postcard-cover">
+    <div :style="'transform: scale(' + scaling()+'); transform-origin: top left; width: '+(horizontal?'max-content':'min-content')">
+        <div class="postcard-body"
+             :style="{'margin-bottom': horizontal?0:bottomMargin, 'margin-right': horizontal?centerMargin:0, 'float':'left'}">
             <EmojieBackground :recipe="recipe" :opacity="1"/>
             <div class="postcard-inner">
                 <span>
                     <h1>{{ recipe.title }}</h1>
                 </span>
-                <span class="ad adPositionFront">gesendet mit recipes.generated.online</span>
+                <span class="ad">gesendet mit recipes.generated.online</span>
             </div>
         </div>
 
-        <div class="postcard-body" style="background:white ">
-            <div class="postcard-inner-back">
+        <div class="postcard-body" :style="{'background':'white', 'float': horizontal?'right':'left'}">
+            <div>
                 <div class="half-postcard">
                     <h2>{{ recipe.title }}</h2>
                     <p v-for="ingredient in recipe.ingredients" v-bind:key="ingredient">{{ ingredient }}</p>
@@ -32,7 +33,6 @@
             </div>
         </div>
     </div>
-
 </template>
 
 <script>
@@ -62,7 +62,7 @@ export default {
         },
         "horizontal": {
             type: Boolean,
-            default: true
+            default: false
         },
         "parentWidth": {
             type: Number,
@@ -72,7 +72,8 @@ export default {
     },
     data() {
         return {
-            scalingFactor: 0.1
+            "bottomMargin": "2em",
+            "centerMargin": "2em"
         }
     },
     components: {
@@ -82,28 +83,30 @@ export default {
         scaling() {
             let scaleFactor
             if (!this.horizontal) {
-                scaleFactor = this.parentWidth / 1440
-                this.$emit("height", scaleFactor*(1040*2))
-            } else {
-                scaleFactor = this.parentWidth / (1440 * 2)
-                this.$emit("height", scaleFactor*(1040))
 
+                scaleFactor = this.parentWidth / 1440
+            } else {
+                let em = 16;
+                scaleFactor = this.parentWidth / ((1440) * 2 + parseFloat(this.centerMargin) * em)
             }
+
+            this.$emit("height", this.scaledHeight(scaleFactor))
             return scaleFactor
+        },
+        scaledHeight(scaleFactor) {
+            let bottomMargin = 0;
+
+            if (this.$parent.$el) {
+                var em = parseFloat(getComputedStyle(this.$parent.$el).fontSize);
+                bottomMargin = (this.horizontal ? 0 : (parseFloat(this.bottomMargin) * em))
+            }
+            return scaleFactor * 1040 * (this.horizontal ? 1 : 2) + bottomMargin
         }
-    },
-    mounted() {
-        this.scalingFactor = this.scaling()
     }
 }
 </script>
 
 <style scoped>
-
-.postcard-container {
-    height: 100%;
-    width: min-content;
-}
 
 p {
     margin: 0 !important;
@@ -153,12 +156,8 @@ input,
     padding: 2%;
 }
 
-.postcard-cover {
-    margin-bottom: 50px;
-}
 
 .postcard-body {
-    float: left;
     position: relative;
     border: solid black 40px;
     width: 1440px;
@@ -170,10 +169,6 @@ input,
     height: 100%;
 }
 
-.postcard-inner-back {
-    float: left;
-    height: 100%;
-}
 
 .ad {
     font-size: 1.5em;
@@ -201,23 +196,5 @@ p {
 h2 {
     padding-bottom: 10px;
     font-size: 3em;
-}
-
-@media (max-width: 507px) {
-    .postcard-cover {
-        margin-bottom: 50px !important;
-    }
-}
-
-@media (max-width: 800px) {
-    .postcard-body {
-        float: left !important;
-    }
-
-    .postcard-cover {
-        margin-right: 80px;
-        margin-bottom: 0;
-    }
-
 }
 </style>

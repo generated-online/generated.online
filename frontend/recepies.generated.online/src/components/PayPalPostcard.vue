@@ -8,7 +8,7 @@
             <v-row
                     no-gutters
             >
-                <v-col cols="12"  md="4" lg="4" ref="postcardCol" :style="'height: ' +postcardHeight+'px'">
+                <v-col cols="12"  md="4" lg="4" ref="postcardCol" :style="'height: ' +postcardHeight+'px; overflow: hidden'">
                     <!-- Postcards -->
                     <Postcard :recipe='recipe'
                               :name='name'
