@@ -59,8 +59,6 @@
                     </v-col>
                 </v-row>
             </v-container>
-            <v-divider></v-divider>
-
             <!--  Postcard -->
             <PayPalPostcard :recipe='recipe'/>
         </div>
@@ -153,11 +151,8 @@ export default {
 
 .instruction {
     font-size: 1.5em;
-    /*flex-grow: 1;*/
     text-align: justify;
     display: block;
-    /*padding: 2%;*/
-    /*margin-left: 2%;*/
 }
 
 </style>
