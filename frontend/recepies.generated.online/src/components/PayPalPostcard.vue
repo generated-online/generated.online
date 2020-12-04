@@ -218,16 +218,17 @@ input[type=number] {
     -moz-appearance: textfield;
 }
 
+input::placeholder {
+    color: rgba(255, 255, 255, 0.5) !important;
+}
 
 .center-button {
     width: 100%;
-    /* float: left; */
     text-align: center
 }
 
 .center-button {
     width: 100%;
-    /* float: left; */
     text-align: center
 }
 
