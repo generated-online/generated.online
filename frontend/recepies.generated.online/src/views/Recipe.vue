@@ -1,5 +1,5 @@
 <template>
-    <v-card :class="['mb-16',{'mt-8':$vuetify.breakpoint.mdAndUp}]">
+    <v-card :class="['mb-16','info-container',{'mt-8':$vuetify.breakpoint.mdAndUp}]">
         <div v-if='recipe'>
             <v-container class="pb-6">
                 <v-row

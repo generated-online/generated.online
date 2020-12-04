@@ -94,7 +94,6 @@ $softPink: var(--bg-color);
 }
 
 .info-container {
-  margin: 4em 0em 2em 0em;
   background-color: rgba(255, 255, 255, 0.85) !important;
 }
 
