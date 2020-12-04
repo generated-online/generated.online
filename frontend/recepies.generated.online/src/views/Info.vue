@@ -1,6 +1,6 @@
 <template>
-    <v-card>
-        <v-container :class="['info-container','mb-16',{'mt-8': $vuetify.breakpoint.mdAndUp}]">
+    <v-card class="info-container">
+        <v-container :class="['mb-16',{'mt-8': $vuetify.breakpoint.mdAndUp}]">
             <h1 class=text-span style="font-size:3em">Was ist das hier?</h1>
             <br>
             <h2 class="project-description">
