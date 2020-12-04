@@ -54,10 +54,12 @@
                     <v-col>
                         <!--  Instructions -->
                         <span class="instruction text-span">
-            {{ recipe.instructions }}
-          </span>
+                            {{ recipe.instructions }}
+                        </span>
                     </v-col>
                 </v-row>
+                <v-divider
+                        style="width: 20%; min-width: 4em; margin: auto; margin-top: 2em; border-width: thin; border-color: black !important"></v-divider>
             </v-container>
             <!--  Postcard -->
             <PayPalPostcard :recipe='recipe'/>
