@@ -37,34 +37,35 @@
                         <br>
                         <h3>Die Karte geht an:</h3>
                         <div class="address">
-                            <input type="text" placeholder="❌ Name" v-model="name">
-                            <input type="text" placeholder="❌ Straße" v-model="street">
+                            <input type="text" placeholder="❌ Name" class="shady"v-model="name">
+                            <input type="text" placeholder="❌ Straße" class="shady"v-model="street">
                             <br>
-                            <input type="number" placeholder="❌ Postleitzahl" v-model.number="plz">
-                            <input type="text" placeholder="❌ Ort" v-model="city">
-                            <div class="countrySelect">
+                            <input type="number" placeholder="❌ Postleitzahl" class="shady"v-model.number="plz">
+                            <input type="text" placeholder="❌ Ort" class="shady"v-model="city">
+                            <div class="countrySelectshady">
                                 <label for="countries">Land: </label>
-                                <select name="countries" id="countries" v-model="country">
+                                <select name="countries" id="countries" v-model="country"style="color: white">
                                     <option value="DE">Deutschland</option>
                                     <option value="AT">Österreich</option>
                                     <option value="CH">Schweiz</option>
                                 </select>
                             </div>
                             <br>
-                            <div class="addressError" v-if='!showPaypalButton()'>
-                                <div> ❌<b>Bitte alle Felder ausfüllen!</b></div>
-                            </div>
                             <h3 class="moneyAsking">Du unterstützt uns mit:</h3>
 
 
                             <div class="moneySpan">
                                 <div>{{ price.toFixed(2) }} € +</div>
-                                <div class="ml-1" style="width: min-content">
-                                    <input class="moneyInput" type="number" :min='0' :step='0.5' v-model.number="money">
+                                <div class="ml-1shady" style="width: min-content">
+                                    <input class="moneyInput" style="color: white"type="number" :min='0' :step='0.5' v-model.number="money">
                                 </div>
-                                <div>€ <b> = {{ money ? (price + money).toFixed(2) : price.toFixed(2) }} €</b></div>
+                                <div>€ <b> = {{ money ? (price + money).toFixed(2) : price.toFixed(2) }} €</b></div></div>
 
-                                <MoneyBar :money="money" :price="price"/>
+                                <h3 class="moneyAsking">So wird dein Geld verwendet:</h3>
+                    <MoneyBar :money="money" :price="price" />
+
+                    <div class="addressError shady" v-if='!showPaypalButton()'>
+                        <div> ❌<b>Bitte alle Felder ausfüllen!</b></div>
                             </div>
                             <h3 class="moneyAsking" v-if='showPaypalButton()'>Jetzt {{ (price + money).toFixed(2) }}€
                                 bezahlen:</h3>
@@ -72,7 +73,7 @@
 
                         <Paypal v-if='showPaypalButton()' :recipeID='recipe.id'
                                 :sendTo='{name: name, street: street, plz: plz, city:city, country: country}'
-                                :amount='price+money'/>
+                                :amount='price+money'style="text-align: center"/>
                         <div v-if="$vuetify.breakpoint.xs" class="center-button" style="margin-top: 1em">
                             <v-btn @click="showMore=!showMore" class="black-button">Weniger</v-btn>
                         </div>
@@ -84,48 +85,48 @@
 </template>
 
 <script>
-import Postcard from "@/components/Postcard"
-import Paypal from "@/components/Paypal"
-import MoneyBar from "@/components/MoneyBar";
+    import Postcard from "@/components/Postcard"
+    import Paypal from "@/components/Paypal"
+    import MoneyBar from "@/components/MoneyBar";
 
-export default {
-    components: {
-        MoneyBar,
-        Postcard,
-        Paypal,
-    },
-    props: {
-        "recipe": {
-            type: Object,
-            default: undefined
+    export default {
+        components: {
+            MoneyBar,
+            Postcard,
+            Paypal,
         },
-    },
-    data() {
-        return {
-            name: '',
-            street: '',
-            plz: '',
-            city: '',
-            country: 'DE',
-            price: 3.50,
-            money: 0.5,
-            showMore: false,
+        props: {
+            "recipe": {
+                type: Object,
+                default: undefined
+            },
+        },
+        data() {
+            return {
+                name: '',
+                street: '',
+                plz: '',
+                city: '',
+                country: 'DE',
+                price: 3.50,
+                money: 0.5,
+                showMore: false,
             postcardWidth: this.calculatePostcardWidth(),
             postcardHeight: 100
-        };
-    },
-    created() {
-        window.addEventListener('resize', () => {
-            this.postcardWidth = this.calculatePostcardWidth();
+            };
+        },
+        created() {
+            window.addEventListener('resize', () => {
+                this.postcardWidth = this.calculatePostcardWidth();
         })
     },
     mounted() {
         this.postcardWidth = this.calculatePostcardWidth();
-    },
-    watch: {
-        money: function (newVal) {
-            newVal < 0 ? this.money = 0 : null
-        }
+        },
+        watch: {
+            money: function (newVal) {
+                newVal < 0 ? this.money = 0 : null
+            }
     },
     methods: {
         showPaypalButton() {
@@ -135,104 +136,104 @@ export default {
             return !(this.plz.length + this.city.length === 0) ? this.plz + " " + this.city : ""
         },
         calculatePostcardWidth() {
-            if ("postcardCol" in this.$refs) {
+                if ("postcardCol" in this.$refs) {
                 return this.$refs.postcardCol.clientWidth
             } else {
                 return 100.
+                }
             }
         }
     }
-}
 </script>
 
 
 <style scoped>
+    h3 {
+        padding-bottom: 1em;
+    }
 
-input::placeholder {
-    color: black
-}
+    .countrySelect,
+    .address input {
+        width: 48%;
+        float: left;
+        height: 2.5em;
+        padding-left: 1em;
+        padding-top: 0.3em;
+        padding-bottom: 0.3em;
+        margin: 0.25em;
+    }
 
-h3 {
-    padding-bottom: 1em;
-}
 
-.countrySelect,
-.address input {
-    width: 48%;
-    float: left;
-    height: 2.5em;
-    border: 2px dashed black;
-    padding-left: 1em;
-    padding-top: 0.3em;
-    padding-bottom: 0.3em;
-    margin: 0.25em;
+    .addressError {
+        float: left;
+        width: 100%;
+        padding: 0.5em;
+        text-align: center;
+        margin-top: 1em;
+    }
 
-}
+    .countrySelect select {
+        padding-left: 0.25em;
+        padding-right: 0.25em;
+    }
 
-.address input::placeholder {
-    color: rgba(1, 1, 1, .8) !important;
-}
+    .address {
+        overflow: auto;
+        padding: 10px;
+    }
 
-.addressError {
-    float: left;
-    width: 100%;
-    padding: 0.5em;
-    text-align: center;
-    color: red;
-    background: black;
-    margin-top: 1em;
-}
+    .moneyAsking {
+        width: 100%;
+        float: left;
+        margin-top: 1em
+    }
 
-.countrySelect select {
-    padding-left: 0.25em;
-    padding-right: 0.25em;
-}
+    .moneySpan {
+        width: 100%;
+        float: left;
+        overflow: visible;
+    }
 
-.address {
-    overflow: auto;
-}
+    .moneySpan div {
+        display: inline-flex;
+    }
 
-.moneyAsking {
-    width: 100%;
-    float: left;
-    margin-top: 1em
-}
+    .moneyInput {
+        min-width: 4em;
+        padding: 0 !important;
+        margin: 0 !important;
+        text-align: center;
+    }
 
-.moneySpan {
-    width: 100%;
-    float: left;
-    overflow: visible;
-}
+    /* hide arrows in number input field */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
 
-.moneySpan div {
-    display: inline-flex;
-}
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
 
-.moneyInput {
-    min-width: 4em;
-    padding: 0 !important;
-    margin: 0 !important;
-    text-align: center;
-}
+    .dynamic-font-size {
+        font-size: calc(70vw / 15);
+        font-family: "Commissioner", serif;
+        padding: 0.2em 0.2em 0.2em 0.2em;
+    }
 
-/* hide arrows in number input field */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
-input[type=number] {
-    -moz-appearance: textfield;
-}
-
+    .center-button {
+        width: 100%;
+        /* float: left; */
+        text-align: center
+    }
 .center-button {
     width: 100%;
     /* float: left; */
     text-align: center
 }
 
-@media (max-width: 507px) {
+    @media (max-width: 507px) {
 
     .countrySelect,
     .address input {
@@ -241,4 +242,27 @@ input[type=number] {
         margin-right: 0 !important;
     }
 }
+        .countrySelect,
+        .address input {
+            width: 100% !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+        }
+    }
+
+    @media (max-width: 800px) {
+        .dynamic-font-size {
+            font-size: calc(70vw / 8);
+        }
+
+        .postcard {
+            width: 100% !important;
+        }
+
+        .paypal-container {
+            width: 100% !important;
+            margin: 0 !important
+        }
+
+    }
 </style>

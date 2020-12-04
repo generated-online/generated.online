@@ -114,6 +114,11 @@ export default {
 
 <style scoped>
 
+    p {
+        margin: 0 !important;
+        padding: 0 !important
+    }
+
 p {
     margin: 0 !important;
     padding: 0 !important
@@ -139,7 +144,9 @@ input {
     float: right;
     display: block;
     font-size: 2em;
-}
+padding-left: 1em;
+
+    }
 
 .address {
     border-left: solid black 4px;
@@ -149,8 +156,8 @@ input {
     left: 0;
 }
 
-.address input {
-    padding-left: 1em
+ input::placeholder {
+    color: black !important;
 }
 
 .half-postcard {
@@ -173,6 +180,16 @@ input {
     padding: 140px;
     height: 100%;
 }
+    .postcard-inner {
+        padding: 140px;
+        height: 100%;
+    }
+
+    .postcard-inner-back {
+        float: left;
+        height: 100%;
+        width: 100%;
+    }
 
 
 .ad {
