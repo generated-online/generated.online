@@ -125,14 +125,6 @@ export default {
     watch: {
         money: function (newVal) {
             newVal < 0 ? this.money = 0 : null
-        },
-        showMore: function (newVal) {
-            if (newVal) {
-                // need timeout otherwise the size is not changed yet :/
-                setTimeout(() => {
-                    window.dispatchEvent(new Event('resize'))
-                }, 10);
-            }
         }
     },
     methods: {

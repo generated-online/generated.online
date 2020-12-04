@@ -1,5 +1,5 @@
 <template>
-    <div :style="'transform: scale(' + scaling()+'); transform-origin: top left; width: '+(horizontal?'max-content':'min-content')">
+    <div :style="'transform: scale(' + scaling()+'); transform-origin: top left; width: '+(horizontal?'max-content':'min-content')+'; height: '+height+'px'">
         <div class="postcard-body"
              :style="{'margin-bottom': horizontal?0:bottomMargin, 'margin-right': horizontal?centerMargin:0, 'float':'left'}">
             <EmojieBackground :recipe="recipe" :opacity="1" color="var(--bg-color)"/>
@@ -75,7 +75,8 @@ export default {
     data() {
         return {
             "bottomMargin": "2em",
-            "centerMargin": "2em"
+            "centerMargin": "2em",
+            height: 100
         }
     },
     components: {
@@ -91,8 +92,11 @@ export default {
                 let em = 16;
                 scaleFactor = this.parentWidth / ((1440) * 2 + parseFloat(this.centerMargin) * em)
             }
+            let height = this.scaledHeight(scaleFactor)
+            this.$emit("height", height)
 
-            this.$emit("height", this.scaledHeight(scaleFactor))
+            this.height = height / scaleFactor
+
             return scaleFactor
         },
         scaledHeight(scaleFactor) {
