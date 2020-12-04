@@ -8,7 +8,8 @@
             <v-row
                     no-gutters
             >
-                <v-col cols="12"  md="4" lg="4" ref="postcardCol" :style="'height: ' +postcardHeight+'px; overflow: hidden'">
+                <v-col cols="12" md="4" lg="4" ref="postcardCol"
+                       :style="'height: ' +postcardHeight+'px; overflow: hidden'">
                     <!-- Postcards -->
                     <Postcard :recipe='recipe'
                               :name='name'
@@ -21,14 +22,17 @@
                               @height="postcardHeight=$event"
                     />
                 </v-col>
-                <v-col>
+                <v-col :style="{
+                                'margin-left': $vuetify.breakpoint.mdAndUp? '2em': '0',
+                                'margin-top': !$vuetify.breakpoint.mdAndUp? '2em': '0'
+                                }">
                     <!--  PayPal stuff -->
                     <div class="center-button">
                         <v-btn v-if='!showMore && $vuetify.breakpoint.xsOnly' @click="showMore=!showMore"
                                class="black-button">Erfahre mehr
                         </v-btn>
                     </div>
-                    <div v-if='showMore || !$vuetify.breakpoint.xsOnly' text-span>
+                    <div v-if='showMore || !$vuetify.breakpoint.xsOnly'>
                         <h1>Sichere dir eine einzigartige Rezept-Karte jetzt ab {{ price.toFixed(2) }} €!</h1>
                         <br>
                         <h3>Die Karte geht an:</h3>

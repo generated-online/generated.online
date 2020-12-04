@@ -2,11 +2,13 @@
     <div :style="'transform: scale(' + scaling()+'); transform-origin: top left; width: '+(horizontal?'max-content':'min-content')">
         <div class="postcard-body"
              :style="{'margin-bottom': horizontal?0:bottomMargin, 'margin-right': horizontal?centerMargin:0, 'float':'left'}">
-            <EmojieBackground :recipe="recipe" :opacity="1"/>
+            <EmojieBackground :recipe="recipe" :opacity="1" color="var(--bg-color)"/>
             <div class="postcard-inner">
-                <span>
-                    <h1>{{ recipe.title }}</h1>
-                </span>
+                <h1>
+                    <span>
+                        {{ recipe.title }}
+                    </span>
+                </h1>
                 <span class="ad">gesendet mit recipes.generated.online</span>
             </div>
         </div>
@@ -100,7 +102,7 @@ export default {
                 var em = parseFloat(getComputedStyle(this.$parent.$el).fontSize);
                 bottomMargin = (this.horizontal ? 0 : (parseFloat(this.bottomMargin) * em))
             }
-            return scaleFactor * 1040 * (this.horizontal ? 1 : 2) + bottomMargin
+            return scaleFactor * (1040 * (this.horizontal ? 1 : 2) + bottomMargin)
         }
     }
 }
@@ -122,8 +124,7 @@ p {
     right: 4%;
 }
 
-input,
-.input {
+input {
     padding-top: 10px;
     margin-top: 10px;
     width: 70%;
@@ -180,7 +181,7 @@ input,
 
 .adPositionBack {
     position: absolute;
-    bottom: 0%;
+    bottom: 0;
     left: 5%;
     margin-left: 0.35em;
 }
