@@ -1,5 +1,5 @@
 <template>
-    <v-card class="info-container recipe-container">
+    <v-card :class="['mb-16',{'mt-8':$vuetify.breakpoint.mdAndUp}]">
         <div v-if='recipe'>
             <v-container class="pb-6">
                 <v-row
@@ -62,7 +62,9 @@
                         style="width: 20%; min-width: 4em; margin: auto; margin-top: 2em; border-width: thin; border-color: black !important"></v-divider>
             </v-container>
             <!--  Postcard -->
-            <PayPalPostcard :recipe='recipe'/>
+            <v-container>
+                <PayPalPostcard :recipe='recipe'/>
+            </v-container>
         </div>
     </v-card>
 </template>
@@ -146,9 +148,6 @@ export default {
 </script>
 
 <style scoped>
-.recipe-container {
-    padding: 2em
-}
 
 
 .instruction {
