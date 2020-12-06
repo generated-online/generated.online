@@ -65,10 +65,10 @@
 
                             <h3 class="moneyAsking">So wird dein Geld verwendet:</h3>
                             <MoneyBar :money="money" :price="price"/>
-
                             <div class="addressError shady" v-if='!showPaypalButton()'>
                                 <div> ❌<b>Bitte alle Felder ausfüllen!</b></div>
                             </div>
+
                             <h3 class="moneyAsking" v-if='showPaypalButton()'>Jetzt {{ (price + money).toFixed(2) }}€
                                 bezahlen:</h3>
                         </div>
@@ -160,7 +160,6 @@ h3 {
 .address input {
     width: 48%;
     float: left;
-    height: 2.5em;
     padding-left: 1em;
     padding-top: 0.3em;
     padding-bottom: 0.3em;
