@@ -1,34 +1,72 @@
 <template>
-    <div class="recipe-container">
+    <v-card :class="['mb-16','info-container',{'mt-8':$vuetify.breakpoint.mdAndUp}]">
         <div v-if='recipe'>
-            <EmojieBackground :recipe="recipe" emojiContainerSize='7em' :opacity="0.3"/>
-            <div style="min-height: 100vh">
-                <div class="title-container">
-                    <h1 class="recipe-title text-span dynamic-font-size">
-                        {{ recipe.title }}
-                    </h1>
-                    <Voting class="recipe-vote dynamic-font-size text-span" :recipe='recipe'/>
-                </div>
-
-                <div class="recipe-body">
-                    <!-- ZUTATEN -->
-                    <div class="ingredients text-span">
-                        <div class="ingredient" :key="ingredient+String(Math.floor(Math.random() * 100))"
-                             v-for="ingredient in recipe.ingredients">
-                            <span>{{ ingredient }}</span>
+            <v-container class="pb-6">
+                <v-row
+                        no-gutters
+                >
+                    <v-col>
+                        <div :class="['text-sm-h3', 'text-md-h2', 'text-h4', {'text-center': $vuetify.breakpoint.xs}]"
+                             style="word-break: break-word">
+                            {{ recipe.title }}
                         </div>
-                        <div class="divider"></div>
-                    </div>
-                    <!--  Instructions -->
-                    <span class="instruction text-span">
-            {{ recipe.instructions }}
-          </span>
-                </div>
-                <!--  Postcard -->
+                    </v-col>
+                    <v-col cols="12" sm="auto">
+                        <div :style="{'width': 'fit-content', 'margin': 'auto', 'padding-top': $vuetify.breakpoint.xs? '1em':'0'}">
+                            <Voting :recipe='recipe'/>
+                        </div>
+                    </v-col>
+                </v-row>
+            </v-container>
+            <v-container class="pb-6">
+                <v-row
+                        no-gutters
+                >
+                    <v-col cols="12" md="auto" lg="auto">
+                        <!-- ZUTATEN -->
+                        <div :class="['text-sm-h6', 'text-md-h6', 'text-h6']"
+                             :style="{'margin':$vuetify.breakpoint.xs?'auto': '0'}">
+                            <v-container>
+                                <!--                                starting from md the ingredients should only have the width of min content-->
+                                <v-row no-gutters
+                                       :style="{'width': ($vuetify.breakpoint.sm)? 'auto':'min-content'}">
+                                    <template v-for="(ingredient, n) in recipe.ingredients">
+                                        <v-col :key="n"
+                                               :style="{
+                                            'width': 'max-content',
+                                            'border-left': (n%2 === 1 && $vuetify.breakpoint.smOnly)?'1px solid rgba(0,0,0, 0.3)':'',
+                                            'padding-left': (n%2 === 1 && $vuetify.breakpoint.smOnly) ?'1em':'0'
+                                        }">
+                                            {{ ingredient }}
+                                        </v-col>
+                                        <v-responsive
+                                                v-if="n%2 === 1 || !$vuetify.breakpoint.smOnly"
+                                                :key="`width-${n}`"
+                                                width="100%"
+                                        ></v-responsive>
+                                    </template>
+                                </v-row>
+                            </v-container>
+                        </div>
+                    </v-col>
+                    <v-divider vertical inset v-if="!$vuetify.breakpoint.smAndDown"
+                               style="margin-right: 1em"></v-divider>
+                    <v-col>
+                        <!--  Instructions -->
+                        <span class="instruction text-span">
+                            {{ recipe.instructions }}
+                        </span>
+                    </v-col>
+                </v-row>
+                <v-divider
+                        style="width: 20%; min-width: 4em; margin: auto; margin-top: 2em; border-width: thin; border-color: black !important"></v-divider>
+            </v-container>
+            <!--  Postcard -->
+            <v-container>
                 <PayPalPostcard :recipe='recipe'/>
-            </div>
+            </v-container>
         </div>
-    </div>
+    </v-card>
 </template>
 
 <script>
@@ -99,7 +137,8 @@ export default {
             };
 
             this.$emit('shareText', 'Schau dir dieses coole KI generierte Rezept an: ' + this.recipe['title']);
-            this.$emit('recipeId', this.recipe.id);
+            // this.$emit('recipeId', this.recipe.id);
+            this.$emit('recipe', this.recipe);
             if (this.id === undefined) {
                 this.$router.replace("/recipe/" + doc.id);
             }
@@ -109,146 +148,12 @@ export default {
 </script>
 
 <style scoped>
-.recipe-container {
-    text-align: left;
-    height: 100%;
-    padding: 2em 2em 2em 2em;
-    margin-bottom: 2em;
-}
 
-.title-container {
-    width: 100%;
-    overflow: hidden;
-    margin-bottom: 1.5em;
-    display: flex;
-}
-
-.dynamic-font-size {
-    font-size: calc(70vw / 15);
-    font-family: "Commissioner",serif;
-    padding: 0.2em 0.2em 0.2em 0.2em;
-}
-
-.recipe-title {
-    word-wrap: break-word;
-    flex-grow: 1;
-    margin-right: 0.5em
-}
-
-.recipe-vote {
-    float: right;
-    height: fit-content;
-}
-
-.recipe-body {
-    padding-bottom: 1.5em;
-    display: flex;
-}
-
-.ingredient {
-    padding-bottom: 0.5em;
-    font-size: 1.2em;
-    white-space: nowrap
-}
-
-.ingredients {
-    width: fit-content;
-    padding: 2%
-}
 
 .instruction {
     font-size: 1.5em;
-    flex-grow: 1;
     text-align: justify;
     display: block;
-    padding: 2%;
-    margin-left: 2%;
 }
 
-@media (max-width: 800px) {
-    .dynamic-font-size {
-        font-size: calc(70vw / 8);
-    }
-
-    .title-container {
-        text-align: center;
-        display: block;
-        align-items: center;
-    }
-
-    .recipe-title {
-        word-wrap: break-word;
-        flex-grow: 0;
-        width: 80%;
-        margin: auto;
-        margin-bottom: 0.5em;
-    }
-
-    .recipe-vote {
-        float: unset;
-        width: fit-content;
-        height: fit-content;
-        margin: auto;
-    }
-
-    .recipe-body {
-        position: relative;
-        overflow: hidden;
-        display: block;
-    }
-
-    .ingredient {
-        padding-bottom: 0.5em;
-        width: 50%;
-        float: left;
-    }
-
-    .ingredients {
-        width: 100%;
-        margin-bottom: 2em;
-        float: left;
-        position: relative;
-    }
-
-    .instruction {
-        float: left;
-        margin-left: 0;
-    }
-
-    .divider {
-        position: absolute;
-        left: 48%;
-        top: 5%;
-        bottom: 5%;
-        border-left: 3px solid black;
-    }
-}
-
-@media (min-width: 500px) and (max-width: 600px) {
-    .ingredient {
-        font-size: 1em;
-        padding-bottom: 0.5em;
-        width: 50%;
-        float: left;
-    }
-
-    .divider {
-        border-left: 1.5px solid black
-    }
-}
-
-@media (max-width: 500px) {
-    .ingredient {
-        font-size: 1.4em;
-        padding-bottom: 0.5em;
-
-        width: 100%;
-        float: none;
-
-    }
-
-    .divider {
-        border-left: none;
-    }
-}
 </style>
