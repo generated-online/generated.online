@@ -104,7 +104,7 @@ $softPink: var(--bg-color);
 .shady {
   border-radius: 5px;
   box-shadow: 0 0 10px black;
-  background: rgba(1, 1, 1, 0.8);
+  background: rgba(0, 0, 0, 0.8);
   color: white;
 }
 
