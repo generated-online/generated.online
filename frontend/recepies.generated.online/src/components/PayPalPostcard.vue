@@ -73,9 +73,11 @@
                                 bezahlen:</h3>
                         </div>
 
-                        <Paypal v-if='showPaypalButton()' :recipeID='recipe.id'
-                                :sendTo='{name: name, street: street, plz: plz, city:city, country: country}'
-                                :amount='price+money' style="text-align: center"/>
+                        <v-container :style="{'width': $vuetify.breakpoint.smAndUp? '70%': '100%'}">
+                            <Paypal v-if='showPaypalButton()' :recipeID='recipe.id'
+                                    :sendTo='{name: name, street: street, plz: plz, city:city, country: country}'
+                                    :amount='price+money' style="text-align: center"/>
+                        </v-container>
                         <div v-if="$vuetify.breakpoint.xs" class="center-button" style="margin-top: 1em">
                             <v-btn @click="showMore=!showMore" class="black-button">Weniger</v-btn>
                         </div>

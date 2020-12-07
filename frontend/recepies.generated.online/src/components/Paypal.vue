@@ -1,5 +1,5 @@
 <template>
-    <div id="smart-button-container">
+    <div id="smart-button-container" style="position: relative; z-index: 1;">
         <div id="paypal-button-container"></div>
     </div>
 
@@ -16,7 +16,7 @@ export default {
                     color: 'black',
                     layout: 'vertical',
                     label: 'paypal',
-
+                    tagline: false
                 },
 
                 createOrder: (data, actions) => {
