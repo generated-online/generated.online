@@ -6,8 +6,8 @@
                 <div v-if="_row % 2 === 0" :style="uneven">
                     <div class="emojie-container" :style="emojiContainer" v-for='element in elementsInRow+2'
                         :key="element">
-                        <div class="emoji" :style="emoji">
-                            <img :src="getImgUrl(line[element - 1])">
+                        <div class="emoji">
+                            <img :style="emoji" :src="getImgUrl(line[element - 1])">
                         </div>
                     </div>
                 </div>
@@ -15,8 +15,8 @@
                 <div v-else :style="even">
                     <div class="emojie-container" :style="emojiContainer" v-for='element in (elementsInRow+1)'
                         :key="element">
-                        <div class="emoji" :style="emoji">
-                            <img :src="getImgUrl(reverseLine[element - 1])">
+                        <div class="emoji">
+                            <img :style="emoji" :src="getImgUrl(reverseLine[element - 1])">
                         </div>
                     </div>
                 </div>
@@ -98,7 +98,7 @@
                     "getreide": "hafer",
                     "erdnüsse": "erdnuss",
                     "kalb": "kuh"
-                    
+
                 },
                 // emos must be sorted by lengths for better matching
                 allEmos: [
@@ -127,8 +127,7 @@
             getImgUrl(emojie) {
                 if (emojie === undefined) emojie = "knoblauch"
 
-                var images = require.context('../assets/emojies/', false, /\.png$/)
-                console.log('./' + emojie + ".png");
+                var images = require.context('@/assets/emojies/', false, /\.png$/)
                 return images('./' + emojie + ".png")
             },
             shuffleArray(a) {
@@ -142,24 +141,24 @@
                 if (word !== "") {
                     const lowercasedWord = word.toLowerCase()
                     let matchingEmojie = ''
-
                     // direct search
                     if (lowercasedWord in this.allPossibleEmos) {
                         // there is a identical name in the images
-                        matchingEmojie = capitalizedWord
+                        matchingEmojie = lowercasedWord
                     } else {
                         // try to search substrings
                         if (word.length > 3) {
-                            for (const emo in this.allPossibleEmos) {
+                            this.allPossibleEmos.forEach(emo => {
                                 if (lowercasedWord.includes(emo) || emo.includes(lowercasedWord)) {
                                     matchingEmojie = emo
                                 }
-                            }
+                            })
                         }
                     }
-
+                    console.log(matchingEmojie)
                     if (matchingEmojie !== '') {
-                        if (matchingEmojie in this.emoMap.keys()) matchingEmojie = this.emoMap[matchingEmojie]
+                        if (Object.keys(this.emoMap).includes(matchingEmojie)) matchingEmojie = this.emoMap[
+                            matchingEmojie]
                         this.matchingEmos.push(matchingEmojie)
                     }
                 }
@@ -189,8 +188,10 @@
             },
             setupMatchinEmos() {
                 let words = []
+                console.log(this.recipe)
                 if (!this.recipe) {
                     // load random keys as words
+                    console.log("NO RECIPE")
                     this.matchingEmos = this.shuffleArray(this.allEmos)
                 } else {
                     words = this.recipe.ingredients.toString().replaceAll(",", " ").split(" ")
@@ -200,7 +201,6 @@
                     if (this.matchingEmos.length === 0) {
                         this.matchingEmos = this.shuffleArray(this.allEmos)
                     }
-
                     // remove all duplicates
                     this.matchingEmos = [...new Set(this.matchingEmos)];
                 }
@@ -220,7 +220,11 @@
         },
         created() {
             this.emoMapKeys = Object.keys(this.emoMap)
-            this.allPossibleEmos = this.allEmos.concat(this.emoMapKeys)
+            this.allPossibleEmos = this.allEmos.concat(this.emoMapKeys).sort(function (a, b) {
+                // ASC  -> a.length - b.length
+                // DESC -> b.length - a.length
+                return b.length - a.length;
+            });
         },
         mounted() {
             this.calculateElementsInRow()
@@ -257,7 +261,8 @@
             },
             emoji() {
                 var d = {
-                    "font-size": this.emojieSize,
+                    "height": this.emojieSize,
+                    "width": this.emojieSize,
                 }
                 return this.dictToCssString(d)
             },
