@@ -16,7 +16,6 @@ import Footer from "./views/Footer";
 import recipeToColor from "@/functions/recipe_to_color";
 import EmojieBackground from "@/components/EmojieBackground";
 
-
 export default {
     components: {
         Footer,
