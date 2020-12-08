@@ -5,7 +5,7 @@
       <ais-search-box placeholder="Suche nach Rezepten..." attribute="title" submit-title="Suche"
         reset-title="Lösche alles" show-loading-indicator />
 
-      <ais-refinement-list attribute="filtered_ingredients" operator="and" :limit="5" :show-more="true"
+      <ais-refinement-list class="bg-color" attribute="filtered_ingredients" operator="and" :limit="5" :show-more="true"
         :searchable="false" searchable-placeholder="Suche nach Zutaten..." :sort-by="['count:desc']" :class-names="{
           'ais-RefinementList-showMore': 'showMore-button',
           'ais-RefinementList-showMore--disabled': 'showMore-button--disbaled',
@@ -95,7 +95,7 @@
   };
 </script>
 
-<style>
+<style lang="scss">
   /* add bottom margin to search box */
   .ais-SearchBox {
     margin-bottom: 1em;
@@ -143,6 +143,12 @@
     border: thin solid black;
   }
 
+  .ais-SearchBox-submitIcon {
+        width: 1.5em !important;
+        height: 1.5em !important;
+        margin-left: 1em !important;
+  }
+
   .showMore-button:hover {
     background-color: lightgray;
   }
@@ -153,9 +159,12 @@
   }
 
   .ais-SearchBox-input {
-    background: rgba(1, 1, 1, 0.8);
+    padding-left: 2em !important;
+    font-size: 2em;
+    background: rgba(1, 1, 1, 1);
+    border-radius: 15px;
     border: 1px solid rgba(1, 1, 1, 0.8);
-    color: white;
+    color: var(--bg-color) !important;
     user-select: none;
   }
 

@@ -70,7 +70,18 @@ export default {
 <style lang="scss">
 $softPink: var(--bg-color);
 
+.boldy {
+    background: black !important;
+    padding: 20px  !important;
+    border-radius: 30px !important;
+    color: var(--bg-color) !important;
 
+}
+
+.ais-SearchBox-input::placeholder {
+        color: var(--bg-color) !important;
+
+}
 #app {
   margin: 0;
   padding: 0;
@@ -80,10 +91,10 @@ $softPink: var(--bg-color);
   font-family: "Roboto";
 }
 
-.text-span {
-  //background: $softPink;
-  //background: rgba(255, 255, 255, 0.05);
-  //text-shadow: 0px 0px 20px $softPink;
+.info-container {
+    background-color: rgba(0,0,0,0) !important;
+    border: none !important;
+    box-shadow: none !important;
 }
 
 .black-button {
@@ -92,9 +103,6 @@ $softPink: var(--bg-color);
   box-shadow: unset !important;
 }
 
-.info-container {
-  background-color: rgba(255, 255, 255, 0.85) !important;
-}
 
 .v-divider {
   border-color: rgba(0, 0, 0, 0.3) !important;

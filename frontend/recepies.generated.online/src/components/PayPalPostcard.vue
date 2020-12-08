@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div :class="['text-sm-h3', 'text-md-h2', 'text-h3', 'text-span' , 'font-weight-black']"
+        <div :class="['text-sm-h3', 'text-md-h2', 'text-h3', 'text-span' , 'font-weight-black', 'boldy']"
              style="margin-bottom: 0.5em">
             Verschicke das Rezept als Postkarte!
         </div>

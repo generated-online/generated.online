@@ -1,10 +1,8 @@
 <template>
     <span>
         <!-- if there is text we want to have a real button -->
-        <v-btn v-if="buttonText !== ''" to="/recipe" large depressed
-               style="background: black; color: white; opacity: 0.8">
-            <h5> {{ buttonText }}</h5>
-
+        <v-btn v-if="buttonText !== ''" to="/recipe" large  class="boldy mt-12" >
+            <h2 style="text-transform: capitalize !important"> {{ buttonText }}</h2>
             <v-icon style="padding-left:0.5em">shuffle</v-icon>
         </v-btn>
         <!-- without text no button -->
