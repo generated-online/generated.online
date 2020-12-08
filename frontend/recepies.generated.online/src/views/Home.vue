@@ -1,39 +1,36 @@
 <template>
-    <div>
-        <EmojieBackground :opacity="0.5" />
-        <div class="info-container">
-            <h1 style="text-align:center; margin-bottom:2em; font-size: 5em"> <span class="text-span">
-                    KI generierte Rezepte!</span>
-            </h1>
-            <Search style="width: 77%; margin: auto" />
+    <v-card class="info-container py-4 px-2 mt-16 mb-8">
+        <div class="text-sm-h2 text-md-h1 text-h4 pb-12 text-center">
+            <b>KI generierte Rezepte!</b>
         </div>
-    </div>
+        <div :style="searchWidth">
+            <Search/>
+        </div>
+    </v-card>
 </template>
 
 <script>
-    import Search from "./Search";
-    import EmojieBackground from "@/components/EmojieBackground"
+import Search from "./Search";
+import EmojieBackground from "@/components/EmojieBackground"
 
 
-    export default {
-        name: "info",
-        components: {
-            Search,
-            EmojieBackground
-        },
-        created() {
-            this.$emit('shareText', "Schau dir diese coolen von einer KI generierten Rezepte an!");
-            this.$emit('recipeId', null);
+export default {
+    name: "info",
+    components: {
+        Search,
+        EmojieBackground
+    },
+    created() {
+        this.$emit('shareText', "Schau dir diese coolen von einer KI generierten Rezepte an!");
+        this.$emit('recipe', null);
+    },
+    computed: {
+        searchWidth() {
+            return {
+                "width": this.$vuetify.breakpoint.xs ? '99%' : '80%',
+                "margin": "auto"
+            }
         }
-    };
-</script>
-
-<style scoped>
-    .info-container {
-        text-align: left;
-        height: 100% !important;
-        padding: 2em 0em 2em 0em;
-        max-width: 100vw !important;
-        min-height: 100vh !important;
     }
-</style>
+};
+</script>

@@ -1,25 +1,28 @@
 <template>
-    <div class="background" :style="backgroundMargin+' background: var(--bg-color)'">
+    <div class="background" :style="backgroundMargin+' background: '+color">
         <div v-for='_row in numRow' :key="_row">
             <!-- uneven rows vue starts indexing at 1 lol-->
             <div :style="row">
-                <div v-if="_row % 2 == 0" :style="uneven">
+                <div v-if="_row % 2 === 0" :style="uneven">
                     <div class="emojie-container" :style="emojiContainer" v-for='element in elementsInRow+2'
                         :key="element">
-                        <div class="emoji" :style="emoji">{{line[element-1]}}</div>
+                        <div class="emoji" :style="emoji">
+                            <img :src="getImgUrl(line[element - 1])">
+                        </div>
                     </div>
                 </div>
                 <!-- even rows -->
                 <div v-else :style="even">
                     <div class="emojie-container" :style="emojiContainer" v-for='element in (elementsInRow+1)'
                         :key="element">
-                        <div class="emoji" :style="emoji">{{reverseLine[element-1]}}</div>
+                        <div class="emoji" :style="emoji">
+                            <img :src="getImgUrl(reverseLine[element - 1])">
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 </template>
 
 <script>
@@ -40,76 +43,93 @@
             "opacity": {
                 type: Number,
                 default: 0.2
+            },
+            "color": {
+                type: String,
+                default: "lightblue"
             }
         },
         data() {
             return {
                 width: window.innerWidth,
+                height: window.innerHeight,
                 elementsInRow: 1,
                 numRow: 1,
                 rowMargin: "5px",
                 line: [],
                 reverseLine: [],
                 emoMap: {
-                    "Lachs": 'Fisch',
-                    "Forelle": 'Fisch',
-                    "Brasse": 'Fisch',
-                    "Karpfen": 'Fisch',
-                    "Hecht": 'Fisch',
-                    "Äpfel": 'Apfel',
-                    "Möhre": "Karrotte",
-                    "Gelberübe": "Karrotte",
-                    "Eigelb": "Ei",
-                    "Thymian": "Kräuter",
-                    "Oregano": "Grüne_blätter",
-                    "Basilikum": "Samen",
-                    "Petersilie": "Kräuter",
-                    "Fleisch": "Steak",
-                    "Parmesan": "Käse",
-                    "Gorgonzola": "Käse",
-                    "Gauda": "Käse",
-                    "Emmenthaler": "Käse",
-                    "Erdnüsse": "Erdnuss",
-                    "Haselnüsse": "Haselnuss",
-                    "Manderine": "Orange",
-                    "Clementine": "Orange",
-                    "Schwammerl": "Pilze",
-                    "Champignons": "Pilze",
-                    "Eigelb": "Ei",
-                    "Eiweiß": "Ei",
-                    "Filet": "Steak",
-                    "braten": "Steak",
-                    "Hühnchen": "Juhn",
-                    "Pute": "Truthahn",
-                    "geflügel": "Ente",
-                    "Plätzchen": "Keks",
-                    "Gebäck": 'Keks',
-                    "Getreide": "Hafer",
+                    'rind': 'steak',
+                    'speck': 'schinken',
+                    'haselnüsse': 'kastanie',
+                    "lachs": 'fisch',
+                    "forelle": 'fisch',
+                    "brasse": 'fisch',
+                    "karpfen": 'fisch',
+                    "hecht": 'fisch',
+                    "äpfel": 'apfel',
+                    "möhre": "karotte",
+                    "gelberübe": "karotte",
+                    "eigelb": "ei",
+                    "thymian": "kräuter",
+                    "oregano": "grüne_blätter",
+                    "basilikum": "samen",
+                    "petersilie": "kräuter",
+                    "fleisch": "steak",
+                    "parmesan": "käse",
+                    "gorgonzola": "käse",
+                    "gauda": "käse",
+                    "emmenthaler": "käse",
+                    "erdnüsse": "erdnuss",
+                    "haselnüsse": "haselnuss",
+                    "manderine": "orange",
+                    "clementine": "orange",
+                    "schwammerl": "pilze",
+                    "champignons": "pilze",
+                    "eigelb": "ei",
+                    "eiweiß": "ei",
+                    "filet": "steak",
+                    "braten": "steak",
+                    "hühnchen": "juhn",
+                    "pute": "truthahn",
+                    "geflügel": "ente",
+                    "plätzchen": "keks",
+                    "gebäck": 'keks',
+                    "getreide": "hafer",
+                    "erdnüsse": "erdnuss",
+                    "kalb": "kuh"
+                    
                 },
                 // emos must be sorted by lengths for better matching
-                emoImages: [
-                    "Ei", "Kuh", "Eis", "Rind", "Kalb", "Lamm", "Huhn", "Ente", "Kiwi", "Mais", "Pilz",
-                    "Brot", "Käse", "Taco", "Salz", "Dose", "Reis", "Keks", "Wein", "Bier", "Speck",
-                    "Fisch", "Schaf", "Samen", "Hafer", "Olive", "Mango", "Apfel", "Birne",
-                    "Chili", "Gurke", "Salat", "Breze", "Bagel", "Speck", "Pizza", "Sushi", "Honig", "Milch",
-                    "Karotte", "Wasser", "Krabbe", "Hummer", "Melone", "Banane", "Tomate",
-                    "Burger", "Pommes", "Muffin", "Kuchen", "Ananas", "Oktopus", "Garnele", "Schwein", "Truthan",
-                    "Trauben", "Zwiebel",
-                    "Paprika", "Avocado", "Zitrone", "Kirsche", "Avocado", "Karotte", "Steak",
-                    "Hot-Dog", "Burrito", "Spiegelei", "Popcorn",
-                    "Schinken", "Karrotte", "Obergine", "Erdbeere", "Pfirsich", "Brokkoli",
-                    "Erdnüsse", "Kastanie", "Baguette", "Sandwich", "Cocktail",
-                    "Kartoffel", "Knoblauch", "Blaubeere", "Orange", "Kokosnuss", "Aubergine", "Kartoffel",
-                    "Croissant", "Spaghetti", "Haselnüsse", "Reis", "Schokolade",
-                    "Tintenfisch", "Pfannkuchen", "Schnittlauch",
-                    "Wassermelone", "Süßkartoffel",
+                allEmos: [
+                    "ei", "kuh", "eis", "lamm", "huhn", "ente", "kiwi", "mais", "pilz",
+                    "brot", "käse", "taco", "salz", "dose", "reis", "keks", "wein", "bier", "schinken",
+                    "fisch", "schaf", "samen", "hafer", "olive", "mango", "apfel", "birne",
+                    "chili", "gurke", "salat", "breze", "pizza", "sushi", "honig", "milch",
+                    "karotte", "wasser", "krabbe", "hummer", "melone", "banane", "tomate",
+                    "burger", "pommes", "muffin", "kuchen", "ananas", "oktopus", "garnele", "schwein", "truthan",
+                    "weintrauben", "zwiebel",
+                    "paprika", "avocado", "zitrone", "kirsche", "avocado", "karotte", "steak",
+                    "burrito", "spiegelei", "popcorn",
+                    "schinken", "karotte", "aubergine", "erdbeere", "pfirsich", "brokkoli",
+                    "erdnuss", "kastanie", "baguette", "sandwich", "cocktail",
+                    "kartoffel", "knoblauch", "blaubeere", "orange", "kokosnuss", "kartoffel",
+                    "croissant", "spaghetti", "reis", "schokolade",
+                    "tintenfisch", "pfannkuchen", "schnittlauch",
+                    "wassermelone", "süßkartoffel"
                 ],
-                matchingEmos: []
+                matchingEmos: [],
+                emoMapKeys: {},
+                allPossibleEmos: [],
             }
         },
         methods: {
-            getRandomNumber(min, max) {
-                return Math.random() * (max - min) + min;
+            getImgUrl(emojie) {
+                if (emojie === undefined) emojie = "knoblauch"
+
+                var images = require.context('../assets/emojies/', false, /\.png$/)
+                console.log('./' + emojie + ".png");
+                return images('./' + emojie + ".png")
             },
             shuffleArray(a) {
                 for (let i = a.length - 1; i > 0; i--) {
@@ -121,31 +141,25 @@
             wordToEmoji(word) {
                 if (word !== "") {
                     const lowercasedWord = word.toLowerCase()
-                    const capitalizedWord = lowercasedWord.replace(/^\w/, c => c.toUpperCase());
-                    const emoMapKeys = Object.keys(this.emoMap)
-                    const matchingEmojie = ''
+                    let matchingEmojie = ''
 
-                    if (capitalizedWord in this.allEmos) {
-                        // isMatching = true
-                        matchingEmojie = this.allEmos[capitalizedWord]
-                    }
-                    if (capitalizedWord in emoMapKeys) {
-                        matchingEmojie = this.emoMap[capitalizedWord]
-
+                    // direct search
+                    if (lowercasedWord in this.allPossibleEmos) {
+                        // there is a identical name in the images
+                        matchingEmojie = capitalizedWord
                     } else {
+                        // try to search substrings
                         if (word.length > 3) {
-                            let matchingEmojie = ''
-                            for (const emo in this.allEmos) {
-                                if (lowercasedWord.includes(emo.toLowerCase()) || emo.toLowerCase().includes(
-                                        lowercasedWord)) {
+                            for (const emo in this.allPossibleEmos) {
+                                if (lowercasedWord.includes(emo) || emo.includes(lowercasedWord)) {
                                     matchingEmojie = emo
                                 }
                             }
                         }
                     }
 
-                    // Take last match
                     if (matchingEmojie !== '') {
+                        if (matchingEmojie in this.emoMap.keys()) matchingEmojie = this.emoMap[matchingEmojie]
                         this.matchingEmos.push(matchingEmojie)
                     }
                 }
@@ -177,24 +191,23 @@
                 let words = []
                 if (!this.recipe) {
                     // load random keys as words
-                    words = this.shuffleArray(Object.keys(this.allEmos))
+                    this.matchingEmos = this.shuffleArray(this.allEmos)
                 } else {
                     words = this.recipe.ingredients.toString().replaceAll(",", " ").split(" ")
-                }
-                words.forEach(this.wordToEmoji)
-
-                // if we dit not find any emojis
-                if (this.matchingEmos.length == 0) {
-                    words = this.shuffleArray(this.allEmos)
                     words.forEach(this.wordToEmoji)
+
+                    // if we dit not find any emojis
+                    if (this.matchingEmos.length === 0) {
+                        this.matchingEmos = this.shuffleArray(this.allEmos)
+                    }
+
+                    // remove all duplicates
+                    this.matchingEmos = [...new Set(this.matchingEmos)];
                 }
 
-                // remove all duplicates
-                this.matchingEmos = [...new Set(this.matchingEmos)];
-
-                var line = new Array(Math.floor((this.elementsInRow + 2) / this.matchingEmos.length)).fill(this
-                        .matchingEmos)
-                    .flat();
+                var line = new Array(Math.floor((this.elementsInRow + 2) / this.matchingEmos.length))
+                    .fill(this.matchingEmos)
+                    .flat()
 
                 var diff = this.elementsInRow - line.length + 2
                 if (diff > 0) {
@@ -204,21 +217,34 @@
                 this.line = line
                 this.matchingEmos = []
             },
-
         },
-
+        created() {
+            this.emoMapKeys = Object.keys(this.emoMap)
+            this.allPossibleEmos = this.allEmos.concat(this.emoMapKeys)
+        },
         mounted() {
-
             this.calculateElementsInRow()
             this.calculateNumRows()
             this.setupMatchinEmos()
 
-            window.addEventListener('resize', () => {
-                this.calculateElementsInRow()
-                this.calculateNumRows()
-                this.setupMatchinEmos()
-
+            let ob = new ResizeObserver((mutationList, a) => {
+                this.height = mutationList[0].target.clientHeight
+                this.width = mutationList[0].target.clientWidth
             })
+            ob.observe(this.$parent.$el)
+        },
+        watch: {
+            "recipe": function () {
+                this.setupMatchinEmos()
+            },
+            "height": function () {
+                this.calculateNumRows()
+            },
+
+            "width": function () {
+                this.calculateElementsInRow()
+                this.setupMatchinEmos()
+            }
         },
         computed: {
             emojiContainer() {
