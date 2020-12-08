@@ -3,13 +3,13 @@
         <div class="postcard-body"
              :style="{'margin-bottom': horizontal?0:bottomMargin, 'margin-right': horizontal?centerMargin:0, 'float':'left'}">
             <EmojieBackground :recipe="recipe" :opacity="1" color="var(--bg-color)"/>
-            <div class="postcard-inner">
+            <div class="postcard-inner title2">
                 <h1>
-                    <span>
-                        {{ recipe.title }}
+                    <span class="clip-text">
+                       {{ recipe.title }}
                     </span>
                 </h1>
-                <span class="ad">gesendet mit recipes.generated.online</span>
+                <span class="ad clip-text">gesendet mit recipes.generated.online</span>
             </div>
         </div>
 
@@ -31,7 +31,8 @@
                         <input type="text" placeholder="Land" v-model="country" disabled>
                     </div>
                 </div>
-                <p class="ad adPositionBack">gesendet mit recipes.generated.online</p>
+                <p class="ad adPositionBack clip-text" style="background: black">gesendet mit
+                    recipes.generated.online</p>
             </div>
         </div>
     </div>
@@ -112,16 +113,21 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+$textBGColor: black;/*rgba(0, 0, 0, 0.8);*/
 
-p {
-    margin: 0 !important;
-    padding: 0 !important
+.clip-text {
+    color: rgba(255, 255, 255, 0.9);
+    mix-blend-mode: multiply;
+    box-shadow: 10px 0 0 $textBGColor, -10px 0 0 $textBGColor;
+    -moz-box-shadow: 10px 0 0 $textBGColor, -10px 0 0 $textBGColor;
+    -webkit-box-shadow: 10px 0 0 $textBGColor, -10px 0 0 $textBGColor;
+    background: $textBGColor;
 }
 
-p {
-    margin: 0 !important;
-    padding: 0 !important
+.title2 h1 {
+    font-size: 8em;
+    line-height: 1.5em;
 }
 
 .stamp {
@@ -181,24 +187,11 @@ input::placeholder {
     height: 100%;
 }
 
-.postcard-inner {
-    padding: 140px;
-    height: 100%;
-}
-
-.postcard-inner-back {
-    float: left;
-    height: 100%;
-    width: 100%;
-}
-
 
 .ad {
     font-size: 1.5em;
-    padding: 0 0.5em 0 0.5em !important;
-    background-color: black;
-    color: var(--bg-color);
-    display: inline;
+    padding: 0.25em 0 0.25em 0;
+    font-weight: bold;
 }
 
 .adPositionBack {
@@ -208,16 +201,15 @@ input::placeholder {
     margin-left: 0.35em;
 }
 
-h1 {
-    font-size: 120px;
-}
-
 p {
     font-size: 18px;
+    margin: 0 !important;
+    padding: 0 !important
 }
 
 h2 {
     padding-bottom: 10px;
     font-size: 3em;
 }
+
 </style>
