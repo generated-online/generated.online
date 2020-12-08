@@ -50,21 +50,58 @@
                 rowMargin: "5px",
                 line: [],
                 reverseLine: [],
-                allEmos: [
-                    "Ei", "Kuh", "Eis", "Rind", "Kalb", "Lamm", "Huhn", "Ente", "Rose", "Kiwi", "Mais", "Pilz",
-                    "Brot", "Käse", "Taco", "Salz", "Dose", "Reis", "Keks", "Wein", "Bier", "Brühe", "Speck",
-                    "Lachs", "Fisch", "Schaf", "Samen", "Hafer", "Olive", "Mango", "Apfel", "Äpfel", "Birne",
+                emoMap: {
+                    "Lachs": 'Fisch',
+                    "Forelle": 'Fisch',
+                    "Brasse": 'Fisch',
+                    "Karpfen": 'Fisch',
+                    "Hecht": 'Fisch',
+                    "Äpfel": 'Apfel',
+                    "Möhre": "Karrotte",
+                    "Gelberübe": "Karrotte",
+                    "Eigelb": "Ei",
+                    "Thymian": "Kräuter",
+                    "Oregano": "Grüne_blätter",
+                    "Basilikum": "Samen",
+                    "Petersilie": "Kräuter",
+                    "Fleisch": "Steak",
+                    "Parmesan": "Käse",
+                    "Gorgonzola": "Käse",
+                    "Gauda": "Käse",
+                    "Emmenthaler": "Käse",
+                    "Erdnüsse": "Erdnuss",
+                    "Haselnüsse": "Haselnuss",
+                    "Manderine": "Orange",
+                    "Clementine": "Orange",
+                    "Schwammerl": "Pilze",
+                    "Champignons": "Pilze",
+                    "Eigelb": "Ei",
+                    "Eiweiß": "Ei",
+                    "Filet": "Steak",
+                    "braten": "Steak",
+                    "Hühnchen": "Juhn",
+                    "Pute": "Truthahn",
+                    "geflügel": "Ente",
+                    "Plätzchen": "Keks",
+                    "Gebäck": 'Keks',
+                    "Getreide": "Hafer",
+                },
+                // emos must be sorted by lengths for better matching
+                emoImages: [
+                    "Ei", "Kuh", "Eis", "Rind", "Kalb", "Lamm", "Huhn", "Ente", "Kiwi", "Mais", "Pilz",
+                    "Brot", "Käse", "Taco", "Salz", "Dose", "Reis", "Keks", "Wein", "Bier", "Speck",
+                    "Fisch", "Schaf", "Samen", "Hafer", "Olive", "Mango", "Apfel", "Birne",
                     "Chili", "Gurke", "Salat", "Breze", "Bagel", "Speck", "Pizza", "Sushi", "Honig", "Milch",
-                    "Suppe", "Spieß", "Möhre", "Eigelb", "Wasser", "Krabbe", "Hummer", "Melone", "Banane", "Tomate",
-                    "Gemüse", "Burger", "Pommes", "Knödel", "Muffin", "Kuchen", "Ananas", "Kräuter", "Thymian",
-                    "Oregano", "Oktopus", "Garnele", "Schwein", "Truthan", "Kräuter", "Trauben", "Zwiebel",
-                    "Paprika", "Avocado", "Zitrone", "Kirsche", "Avocado", "Karotte", "Fleisch",
-                    "Dog", "Burrito", "Spiegei", "Popcorn", "Krapfen", "Pudding", "Flasche", "Flasche", "Parmesan",
-                    "Schinken", "Hähnchen", "Karrotte", "Obergine", "Erdbeere", "Pfirsich", "Erdbeere", "Brokkoli",
-                    "Erdnüsse", "Kastanie", "Baguette", "Sandwich", "Schüssel", "Cocktail", "Basilikum",
-                    "Kartoffel", "Knoblauch", "Blaubeere", "Mandarine", "Kokosnuss", "Aubergine", "Kartoffel",
-                    "Croissant", "Spaghetti", "Petersilie", "Haselnüsse", "Reis", "Glückskeks", "Schokolade",
-                    "Gemüsebrühe", "Champignons", "Tintenfisch", "Sonnenblume", "Pfannkuchen", "Schnittlauch",
+                    "Karotte", "Wasser", "Krabbe", "Hummer", "Melone", "Banane", "Tomate",
+                    "Burger", "Pommes", "Muffin", "Kuchen", "Ananas", "Oktopus", "Garnele", "Schwein", "Truthan",
+                    "Trauben", "Zwiebel",
+                    "Paprika", "Avocado", "Zitrone", "Kirsche", "Avocado", "Karotte", "Steak",
+                    "Hot-Dog", "Burrito", "Spiegelei", "Popcorn",
+                    "Schinken", "Karrotte", "Obergine", "Erdbeere", "Pfirsich", "Brokkoli",
+                    "Erdnüsse", "Kastanie", "Baguette", "Sandwich", "Cocktail",
+                    "Kartoffel", "Knoblauch", "Blaubeere", "Orange", "Kokosnuss", "Aubergine", "Kartoffel",
+                    "Croissant", "Spaghetti", "Haselnüsse", "Reis", "Schokolade",
+                    "Tintenfisch", "Pfannkuchen", "Schnittlauch",
                     "Wassermelone", "Süßkartoffel",
                 ],
                 matchingEmos: []
@@ -85,24 +122,31 @@
                 if (word !== "") {
                     const lowercasedWord = word.toLowerCase()
                     const capitalizedWord = lowercasedWord.replace(/^\w/, c => c.toUpperCase());
+                    const emoMapKeys = Object.keys(this.emoMap)
+                    const matchingEmojie = ''
 
                     if (capitalizedWord in this.allEmos) {
                         // isMatching = true
-                        const matchingEmojie = this.allEmos[capitalizedWord]
-                        this.matchingEmos.push(matchingEmojie)
+                        matchingEmojie = this.allEmos[capitalizedWord]
+                    }
+                    if (capitalizedWord in emoMapKeys) {
+                        matchingEmojie = this.emoMap[capitalizedWord]
+
                     } else {
                         if (word.length > 3) {
                             let matchingEmojie = ''
                             for (const emo in this.allEmos) {
-                                if (lowercasedWord.includes(emo.toLowerCase()) || emo.toLowerCase().includes(lowercasedWord)) {
+                                if (lowercasedWord.includes(emo.toLowerCase()) || emo.toLowerCase().includes(
+                                        lowercasedWord)) {
                                     matchingEmojie = emo
                                 }
                             }
-                            // Take last match
-                            if (matchingEmojie !== '') {
-                                this.matchingEmos.push(matchingEmojie)
-                            }
                         }
+                    }
+
+                    // Take last match
+                    if (matchingEmojie !== '') {
+                        this.matchingEmos.push(matchingEmojie)
                     }
                 }
             },
