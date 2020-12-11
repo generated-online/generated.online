@@ -162,13 +162,19 @@
   }
 
   .ais-SearchBox-input {
-    padding-left: 2em !important;
+    padding-left: 50px !important;
     font-size: 2em;
     background: rgba(1, 1, 1, 1);
     border-radius: 15px;
     border: 1px solid rgba(1, 1, 1, 0.8);
     color: var(--bg-color) !important;
     user-select: inherit !important;
+  }
+
+  @media (max-width: 600px) {
+    .ais-SearchBox-input {
+      font-size: 1em !important;
+    }
   }
 
   input:focus {
