@@ -17,7 +17,7 @@
                 <v-btn class="mx-3 my-0 boldy" icon>
                     <!-- show whatsapp share button, when not loaded yet just an empty button -->
                     <ShareNetwork class="inline-block" network="whatsapp" style="text-decoration: unset" :url="url"
-                        :title="shareText">
+                                  :title="shareText">
                         <v-icon class="vue-icon" size="30">mdi-whatsapp</v-icon>
                     </ShareNetwork>
                 </v-btn>
@@ -27,63 +27,64 @@
 </template>
 
 <script>
-    import Vue from "vue";
-    import VueSocialSharing from "vue-social-sharing";
-    import recipeToColor from "@/functions/recipe_to_color";
-    import generateRecipeButton from "@/components/generateRecipeButton";
+import Vue from "vue";
+import VueSocialSharing from "vue-social-sharing";
+import recipeToColor from "@/functions/recipe_to_color";
+import generateRecipeButton from "@/components/generateRecipeButton";
 
-    Vue.use(VueSocialSharing);
+Vue.use(VueSocialSharing);
 
-    export default {
-        name: "big-footer",
-        props: {
-            "shareText": {
-                type: String,
-                default: "Schau dir diese coolen von einer KI generierten Rezepte an!"
-            },
-            "recipeId": {
-                type: String,
-                default: null
-            }
+export default {
+    name: "big-footer",
+    props: {
+        "shareText": {
+            type: String,
+            default: "Schau dir diese coolen von einer KI generierten Rezepte an!"
         },
-        components: {
-            VueSocialSharing,
-            generateRecipeButton
+        "recipeId": {
+            type: String,
+            default: null
+        }
+    },
+    components: {
+        VueSocialSharing,
+        generateRecipeButton
+    },
+    data() {
+        return {
+            url: window.location.href,
+            color: recipeToColor(this.recipeId),
+        };
+    },
+    watch: {
+        '$route': function () {
+            this.url = window.location.href;
         },
-        data() {
-            return {
-                url: window.location.href,
-                color: recipeToColor(this.recipeId),
-            };
-        },
-        watch: {
-            '$route': function () {
-                this.url = window.location.href;
-            },
-            'recipeId': function () {
-                this.color = recipeToColor(this.recipeId);
-            }
+        'recipeId': function () {
+            this.color = recipeToColor(this.recipeId);
         }
     }
+}
 </script>
 
 <style scoped lang="scss">
 .v-btn:not(.v-btn--text):not(.v-btn--outlined).v-btn--active:before {
-      opacity: 0 !important;
+  opacity: 0 !important;
 }
 
 a:link {
-    color: var(--bg-color)
+  color: var(--bg-color)
 }
-    .footer-container {
-        color: white !important;
-    }
 
-    .vue-icon {
-        cursor: grab;
-    }
+.footer-container {
+  color: white !important;
+}
 
-    .footer-text {
-        color: rgb(211, 211, 211);
-    }
+.vue-icon {
+  cursor: grab;
+}
+
+.footer-text {
+  color: rgb(211, 211, 211);
+}
 </style>

@@ -89,6 +89,12 @@ $softPink: var(--bg-color);
     color: var(--bg-color) !important;
 }
 
+.boldyNoColor{
+  background: black;
+  padding: 20px  !important;
+  border-radius: 30px !important;
+}
+
 .ais-SearchBox-input::placeholder {
         color: var(--bg-color) !important;
 
@@ -112,11 +118,6 @@ $softPink: var(--bg-color);
   background: rgba(1, 1, 1, 0.8) !important;
   color: white !important;
   box-shadow: unset !important;
-}
-
-
-.v-divider {
-  border-color: rgba(0, 0, 0, 0.3) !important;
 }
 
 .shady {
