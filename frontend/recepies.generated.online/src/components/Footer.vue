@@ -1,5 +1,5 @@
 <template>
-    <v-footer fixed padless style="background: transparent">
+    <v-footer fixed padless style="background: transparent; pointer-events: none;">
         <v-card class="footer-container text-center" flat style="background: transparent" tile width="100%">
             <v-card-text :style="{'margin-right': $vuetify.breakpoint.smAndDown? '0':'auto',
             'width': $vuetify.breakpoint.smAndDown? 'min-content':'max-content'}"
@@ -88,15 +88,15 @@ a:link {
 
 .vue-icon {
   cursor: grab;
-}
-
-.footer-text {
-  color: rgb(211, 211, 211);
+  //filter: grayscale("green");
+  color: transparent;
+  text-shadow: 0 0 0 var(--bg-color);
 }
 
 .allIcons {
   margin-left: auto;
   background: var(--bg-color);
   border-radius: 35px !important;
+  pointer-events: all;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
     <v-card :class="['mb-16','info-container',{'mt-8':$vuetify.breakpoint.mdAndUp}]">
-        <div v-show='recipe'>
+        <div v-if='recipe'>
             <!-- Title and Voting -->
             <div style="min-height: 100vh">
                 <v-container :class="['pb-6', 'pa-0']">

@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <div class="text-h2 boldy mb-8 text-center" style="font-weight:bold">👩‍🍳 Beschde Rezepte</div>
+        <div class="text-h2 boldy mb-8 text-center" style="font-weight:bold;">👩‍🍳 Beschde Rezepte</div>
         <v-row v-for="recipe in recipes" :style="{'color':(recipeToColor(recipe.id) +' !important')}" class="row"
                no-gutters>
             <router-link :to="'/recipe/' + recipe.id" class="boldyNoColor px-4 py-1 mb-4" style="width:100%">
