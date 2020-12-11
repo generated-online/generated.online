@@ -1,12 +1,13 @@
 <template>
-    <div :style="'transform: scale(' + scaling()+'); transform-origin: top left; width: '+(horizontal?'max-content':'min-content')+'; height: '+height+'px'">
+    <div
+        :style="'transform: scale(' + scaling()+'); transform-origin: top left; width: '+(horizontal?'max-content':'min-content')+'; height: '+height+'px'">
         <div class="postcard-body"
-             :style="{'margin-bottom': horizontal?0:bottomMargin, 'margin-right': horizontal?centerMargin:0, 'float':'left'}">
-            <EmojieBackground :recipe="recipe" :opacity="1" color="var(--bg-color)"/>
+            :style="{'margin-bottom': horizontal ? 0 : bottomMargin, 'margin-right': horizontal ? centerMargin : 0, 'float':'left'}">
+            <EmojieBackground :recipe="recipe" :opacity="1" color="var(--bg-color)" />
             <div class="postcard-inner title2">
                 <h1>
                     <span class="clip-text">
-                       {{ recipe.title }}
+                        {{ recipe.title }}
                     </span>
                 </h1>
                 <span class="ad clip-text">gesendet mit recipes.generated.online</span>
@@ -39,178 +40,179 @@
 </template>
 
 <script>
-import EmojieBackground from "@/components/EmojieBackground"
+    import EmojieBackground from "@/components/EmojieBackground"
 
-export default {
-    props: {
-        "recipe": {
-            type: Object,
-            default: {}
-        },
-        "name": {
-            type: String,
-            default: ""
-        },
-        "street": {
-            type: String,
-            default: ""
-        },
-        "zip": {
-            type: String,
-            default: ""
-        },
-        "country": {
-            type: String,
-            default: "DE"
-        },
-        "horizontal": {
-            type: Boolean,
-            default: false
-        },
-        "parentWidth": {
-            type: Number,
-            default: 100.
-        }
-
-    },
-    data() {
-        return {
-            "bottomMargin": "2em",
-            "centerMargin": "2em",
-            height: 100
-        }
-    },
-    components: {
-        EmojieBackground,
-    },
-    methods: {
-        scaling() {
-            let scaleFactor
-            if (!this.horizontal) {
-
-                scaleFactor = this.parentWidth / 1440
-            } else {
-                let em = 16;
-                scaleFactor = this.parentWidth / ((1440) * 2 + parseFloat(this.centerMargin) * em)
+    export default {
+        props: {
+            "recipe": {
+                type: Object,
+                default: {}
+            },
+            "name": {
+                type: String,
+                default: ""
+            },
+            "street": {
+                type: String,
+                default: ""
+            },
+            "zip": {
+                type: String,
+                default: ""
+            },
+            "country": {
+                type: String,
+                default: "DE"
+            },
+            "horizontal": {
+                type: Boolean,
+                default: false
+            },
+            "parentWidth": {
+                type: Number,
+                default: 100.
             }
-            let height = this.scaledHeight(scaleFactor)
-            this.$emit("height", height)
-
-            this.height = height / scaleFactor
-
-            return scaleFactor
         },
-        scaledHeight(scaleFactor) {
-            let bottomMargin = 0;
-
-            if (this.$parent.$el) {
-                var em = parseFloat(getComputedStyle(this.$parent.$el).fontSize);
-                bottomMargin = (this.horizontal ? 0 : (parseFloat(this.bottomMargin) * em))
+        data() {
+            return {
+                "bottomMargin": "4em",
+                "centerMargin": "4em",
+                height: 100
             }
-            return scaleFactor * (1040 * (this.horizontal ? 1 : 2) + bottomMargin)
+        },
+        components: {
+            EmojieBackground,
+        },
+        methods: {
+            scaling() {
+                let scaleFactor
+                if (!this.horizontal) {
+
+                    scaleFactor = this.parentWidth / 1440
+                } else {
+                    let em = 16;
+                    scaleFactor = this.parentWidth / ((1440) * 2 + parseFloat(this.centerMargin) * em)
+                }
+                let height = this.scaledHeight(scaleFactor)
+                this.$emit("height", height)
+
+                this.height = height / scaleFactor
+
+                return scaleFactor
+            },
+            scaledHeight(scaleFactor) {
+                let bottomMargin = 0;
+
+                if (this.$parent.$el) {
+                    var em = parseFloat(getComputedStyle(this.$parent.$el).fontSize);
+                    bottomMargin = (this.horizontal ? 0 : (parseFloat(this.bottomMargin) * em))
+                }
+                return scaleFactor * (1040 * (this.horizontal ? 1 : 2) + bottomMargin)
+            }
         }
     }
-}
 </script>
 
 <style lang="scss" scoped>
-$textBGColor: black;/*rgba(0, 0, 0, 0.8);*/
+    $textBGColor: black;
+    /*rgba(0, 0, 0, 0.8);*/
 
-.clip-text {
-    color: rgba(255, 255, 255, 0.9);
-    mix-blend-mode: multiply;
-    box-shadow: 10px 0 0 $textBGColor, -10px 0 0 $textBGColor;
-    -moz-box-shadow: 10px 0 0 $textBGColor, -10px 0 0 $textBGColor;
-    -webkit-box-shadow: 10px 0 0 $textBGColor, -10px 0 0 $textBGColor;
-    background: $textBGColor;
-}
+    .clip-text {
+        color: rgba(255, 255, 255, 0.9);
+        mix-blend-mode: multiply;
+        box-shadow: 10px 0 0 $textBGColor, -10px 0 0 $textBGColor;
+        -moz-box-shadow: 10px 0 0 $textBGColor, -10px 0 0 $textBGColor;
+        -webkit-box-shadow: 10px 0 0 $textBGColor, -10px 0 0 $textBGColor;
+        background: $textBGColor;
+    }
 
-.title2 h1 {
-    font-size: 8em;
-    line-height: 1.5em;
-}
+    .title2 h1 {
+        font-size: 8em;
+        line-height: 1.5em;
+    }
 
-.stamp {
-    position: absolute;
-    width: 145px;
-    height: 190px;
-    border: dashed black 2px;
-    background: whitesmoke;
-    right: 4%;
-}
+    .stamp {
+        position: absolute;
+        width: 145px;
+        height: 190px;
+        border: dashed black 2px;
+        background: whitesmoke;
+        right: 4%;
+    }
 
-input {
-    padding-top: 10px;
-    margin-top: 10px;
-    width: 70%;
-    margin-right: 20%;
-    margin-left: 10%;
-    background: whitesmoke;
-    border: dashed black 2px;
-    float: right;
-    display: block;
-    font-size: 2em;
-    padding-left: 1em;
+    input:disabled {
+        color: black;
+    }
 
-}
+    input {
+        padding-top: 10px;
+        margin-top: 10px;
+        width: 70%;
+        margin-right: 20%;
+        margin-left: 10%;
+        background: whitesmoke;
+        float: right;
+        display: block;
+        font-size: 2em;
+        padding-left: 1em;
+    }
 
-.address {
-    border-left: solid black 4px;
-    position: absolute;
-    top: 300px;
-    padding-top: 150px;
-    left: 0;
-}
+    .address {
+        border-left: solid black 4px;
+        position: absolute;
+        top: 300px;
+        padding-top: 150px;
+        left: 0;
+    }
 
-input::placeholder {
-    color: black !important;
-}
+    input::placeholder {
+        color: rgb(170, 170, 170) !important;
+    }
 
-.half-postcard {
-    color: black !important;
-    position: relative;
-    width: 50%;
-    float: left;
-    height: 100%;
-    padding: 2%;
-}
-
-
-.postcard-body {
-    position: relative;
-    box-shadow: 0px 0px 10px white;
-    width: 1440px;
-    height: 1040px;
-}
-
-.postcard-inner {
-    padding: 140px;
-    height: 100%;
-}
+    .half-postcard {
+        color: black !important;
+        position: relative;
+        width: 50%;
+        float: left;
+        height: 100%;
+        padding: 2%;
+    }
 
 
-.ad {
-    font-size: 1.5em;
-    padding: 0.25em 0 0.25em 0;
-    font-weight: bold;
-}
+    .postcard-body {
+        position: relative;
+        box-shadow: 0px 0px 10px white;
+        width: 1440px;
+        height: 1040px;
+    }
 
-.adPositionBack {
-    position: absolute;
-    bottom: 0;
-    left: 5%;
-    margin-left: 0.35em;
-}
+    .postcard-inner {
+        padding: 140px;
+        height: 100%;
+    }
 
-p {
-    font-size: 18px;
-    margin: 0 !important;
-    padding: 0 !important
-}
 
-h2 {
-    padding-bottom: 10px;
-    font-size: 3em;
-}
+    .ad {
+        font-size: 1.5em;
+        padding: 0.25em 0 0.25em 0;
+        font-weight: bold;
+    }
 
+    .adPositionBack {
+        position: absolute;
+        bottom: 0;
+        left: 5%;
+        margin-left: 0.35em;
+    }
+
+    p {
+        font-size: 18px;
+        margin: 0 !important;
+        padding: 0 !important
+    }
+
+    h2 {
+        padding-bottom: 10px;
+        font-size: 3em;
+    }
 </style>

@@ -6,7 +6,7 @@
         </div>
         <v-container class="pb-6">
             <v-row no-gutters>
-                <v-col cols="12" md="4" lg="4" ref="postcardCol"
+                <v-col cols="12" md="6" lg="6" ref="postcardCol"
                     :style="'height: ' +postcardHeight+'px; overflow: hidden'">
                     <!-- Postcards -->
                     <Postcard :recipe='recipe' :name='name' :street='street' :zip='zipCode()' :country='country'
@@ -24,10 +24,8 @@
                         </v-btn>
                     </div>
                     <div v-if='showMore || !$vuetify.breakpoint.xsOnly'>
-                        <h1>Coolste Rezept-Karte für {{ price.toFixed(2) }} €!</h1>
-                        <br>
-                        <h3>Die Karte geht an:</h3>
-                        <div class="address">
+                        <h2 class="boldy-border">Die Karte geht an:</h2>
+                        <div class="address pt-3">
                             <input type="text" placeholder="❌ Name" class="shady" v-model="name">
                             <input type="text" placeholder="❌ Straße" class="shady" v-model="street">
                             <br>
@@ -35,37 +33,36 @@
                             <input type="text" placeholder="❌ Ort" class="shady" v-model="city">
                             <div class="countrySelect shady">
                                 <label for="countries">Land: </label>
-                                <select name="countries" id="countries" v-model="country" style="color: white">
+                                <select name="countries" id="countries" v-model="country">
                                     <option value="DE">Deutschland</option>
                                     <option value="AT">Österreich</option>
                                     <option value="CH">Schweiz</option>
                                 </select>
                             </div>
                             <br>
-                            <h3 class="moneyAsking">Du unterstützt uns mit:</h3>
 
 
-                            <div class="moneySpan">
+                            <h2 class="moneyAsking mb-3 boldy-border">Wieviel willst du zahlen?</h2>
+                            <div class="moneySpan mb-2">
                                 <div>{{ price.toFixed(2) }} € +</div>
-                                <div class="ml-1 shady" style="width: min-content">
-                                    <input class="moneyInput" style="color: white" type="number" :min='0' :step='0.5'
-                                        v-model.number="money">
+                                <div style="width: min-content" class="mx-1">
+                                    <input class="moneyInput ma-0 boldy-color" type="number" :min='0' :step='0.5' v-model.number="money">
                                 </div>
-                                <div>€ <b> = {{ money ? (price + money).toFixed(2) : price.toFixed(2) }} €</b></div>
+                                <div>€ = {{ money ? (price + money).toFixed(2) : price.toFixed(2) }} €</div>
                             </div>
-
-                            <h3 class="moneyAsking">So wird dein Geld verwendet:</h3>
                             <MoneyBar :money="money" :price="price" />
-                            <div class="addressError shady" v-if='!showPaypalButton()'>
-                                <div> ❌<b>Bitte alle Felder ausfüllen!</b></div>
-                            </div>
 
-                            <h3 class="moneyAsking" v-if='showPaypalButton()'>Jetzt {{ (price + money).toFixed(2) }}€
-                                bezahlen:</h3>
+
+                            <h2 class="boldy-border my-5">
+                                Jetzt für
+                                {{ (price + money).toFixed(2) }}€
+                                kaufen!
+                            </h2>
+
                         </div>
 
-                        <v-container :style="{'width': $vuetify.breakpoint.smAndUp? '70%': '100%'}">
-                            <Paypal v-if='showPaypalButton()' :recipeID='recipe.id'
+                        <v-container style='width:100%'>
+                            <Paypal :recipeID='recipe.id'
                                 :sendTo='{name: name, street: street, plz: plz, city:city, country: country}'
                                 :amount='price+money' style="text-align: center" />
                         </v-container>
@@ -142,7 +139,7 @@
 </script>
 
 
-<style scoped>
+<style scoped lang="scss">
     h3 {
         padding-bottom: 1em;
     }
@@ -155,6 +152,8 @@
         padding-top: 0.3em;
         padding-bottom: 0.3em;
         margin: 0.25em;
+        background: var(--bg-color);
+        color: black;
     }
 
 
@@ -169,11 +168,11 @@
     .countrySelect select {
         padding-left: 0.25em;
         padding-right: 0.25em;
+        color: black;
     }
 
     .address {
         overflow: auto;
-        padding: 10px;
     }
 
     .moneyAsking {
@@ -183,6 +182,7 @@
     }
 
     .moneySpan {
+        font-weight: bold;
         width: 100%;
         float: left;
         overflow: visible;
@@ -211,7 +211,7 @@
     }
 
     input::placeholder {
-        color: rgba(255, 255, 255, 0.5) !important;
+        color: rgba(0, 0, 0, 0.5) !important;
     }
 
     .center-button {
