@@ -24,7 +24,7 @@
                         </v-btn>
                     </div>
                     <div v-if='showMore || !$vuetify.breakpoint.xsOnly'>
-                        <h1>Sichere dir eine einzigartige Rezept-Karte jetzt ab {{ price.toFixed(2) }} €!</h1>
+                        <h1>Coolste Rezept-Karte für {{ price.toFixed(2) }} €!</h1>
                         <br>
                         <h3>Die Karte geht an:</h3>
                         <div class="address">

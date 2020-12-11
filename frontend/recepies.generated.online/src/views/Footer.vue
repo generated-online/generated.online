@@ -68,9 +68,8 @@
 </script>
 
 <style scoped lang="scss">
-
-.v-btn--active {
-  opacity: 1 ;
+.v-btn:not(.v-btn--text):not(.v-btn--outlined).v-btn--active:before {
+      opacity: 0 !important;
 }
 
 a:link {

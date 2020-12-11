@@ -167,6 +167,7 @@ input::placeholder {
 }
 
 .half-postcard {
+    color: black !important;
     position: relative;
     width: 50%;
     float: left;
