@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import Footer from "./views/Footer";
+import Footer from "./components/Footer";
 import recipeToColor from "@/functions/recipe_to_color";
 import EmojieBackground from "@/components/EmojieBackground";
 

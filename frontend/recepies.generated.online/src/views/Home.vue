@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import Search from "./Search";
+import Search from "../components/Search";
 import EmojieBackground from "@/components/EmojieBackground"
 
 
