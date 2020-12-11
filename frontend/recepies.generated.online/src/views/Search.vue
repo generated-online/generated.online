@@ -24,10 +24,13 @@
         </router-link>
       </ais-hits>
 
-      <ais-state-results>
+      <ais-state-results class="text-center">
         <template slot-scope="{ state: { query }, results: { hits, nbPages } }">
           <!-- show no result if query with no hits -->
-          <div v-if="query && hits.length == 0" style="text-align:center; padding: 2em 0 0 0">Keine Treffer!</div>
+          <v-btn v-if="query && hits.length == 0" large class="boldy-red ma-auto px-4 py-1">
+            <h2 style="width: fit-content" class="text-capitalize">Keine Treffer</h2>
+            <v-icon style="padding-left:0.5em">error</v-icon>
+          </v-btn>
 
           <!-- hide pagination if 1 or less pages -->
           <ais-pagination v-if="nbPages > 1" />
@@ -144,9 +147,9 @@
   }
 
   .ais-SearchBox-submitIcon {
-        width: 1.5em !important;
-        height: 1.5em !important;
-        margin-left: 1em !important;
+    width: 1.5em !important;
+    height: 1.5em !important;
+    margin-left: 1em !important;
   }
 
   .showMore-button:hover {
@@ -165,7 +168,7 @@
     border-radius: 15px;
     border: 1px solid rgba(1, 1, 1, 0.8);
     color: var(--bg-color) !important;
-    user-select: none;
+    user-select: inherit !important;
   }
 
   input:focus {

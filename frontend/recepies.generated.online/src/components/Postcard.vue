@@ -177,7 +177,7 @@ input::placeholder {
 
 .postcard-body {
     position: relative;
-    border: solid black 40px;
+    box-shadow: 0px 0px 10px white;
     width: 1440px;
     height: 1040px;
 }

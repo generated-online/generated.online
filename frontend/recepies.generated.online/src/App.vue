@@ -59,7 +59,8 @@ export default {
         cssVars() {
             return {
                 '--bg-color': this.backgroundColor,
-                "background-color": "transparent"
+                "background-color": "transparent",
+                "green": "rgb(195, 211, 91)",
             }
         }
     }
@@ -70,12 +71,22 @@ export default {
 <style lang="scss">
 $softPink: var(--bg-color);
 
+.bg-green {
+ background: rgb(195, 211, 91);
+}
+
+.boldy-red {
+    color: black !important;
+    background: rgb(231, 55, 61) !important;
+    padding: 20px  !important;
+    border-radius: 30px !important;
+}
+
 .boldy {
-    background: black !important;
+    background: black;
     padding: 20px  !important;
     border-radius: 30px !important;
     color: var(--bg-color) !important;
-
 }
 
 .ais-SearchBox-input::placeholder {
