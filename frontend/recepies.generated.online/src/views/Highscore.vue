@@ -38,7 +38,6 @@ export default {
     created() {
         let db = firebase.firestore();
         const ref = db.collection("recipes")
-        console.log(this.num_recipes)
         ref.orderBy("votes", "desc").limit(this.num_recipes)
             .get()
             .then((snap) => {

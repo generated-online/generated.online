@@ -26,7 +26,9 @@
 </template>
 
 <script>
-    export default {
+import EmojiStorage from "@/functions/emojiStorage";
+
+export default {
         props: {
             "recipe": {
                 type: Object,
@@ -58,66 +60,6 @@
                 rowMargin: "5px",
                 line: [],
                 reverseLine: [],
-                emoMap: {
-                    'rind': 'steak',
-                    'speck': 'schinken',
-                    'haselnüsse': 'kastanie',
-                    "lachs": 'fisch',
-                    "forelle": 'fisch',
-                    "brasse": 'fisch',
-                    "karpfen": 'fisch',
-                    "hecht": 'fisch',
-                    "äpfel": 'apfel',
-                    "möhre": "karotte",
-                    "gelberübe": "karotte",
-                    "eigelb": "ei",
-                    "thymian": "kräuter",
-                    "oregano": "kräuter",
-                    "basilikum": "samen",
-                    "petersilie": "kräuter",
-                    "fleisch": "steak",
-                    "parmesan": "käse",
-                    "gorgonzola": "käse",
-                    "gauda": "käse",
-                    "emmenthaler": "käse",
-                    "erdnüsse": "erdnuss",
-                    "haselnüsse": "haselnuss",
-                    "manderine": "orange",
-                    "clementine": "orange",
-                    "schwammerl": "pilze",
-                    "champignons": "pilze",
-                    "eigelb": "ei",
-                    "eiweiß": "ei",
-                    "filet": "steak",
-                    "braten": "steak",
-                    "hühnchen": "juhn",
-                    "pute": "truthahn",
-                    "geflügel": "ente",
-                    "plätzchen": "keks",
-                    "gebäck": 'keks',
-                    "getreide": "hafer",
-                    "erdnüsse": "erdnuss",
-                    "kalb": "kuh"
-
-                },
-                // emos must be sorted by lengths for better matching
-                allEmos: [
-                    "ei", "kuh", "eis", "lamm", "huhn", "ente", "kiwi", "mais", "pilz",
-                    "brot", "käse", "taco", "salz", "dose", "reis", "keks", "wein", "bier", "schinken",
-                    "fisch", "schaf", "samen", "hafer", "olive", "mango", "apfel", "birne",
-                    "chili", "gurke", "salat", "breze", "pizza", "sushi", "honig", "milch",
-                    "karotte", "wasser", "krabbe", "hummer", "melone", "banane", "tomate",
-                    "burger", "pommes", "muffin", "kuchen", "ananas", "oktopus", "garnele", "schwein", "truthan",
-                    "weintrauben", "zwiebel",
-                    "paprika", "avocado", "zitrone", "kirsche", "avocado", "karotte", "steak",
-                    "burrito", "spiegelei", "popcorn",
-                    "schinken", "karotte", "aubergine", "erdbeere", "pfirsich", "brokkoli",
-                    "erdnuss", "kastanie", "baguette", "sandwich", "cocktail",
-                    "kartoffel", "knoblauch", "blaubeere", "orange", "kokosnuss", "kartoffel",
-                    "croissant", "spaghetti", "reis", "schokolade",
-                    "tintenfisch", "pfannkuchen", "schnittlauch",
-                    "wassermelone", "süßkartoffel"
-                ],
                 matchingEmos: [],
                 emoMapKeys: {},
                 allPossibleEmos: [],
@@ -156,7 +98,7 @@
                         }
                     }
                     if (matchingEmojie !== '') {
-                        if (Object.keys(this.emoMap).includes(matchingEmojie)) matchingEmojie = this.emoMap[
+                        if (Object.keys(EmojiStorage.emoMap).includes(matchingEmojie)) matchingEmojie = EmojiStorage.emoMap[
                             matchingEmojie]
                         this.matchingEmos.push(matchingEmojie)
                     }
@@ -189,14 +131,14 @@
                 let words = []
                 if (!this.recipe) {
                     // load random keys as words
-                    this.matchingEmos = this.shuffleArray(this.allEmos)
+                    this.matchingEmos = this.shuffleArray(EmojiStorage.allEmos)
                 } else {
                     words = this.recipe.ingredients.toString().replaceAll(",", " ").split(" ")
                     words.forEach(this.wordToEmoji)
 
                     // if we dit not find any emojis
                     if (this.matchingEmos.length === 0) {
-                        this.matchingEmos = this.shuffleArray(this.allEmos)
+                        this.matchingEmos = this.shuffleArray(EmojiStorage.allEmos)
                     }
                     // remove all duplicates
                     this.matchingEmos = [...new Set(this.matchingEmos)];
@@ -216,8 +158,8 @@
             },
         },
         created() {
-            this.emoMapKeys = Object.keys(this.emoMap)
-            this.allPossibleEmos = this.allEmos.concat(this.emoMapKeys).sort(function (a, b) {
+            this.emoMapKeys = Object.keys(EmojiStorage.emoMap)
+            this.allPossibleEmos = EmojiStorage.allEmos.concat(this.emoMapKeys).sort(function (a, b) {
                 // ASC  -> a.length - b.length
                 // DESC -> b.length - a.length
                 return b.length - a.length;
