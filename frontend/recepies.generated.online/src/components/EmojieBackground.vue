@@ -72,7 +72,7 @@
                     "gelberübe": "karotte",
                     "eigelb": "ei",
                     "thymian": "kräuter",
-                    "oregano": "grüne_blätter",
+                    "oregano": "kräuter",
                     "basilikum": "samen",
                     "petersilie": "kräuter",
                     "fleisch": "steak",

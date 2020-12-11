@@ -1,7 +1,7 @@
 <template>
     <v-card class="info-container py-4 px-2 mt-16 mb-8">
-        <div class="text-sm-h2 text-md-h1 text-h4 pb-12 text-center">
-            <b>KI generierte Rezepte!</b>
+        <div class="text-sm-h2 text-md-h1 text-h4 pb-12 mb-16 text-center">
+            <b class="boldy" >KI generierte Rezepte!</b>
         </div>
         <div :style="searchWidth">
             <Search/>

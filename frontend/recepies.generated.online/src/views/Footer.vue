@@ -1,27 +1,29 @@
 <template>
-    <v-card>
-        <v-footer padless fixed>
-            <v-card flat tile width="100%" class="footer-container lighten-1 text-center"
-                :style="'background-color:' + color">
-                <v-card-text class="py-2 px-0 text center" width="100%">
-                    <v-btn class="mx-3 my-0" to="/" icon>
-                        <v-icon class="vue-icon" size="30">search</v-icon>
-                    </v-btn>
-                    <generateRecipeButton buttonText="" />
-                    <v-btn class="mx-3 my-0" icon to="/info">
-                        <v-icon class="vue-icon" size="30">mdi-information-outline</v-icon>
-                    </v-btn>
-                    <v-btn class="mx-3 my-0" icon>
-                        <!-- show whatsapp share button, when not loaded yet just an empty button -->
-                        <ShareNetwork class="inline-block" network="whatsapp" style="text-decoration: unset" :url="url"
-                            :title="shareText">
-                            <v-icon class="vue-icon" size="30">mdi-whatsapp</v-icon>
-                        </ShareNetwork>
-                    </v-btn>
-                </v-card-text>
-            </v-card>
-        </v-footer>
-    </v-card>
+    <v-footer padless fixed style="background: transparent">
+        <v-card flat tile width="100%" class="footer-container text-center" style="background: transparent">
+            <v-card-text class="py-2 px-0 text center" width="100%">
+                <v-btn class="mx-3 my-0 boldy remove-acive" to="/" icon>
+                    <v-icon class="vue-icon" size="30">search</v-icon>
+                </v-btn>
+
+                <v-btn to="/recipe" icon class="mx-3 my-0 boldy">
+                    <v-icon class="vue-icon">shuffle</v-icon>
+                </v-btn>
+
+                <v-btn class="mx-3 my-0 boldy" icon to="/info">
+                    <v-icon class="vue-icon" size="30">mdi-information-outline</v-icon>
+                </v-btn>
+
+                <v-btn class="mx-3 my-0 boldy" icon>
+                    <!-- show whatsapp share button, when not loaded yet just an empty button -->
+                    <ShareNetwork class="inline-block" network="whatsapp" style="text-decoration: unset" :url="url"
+                        :title="shareText">
+                        <v-icon class="vue-icon" size="30">mdi-whatsapp</v-icon>
+                    </ShareNetwork>
+                </v-btn>
+            </v-card-text>
+        </v-card>
+    </v-footer>
 </template>
 
 <script>
@@ -65,14 +67,20 @@
     }
 </script>
 
-<style>
+<style scoped lang="scss">
+.v-btn:not(.v-btn--text):not(.v-btn--outlined).v-btn--active:before {
+      opacity: 0 !important;
+}
+
+a:link {
+    color: var(--bg-color)
+}
     .footer-container {
         color: white !important;
     }
 
     .vue-icon {
         cursor: grab;
-        color: rgba(0.82745098039, 0.82745098039, 0.82745098039, 0.6) !important;
     }
 
     .footer-text {
