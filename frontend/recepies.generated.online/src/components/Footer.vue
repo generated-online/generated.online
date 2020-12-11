@@ -1,23 +1,25 @@
 <template>
-    <v-footer padless fixed style="background: transparent">
-        <v-card flat tile width="100%" class="footer-container text-center" style="background: transparent">
-            <v-card-text class="py-2 px-0 text center" width="100%">
-                <v-btn class="mx-3 my-0 boldy remove-acive" to="/" icon>
+    <v-footer fixed padless style="background: transparent">
+        <v-card class="footer-container text-center" flat style="background: transparent" tile width="100%">
+            <v-card-text :style="{'margin-right': $vuetify.breakpoint.smAndDown? '0':'auto',
+            'width': $vuetify.breakpoint.smAndDown? 'min-content':'max-content'}"
+                         class="py-2 px-0 text center allIcons">
+                <v-btn class="mx-2 my-1 boldy remove-acive" icon to="/">
                     <v-icon class="vue-icon" size="30">search</v-icon>
                 </v-btn>
 
-                <v-btn to="/recipe" icon class="mx-3 my-0 boldy">
+                <v-btn class="mx-1 my-1 boldy" icon to="/recipe">
                     <v-icon class="vue-icon">shuffle</v-icon>
                 </v-btn>
 
-                <v-btn class="mx-3 my-0 boldy" icon to="/info">
+                <v-btn class="mx-2 my-1 boldy" icon to="/info">
                     <v-icon class="vue-icon" size="30">mdi-information-outline</v-icon>
                 </v-btn>
 
-                <v-btn class="mx-3 my-0 boldy" icon>
+                <v-btn class="mx-2 my-1 boldy" icon>
                     <!-- show whatsapp share button, when not loaded yet just an empty button -->
-                    <ShareNetwork class="inline-block" network="whatsapp" style="text-decoration: unset" :url="url"
-                                  :title="shareText">
+                    <ShareNetwork :title="shareText" :url="url" class="inline-block" network="whatsapp"
+                                  style="text-decoration: unset">
                         <v-icon class="vue-icon" size="30">mdi-whatsapp</v-icon>
                     </ShareNetwork>
                 </v-btn>
@@ -67,7 +69,7 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .v-btn:not(.v-btn--text):not(.v-btn--outlined).v-btn--active:before {
   opacity: 0 !important;
 }
@@ -86,5 +88,11 @@ a:link {
 
 .footer-text {
   color: rgb(211, 211, 211);
+}
+
+.allIcons {
+  margin-left: auto;
+  background: var(--bg-color);
+  border-radius: 35px !important;
 }
 </style>
