@@ -12,6 +12,10 @@
                     <v-icon class="vue-icon">shuffle</v-icon>
                 </v-btn>
 
+                <v-btn class="mx-1 my-1 boldy" icon to="/highscore">
+                    <span class="vue-icon">👩‍🍳</span>
+                </v-btn>
+
                 <v-btn class="mx-2 my-1 boldy" icon to="/info">
                     <v-icon class="vue-icon" size="30">mdi-information-outline</v-icon>
                 </v-btn>

@@ -155,7 +155,6 @@
                             })
                         }
                     }
-                    console.log(matchingEmojie)
                     if (matchingEmojie !== '') {
                         if (Object.keys(this.emoMap).includes(matchingEmojie)) matchingEmojie = this.emoMap[
                             matchingEmojie]
@@ -188,10 +187,8 @@
             },
             setupMatchinEmos() {
                 let words = []
-                console.log(this.recipe)
                 if (!this.recipe) {
                     // load random keys as words
-                    console.log("NO RECIPE")
                     this.matchingEmos = this.shuffleArray(this.allEmos)
                 } else {
                     words = this.recipe.ingredients.toString().replaceAll(",", " ").split(" ")
