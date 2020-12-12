@@ -1,18 +1,18 @@
 <template>
     <div class="wrapper">
         <div class="progress-padding" :style="flexStyle(2.21, minWidth)+'; '+bg(color='yellow')">
-            🖨 Druck
+            🖨 2.20€
         </div>
         <div class="progress-padding progress-border-left" :style="flexStyle(0.7, minWidth)+'; '+bg(color='skyblue')">
-            📪
+            📪 0.7€
         </div>
         <div class="progress-padding progress-border-left"
              :style="flexStyle(0.35, minWidth)+'; '+bg(color='lightseagreen')">
-            🏦
+            🏦 0.35€
         </div>
         <div class="progress-padding progress-border-left"
              :style="flexStyle(0.25, minWidth)+'; '+bg(color='lightpink')">
-            💻
+            💻 0.25€
         </div>
         <transition name="section">
             <div v-show="money > 0" class="progress-padding progress-border-left spendenBackground"
@@ -51,8 +51,6 @@ export default {
     overflow: hidden;
     display: flex;
     border-radius: 5px;
-    box-shadow: 0 0 10px black;
-    background: rgba(0, 0, 0, 0.8);
     color: black;
 }
 

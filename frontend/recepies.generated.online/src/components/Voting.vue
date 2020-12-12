@@ -1,11 +1,10 @@
 <template>
-    <v-container class="text-sm-subtitle-1 text-md-h5 text-subtitle-2 text-center">
-        <div class=" pb-2">Bewertungen</div>
-        <v-divider></v-divider>
-        <div class="mt-4" style="width:max-content; display:flex; margin: auto">
-            <div class="mx-4 verticalCenter"> {{ recipe.votes }}
-            </div>
-            <v-btn class="transparentButton mx-4 verticalCenter" :disabled="!possibleToVote" :loading="buttonLoading"
+    <v-container class="boldy text-sm-subtitle-1 text-md-h5 text-subtitle-2 text-center">
+        <b>Bewertungen</b>
+        <div style="width:max-content; display:flex; margin: auto">
+            <h1 class="verticalCenter"> {{ recipe.votes }}
+            </h1>
+            <v-btn class="transparentButton verticalCenter" :disabled="!possibleToVote" :loading="buttonLoading"
                    fab dark
                    small color="transparent" @click="upvote">
                 <span class="womanCook">👩‍🍳</span>
