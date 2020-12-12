@@ -97,7 +97,8 @@ export default {
         },
         getImgUrl
     },
-    created() {
+    destroyed() {
+
     },
     mounted() {
         this.calculateElementsInRow()

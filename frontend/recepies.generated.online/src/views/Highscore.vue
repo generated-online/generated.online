@@ -1,6 +1,9 @@
 <template>
     <v-container>
-        <div class="text-h2 boldy mb-8 text-center" style="font-weight:bold;">👩‍🍳 Beschde Rezepte</div>
+        <v-row align="center" justify="center" class="text-h2 boldy mb-8 text-center" style="font-weight:bold;">
+            <img :src="getImgUrl('womanCook')" class="emoji">
+            Beschde Rezepte
+        </v-row>
         <v-row v-for="recipe in recipes" :style="{'color':(recipeToColor(recipe.id) +' !important')}" class="row"
                no-gutters>
             <router-link :to="'/recipe/' + recipe.id" class="boldyNoColor px-4 py-1 mb-4" style="width:100%">
@@ -13,7 +16,7 @@
                             {{ recipe.title }}
                         </v-row>
                         <v-row class="mb-1 text-h6">
-                            <img v-for="emoji in recipeToEmojis(recipe).map(getImgUrl)" :src="emoji" class="emoji">
+                            <img v-for="emoji in recipeToEmojis(recipe).map(getImgUrl)" :src="emoji" class="emoji pr-2">
                         </v-row>
                     </v-col>
 
@@ -88,9 +91,7 @@ a {
 }
 
 .emoji {
-    display: table-cell;
     vertical-align: middle;
-    width: 1em;
     height: 1em;
 }
 
