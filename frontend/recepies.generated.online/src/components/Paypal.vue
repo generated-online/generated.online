@@ -20,8 +20,8 @@ export default {
                 },
 
                 createOrder: (data, actions) => {
-                    console.log(this.recipeID);
-                    console.log(this.sendTo);
+                    // console.log(this.recipeID);
+                    // console.log(this.sendTo);
                     return actions.order.create({
                         //intent: 'CAPTURE', // DEV ONLY
                         "application_context": {

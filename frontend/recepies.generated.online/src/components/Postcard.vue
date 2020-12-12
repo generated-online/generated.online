@@ -4,13 +4,13 @@
         <div class="postcard-body"
             :style="{'margin-bottom': horizontal ? 0 : bottomMargin, 'margin-right': horizontal ? centerMargin : 0, 'float':'left'}">
             <EmojieBackground :recipe="recipe" :opacity="1" color="var(--bg-color)" />
-            <div class="postcard-inner title2">
-                <h1>
+            <div class="postcard-inner">
+                <h1 :style="'line-height: 1.3em; font-size:' + titleSize">
                     <span class="clip-text">
                         {{ recipe.title }}
                     </span>
                 </h1>
-                <span class="ad clip-text">gesendet mit recipes.generated.online</span>
+                <span class="ad clip-text">recipes.generated.online</span>
             </div>
         </div>
 
@@ -18,9 +18,11 @@
             <div>
                 <div class="half-postcard">
                     <h2>{{ recipe.title }}</h2>
-                    <p v-for="ingredient in recipe.ingredients" v-bind:key="ingredient">{{ ingredient }}</p>
+
+                    <p v-for="ingredient in recipe.ingredients" v-bind:key="ingredient"
+                        :style="'font-size:'+ instructionSize">{{ ingredient }}</p>
                     <br>
-                    <p style="text-align: justify">{{ recipe.instructions }}</p>
+                    <p :style="'text-align: justify;font-size:'+ instructionSize">{{ recipe.instructions }}</p>
                     <br>
                 </div>
                 <div class="half-postcard">
@@ -32,8 +34,7 @@
                         <input type="text" placeholder="Land" v-model="country" disabled>
                     </div>
                 </div>
-                <p class="ad adPositionBack clip-text" style="background: black">gesendet mit
-                    recipes.generated.online</p>
+                <p class="ad adPositionBack clip-text" style="background: black">recipes.generated.online</p>
             </div>
         </div>
     </div>
@@ -41,8 +42,45 @@
 
 <script>
     import EmojieBackground from "@/components/EmojieBackground"
-
     export default {
+        created() {
+            if (this.recipe.title.length > 100) {
+                this.titleSize = "6em"
+            } else if (this.recipe.title.length > 70) {
+                this.titleSize = "7em"
+            }
+            // else standard applies
+
+            // get approximate line number, about 25 lines fit on the card
+            const lines = this.recipe.instructions.length / 100 + this.recipe.ingredients.length
+
+            console.log(lines);
+            if (lines > 33) {
+                this.instructionSize = "0.6em"
+            } else if (lines > 31) {
+                this.instructionSize = "0.7em"
+            } else if (lines > 29) {
+                this.instructionSize = "0.8em"
+            } else if (lines > 27) {
+                this.instructionSize = "0.9em"
+            } else if (lines > 25) {
+                this.instructionSize = "1em"
+            } else if (lines > 23) {
+                this.instructionSize = "1.1em"
+            } else if (lines > 21) {
+                this.instructionSize = "1.2em"
+            } else if (lines > 19) {
+                this.instructionSize = "1.3em"
+            } else if (lines > 17) {
+                this.instructionSize = "1.4em"
+            } else if (lines > 15) {
+                this.instructionSize = "1.5em"
+            } else if (lines <= 15) {
+                this.instructionSize = "1.6em"
+            }
+            // else standard applies
+
+        },
         props: {
             "recipe": {
                 type: Object,
@@ -75,6 +113,8 @@
         },
         data() {
             return {
+                "titleSize": "8em",
+                "instructionSize": "1em",
                 "bottomMargin": "4em",
                 "centerMargin": "4em",
                 height: 100
@@ -124,11 +164,6 @@
         -moz-box-shadow: 10px 0 0 $textBGColor, -10px 0 0 $textBGColor;
         -webkit-box-shadow: 10px 0 0 $textBGColor, -10px 0 0 $textBGColor;
         background: $textBGColor;
-    }
-
-    .title2 h1 {
-        font-size: 8em;
-        line-height: 1.5em;
     }
 
     .stamp {
@@ -187,10 +222,11 @@
     }
 
     .postcard-inner {
-        padding: 140px;
+        padding-left: 140px;
+        padding-top: 124px;
+        padding-right: 70px;
         height: 100%;
     }
-
 
     .ad {
         font-size: 1.5em;

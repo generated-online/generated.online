@@ -13,7 +13,7 @@
                         </v-col>
                         <v-col cols="12" sm="auto">
                             <div
-                                :style="{'width': 'fit-content', 'margin': 'autp', 'padding-top': $vuetify.breakpoint.xs? '1em':'0'}" class="ml-4">
+                                :style="{'width': 'fit-content', 'margin': 'autp', 'padding-top': $vuetify.breakpoint.xs? '1em':'0'}" class="ml-sm-4">
                                 <Voting :recipe='recipe' />
                             </div>
                         </v-col>
@@ -26,7 +26,7 @@
                         <v-col cols="12" md="auto" lg="auto">
                             <div :class="['text-sm-h6', 'text-md-h6', 'text-h6']"
                                 :style="{'margin':$vuetify.breakpoint.xs?'auto': '0'}">
-                                <v-container>
+                                <v-container class="pa-0">
                                     <!-- starting from md the ingredients should only have the width of min content-->
                                     <v-row no-gutters
                                         :style="{'width': ($vuetify.breakpoint.sm)? 'auto':'min-content'}">

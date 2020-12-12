@@ -84,8 +84,8 @@
                     "haselnüsse": "haselnuss",
                     "manderine": "orange",
                     "clementine": "orange",
-                    "schwammerl": "pilze",
-                    "champignons": "pilze",
+                    "schwammerl": "pilz",
+                    "champignons": "pilz",
                     "eigelb": "ei",
                     "eiweiß": "ei",
                     "filet": "steak",
@@ -100,7 +100,6 @@
                     "kalb": "kuh"
 
                 },
-                // emos must be sorted by lengths for better matching
                 allEmos: [
                     "ei", "kuh", "eis", "lamm", "huhn", "ente", "kiwi", "mais", "pilz",
                     "brot", "käse", "taco", "salz", "dose", "reis", "keks", "wein", "bier", "schinken",
@@ -108,7 +107,7 @@
                     "chili", "gurke", "salat", "breze", "pizza", "sushi", "honig", "milch",
                     "karotte", "wasser", "krabbe", "hummer", "melone", "banane", "tomate",
                     "burger", "pommes", "muffin", "kuchen", "ananas", "oktopus", "garnele", "schwein", "truthan",
-                    "weintrauben", "zwiebel",
+                    "weintrauben", "zwiebel", "auster",
                     "paprika", "avocado", "zitrone", "kirsche", "avocado", "karotte", "steak",
                     "burrito", "spiegelei", "popcorn",
                     "schinken", "karotte", "aubergine", "erdbeere", "pfirsich", "brokkoli",
@@ -155,7 +154,6 @@
                             })
                         }
                     }
-                    console.log(matchingEmojie)
                     if (matchingEmojie !== '') {
                         if (Object.keys(this.emoMap).includes(matchingEmojie)) matchingEmojie = this.emoMap[
                             matchingEmojie]
@@ -188,7 +186,6 @@
             },
             setupMatchinEmos() {
                 let words = []
-                console.log(this.recipe)
                 if (!this.recipe) {
                     // load random keys as words
                     console.log("NO RECIPE")
