@@ -31,7 +31,7 @@ export default {
                             description: "Postkarte " +
                                 window.location.href + " an " + this.sendTo.name + " " + this
                                     .sendTo.street + " " + this.sendTo.plz + " "+this.sendTo.city + " " + this
-                                    .sendTo.country,
+                                    .sendTo.country+ " von " + this.sendTo.absender,
                             amount: {
                                 currency_code: "EUR",
                                 value: this.amount
