@@ -12,9 +12,9 @@
 </template>
 
 <script>
-import Footer from "./components/Footer";
-import recipeToColor from "@/functions/recipe_to_color";
-import EmojieBackground from "@/components/EmojieBackground";
+    import Footer from "./components/Footer";
+    import recipeToColor from "@/functions/recipe_to_color";
+    import EmojieBackground from "@/components/EmojieBackground";
 
     export default {
         components: {
@@ -33,7 +33,51 @@ import EmojieBackground from "@/components/EmojieBackground";
                 } else {
                     this.recipeID = recipe.id
                 }
+                this.prevBackgroundColor = String(this.backgroundColor);
                 this.backgroundColor = recipeToColor(this.recipeID);
+            },
+            nameToHSL(name) {
+                let fakeDiv = document.createElement("div");
+                fakeDiv.style.color = name;
+                document.body.appendChild(fakeDiv);
+
+                let cs = window.getComputedStyle(fakeDiv),
+                    pv = cs.getPropertyValue("color");
+
+                document.body.removeChild(fakeDiv);
+
+                // Code ripped from RGBToHSL() (except pv is substringed)
+                let rgb = pv.substr(4).split(")")[0].split(","),
+                    r = rgb[0] / 255,
+                    g = rgb[1] / 255,
+                    b = rgb[2] / 255,
+                    cmin = Math.min(r, g, b),
+                    cmax = Math.max(r, g, b),
+                    delta = cmax - cmin,
+                    h = 0,
+                    s = 0,
+                    l = 0;
+
+                if (delta == 0)
+                    h = 0;
+                else if (cmax == r)
+                    h = ((g - b) / delta) % 6;
+                else if (cmax == g)
+                    h = (b - r) / delta + 2;
+                else
+                    h = (r - g) / delta + 4;
+
+                h = Math.round(h * 60);
+
+                if (h < 0)
+                    h += 360;
+
+                l = (cmax + cmin) / 2;
+                s = delta == 0 ? 0 : delta / (1 - Math.abs(2 * l - 1));
+                s = +(s * 100).toFixed(1);
+                l = +(l * 100).toFixed(1);
+
+                return h
             }
         },
         data() {
@@ -43,7 +87,8 @@ import EmojieBackground from "@/components/EmojieBackground";
                 recipe: null,
                 recipeID: null,
                 backgroundPosition: (window.innerWidth % 90) / 2 + "px",
-                backgroundColor: recipeToColor(null)
+                backgroundColor: recipeToColor(null),
+                prevBackgroundColor: recipeToColor(null),
             };
 
         },
@@ -59,8 +104,10 @@ import EmojieBackground from "@/components/EmojieBackground";
             cssVars() {
                 return {
                     '--bg-color': this.backgroundColor,
+                    '--prev-bg-color': this.prevBackgroundColor,
                     "background-color": "transparent",
                     "green": "rgb(195, 211, 91)",
+                    "--hue-filter": 'hue-rotate(' + (this.nameToHSL(this.backgroundColor) - 174) + 'deg)'
                 }
             }
         }
@@ -70,6 +117,19 @@ import EmojieBackground from "@/components/EmojieBackground";
 
 <style lang="scss">
     $softPink: var(--bg-color);
+
+    @keyframes color-filter {
+        0% {
+            filter: hue-rotate(-174deg)
+        }
+        100% {
+            filter: var(--hue-filter)
+        }
+    }
+
+    .color-adapt {
+        animation: color-filter 0.5s linear;
+    }
 
     .bg-green {
         background: rgb(195, 211, 91);
@@ -103,13 +163,13 @@ import EmojieBackground from "@/components/EmojieBackground";
         color: var(--bg-color) !important;
     }
 
-.boldyNoColor{
-  background: black;
-  padding: 20px  !important;
-  border-radius: 30px !important;
-}
+    .boldyNoColor {
+        background: black;
+        padding: 20px !important;
+        border-radius: 30px !important;
+    }
 
-.ais-SearchBox-input::placeholder {
+    .ais-SearchBox-input::placeholder {
         color: var(--bg-color) !important;
 
     }
@@ -135,10 +195,10 @@ import EmojieBackground from "@/components/EmojieBackground";
         box-shadow: unset !important;
     }
 
-.shady {
-  border-radius: 5px;
-  box-shadow: 0 0 10px black;
-  background: rgba(0, 0, 0, 0.8);
-  color: white;
-}
+    .shady {
+        border-radius: 5px;
+        box-shadow: 0 0 10px black;
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+    }
 </style>

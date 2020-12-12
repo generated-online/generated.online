@@ -1,60 +1,69 @@
 <template>
-    <v-card :class="['mb-16','info-container',{'mt-8':$vuetify.breakpoint.mdAndUp}]">
-        <div v-if='recipe'>
-            <!-- Title and Voting -->
-            <div style="min-height: 100vh">
-                <v-container :class="['pb-6', 'pa-0']">
-                    <v-row no-gutters>
-                        <v-col>
-                            <div :class="['text-sm-h3', 'text-md-h2', 'text-h4', {'text-center': $vuetify.breakpoint.xs}, 'boldy']"
-                                style="word-break: break-word">
-                                {{ recipe.title }}
-                            </div>
-                        </v-col>
-                        <v-col cols="12" sm="auto" align="center">
-                            <div
-                                :style="{'width': 'min-content', 'margin': 'auto', 'padding-top': $vuetify.breakpoint.xs? '1em':'0'}" class="ml-sm-4">
-                                <Voting :recipe='recipe' />
-                            </div>
-                        </v-col>
-                    </v-row>
-                </v-container>
-                <!-- Zutaten and Instructions -->
-                <v-container class="pa-0 pb-6" >
-                    <v-row no-gutters>
-                        <!-- ZUTATEN -->
-                        <v-col cols="12" md="auto" lg="auto">
-                            <div :class="['text-sm-h6', 'text-md-h6', 'text-h6']"
-                                :style="{'margin':$vuetify.breakpoint.xs?'auto': '0'}">
-                                <v-container class="pa-0">
-                                    <!-- starting from md the ingredients should only have the width of min content-->
-                                    <v-row no-gutters justify="center"
-                                        :style="{'width': ($vuetify.breakpoint.smAndDown)? 'auto':'min-content'}">
-                                        <template v-for="(ingredient, n) in recipe.ingredients">
-                                            <div :key="n" :style="{'width': 'max-content'}" :class="['boldy','ma-1','py-1','px-4']">
-                                                {{ ingredient }}
-                                            </div>
-                                             <v-responsive v-if="!$vuetify.breakpoint.smAndDown" :key="`width-${n}`" width="100%"></v-responsive>
-                                        </template>
-                                    </v-row>
-                                </v-container>
-                            </div>
-                        </v-col>
-                        <!--  Instructions -->
-                                                               
-                        <v-col class=" ml-md-6">
-                            <span class="instruction text-span mt-3">
-                                {{ recipe.instructions }}
-                            </span>
-                        </v-col>
-                    </v-row>
-                </v-container>
-            </div>
+    <div>
+        <v-card :class="['mb-16','info-container',{'mt-8':$vuetify.breakpoint.mdAndUp}]">
+            <div v-if='recipe && loaded'>
+                <!-- Title and Voting -->
+                <div style="min-height: 100vh">
+                    <v-container :class="['pb-6', 'pa-0']">
+                        <v-row no-gutters>
+                            <v-col>
+                                <div :class="['text-sm-h3', 'text-md-h2', 'text-h4', {'text-center': $vuetify.breakpoint.xs}, 'boldy']"
+                                    style="word-break: break-word">
+                                    {{ recipe.title }}
+                                </div>
+                            </v-col>
+                            <v-col cols="12" sm="auto" align="center">
+                                <div :style="{'width': 'min-content', 'margin': 'auto', 'padding-top': $vuetify.breakpoint.xs? '1em':'0'}"
+                                    class="ml-sm-4">
+                                    <Voting :recipe='recipe' />
+                                </div>
+                            </v-col>
+                        </v-row>
+                    </v-container>
+                    <!-- Zutaten and Instructions -->
+                    <v-container class="pa-0 pb-6">
+                        <v-row no-gutters>
+                            <!-- ZUTATEN -->
+                            <v-col cols="12" md="auto" lg="auto">
+                                <div :class="['text-sm-h6', 'text-md-h6', 'text-h6']"
+                                    :style="{'margin':$vuetify.breakpoint.xs?'auto': '0'}">
+                                    <v-container class="pa-0">
+                                        <!-- starting from md the ingredients should only have the width of min content-->
+                                        <v-row no-gutters justify="center"
+                                            :style="{'width': ($vuetify.breakpoint.smAndDown)? 'auto':'min-content'}">
+                                            <template v-for="(ingredient, n) in recipe.ingredients">
+                                                <div :key="n" :style="{'width': 'max-content'}"
+                                                    :class="['boldy','ma-1','py-1','px-4']">
+                                                    {{ ingredient }}
+                                                </div>
+                                                <v-responsive v-if="!$vuetify.breakpoint.smAndDown" :key="`width-${n}`"
+                                                    width="100%"></v-responsive>
+                                            </template>
+                                        </v-row>
+                                    </v-container>
+                                </div>
+                            </v-col>
+                            <!--  Instructions -->
 
-            <!--  Postcard -->
-            <PayPalPostcard :recipe='recipe' />
+                            <v-col class=" ml-md-6">
+                                <span class="instruction text-span mt-3">
+                                    {{ recipe.instructions }}
+                                </span>
+                            </v-col>
+                        </v-row>
+                    </v-container>
+                </div>
+
+                <!--  Postcard -->
+                <PayPalPostcard :recipe='recipe' />
+            </div>
+        </v-card>
+
+        <div v-if="!loaded" class="loader">
+            <img src="../assets/robokoch.gif" alt="loading animation" class="color-adapt"
+                style="display:block; height: 100px; width: 100px; margin: auto; margin-top: 30vh">
         </div>
-    </v-card>
+    </div>
 </template>
 
 <script>
@@ -75,14 +84,17 @@
                 id: "",
                 recipe: undefined,
                 error: "",
+                loaded: false,
             };
         },
         created() {
+
             let db = firebase.firestore();
             const ref = db.collection("recipes")
 
             this.id = this.$route.params.id;
             let key = "";
+
             if (typeof this.id !== "undefined") {
                 ref
                     .doc(this.id)
@@ -123,6 +135,8 @@
                     instructions: doc.data().instructions,
                     votes: doc.data().votes || 0,
                 };
+                // data loaded
+                this.loaded = true
 
                 this.$emit('shareText', 'Schau dir dieses coole KI generierte Rezept an: ' + this.recipe['title']);
                 // this.$emit('recipeId', this.recipe.id);
@@ -136,6 +150,15 @@
 </script>
 
 <style scoped lang="scss">
+    .loader {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: var(--bg-color);
+    }
+
     .instruction {
         background: rgba(0, 0, 0, 1);
         color: var(--bg-color);

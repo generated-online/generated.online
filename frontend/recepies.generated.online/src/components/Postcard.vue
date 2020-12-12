@@ -54,7 +54,7 @@
             // get approximate line number, about 25 lines fit on the card
             const lines = this.recipe.instructions.length / 100 + this.recipe.ingredients.length
 
-            console.log(lines);
+            // console.log(lines);
             if (lines > 33) {
                 this.instructionSize = "0.6em"
             } else if (lines > 31) {
