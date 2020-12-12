@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import EmojiStorage from "@/functions/emojiStorage";
+import {getEmojiLines} from "@/functions/emojiUtils";
 
 export default {
         props: {
@@ -72,38 +72,6 @@ export default {
                 var images = require.context('@/assets/emojies/', false, /\.png$/)
                 return images('./' + emojie + ".png")
             },
-            shuffleArray(a) {
-                for (let i = a.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [a[i], a[j]] = [a[j], a[i]];
-                }
-                return a;
-            },
-            wordToEmoji(word) {
-                if (word !== "") {
-                    const lowercasedWord = word.toLowerCase()
-                    let matchingEmojie = ''
-                    // direct search
-                    if (lowercasedWord in this.allPossibleEmos) {
-                        // there is a identical name in the images
-                        matchingEmojie = lowercasedWord
-                    } else {
-                        // try to search substrings
-                        if (word.length > 3) {
-                            this.allPossibleEmos.forEach(emo => {
-                                if (lowercasedWord.includes(emo) || emo.includes(lowercasedWord)) {
-                                    matchingEmojie = emo
-                                }
-                            })
-                        }
-                    }
-                    if (matchingEmojie !== '') {
-                        if (Object.keys(EmojiStorage.emoMap).includes(matchingEmojie)) matchingEmojie = EmojiStorage.emoMap[
-                            matchingEmojie]
-                        this.matchingEmos.push(matchingEmojie)
-                    }
-                }
-            },
             calculateElementsInRow() {
                 var width = this.$el.offsetWidth;
                 var elementWidthInPx = this.emToPixle(this.emojiContainerSize);
@@ -127,48 +95,18 @@ export default {
                 var em = parseFloat(getComputedStyle(this.$parent.$el).fontSize);
                 return parseFloat(emValue) * em
             },
-            setupMatchinEmos() {
-                let words = []
-                if (!this.recipe) {
-                    // load random keys as words
-                    this.matchingEmos = this.shuffleArray(EmojiStorage.allEmos)
-                } else {
-                    words = this.recipe.ingredients.toString().replaceAll(",", " ").split(" ")
-                    words.forEach(this.wordToEmoji)
-
-                    // if we dit not find any emojis
-                    if (this.matchingEmos.length === 0) {
-                        this.matchingEmos = this.shuffleArray(EmojiStorage.allEmos)
-                    }
-                    // remove all duplicates
-                    this.matchingEmos = [...new Set(this.matchingEmos)];
-                }
-
-                var line = new Array(Math.floor((this.elementsInRow + 2) / this.matchingEmos.length))
-                    .fill(this.matchingEmos)
-                    .flat()
-
-                var diff = this.elementsInRow - line.length + 2
-                if (diff > 0) {
-                    line = line.concat(this.matchingEmos.slice(0, diff))
-                }
-                this.reverseLine = [...line].reverse()
-                this.line = line
-                this.matchingEmos = []
-            },
+            storeEmojiLines(){
+                var lines = getEmojiLines(this.recipe, this.elementsInRow)
+                this.line = lines[0]
+                this.reverseLine = lines[1]
+            }
         },
         created() {
-            this.emoMapKeys = Object.keys(EmojiStorage.emoMap)
-            this.allPossibleEmos = EmojiStorage.allEmos.concat(this.emoMapKeys).sort(function (a, b) {
-                // ASC  -> a.length - b.length
-                // DESC -> b.length - a.length
-                return b.length - a.length;
-            });
         },
         mounted() {
             this.calculateElementsInRow()
             this.calculateNumRows()
-            this.setupMatchinEmos()
+            this.storeEmojiLines()
 
             let ob = new ResizeObserver((mutationList, a) => {
                 this.height = mutationList[0].target.clientHeight
@@ -178,7 +116,7 @@ export default {
         },
         watch: {
             "recipe": function () {
-                this.setupMatchinEmos()
+                this.storeEmojiLines()
             },
             "height": function () {
                 this.calculateNumRows()
@@ -186,7 +124,7 @@ export default {
 
             "width": function () {
                 this.calculateElementsInRow()
-                this.setupMatchinEmos()
+                this.storeEmojiLines()
             }
         },
         computed: {

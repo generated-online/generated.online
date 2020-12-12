@@ -49,6 +49,8 @@ export default {
             }).catch((err) => {
             console.error(err)
         });
+        this.$emit('shareText', "Schau dir diese bestbewerteten von einer KI generierten Rezepte an!");
+        this.$emit('recipe', null);
     },
     methods: {
         loadData(doc) {
