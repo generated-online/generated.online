@@ -78,3 +78,9 @@ export function getEmojiLines(recipe, elementsInRow) {
     let reverseLine = [...line].reverse()
     return [line, reverseLine]
 }
+export function getImgUrl(emojie) {
+    if (emojie === undefined) emojie = "knoblauch"
+
+    var images = require.context('@/assets/emojies/', false, /\.png$/)
+    return images('./' + emojie + ".png")
+}

@@ -4,13 +4,19 @@
         <v-row v-for="recipe in recipes" :style="{'color':(recipeToColor(recipe.id) +' !important')}" class="row"
                no-gutters>
             <router-link :to="'/recipe/' + recipe.id" class="boldyNoColor px-4 py-1 mb-4" style="width:100%">
-                <v-row cols="12" no-gutters>
+                <v-row cols="12" no-gutters align="center" >
                     <v-col align="center" class="text-h3" cols="auto" style="min-width: 1.75em">
                         {{ recipe.votes }}
                     </v-col>
-                    <v-col class="text-h6">
-                        {{ recipe.title }}
+                    <v-col class="ml-2">
+                        <v-row class="text-h6">
+                            {{ recipe.title }}
+                        </v-row>
+                        <v-row class="mb-1 text-h6">
+                            <img v-for="emoji in recipeToEmojis(recipe).map(getImgUrl)" :src="emoji" class="emoji">
+                        </v-row>
                     </v-col>
+
                 </v-row>
             </router-link>
         </v-row>
@@ -20,6 +26,7 @@
 <script>
 import firebase from "firebase";
 import recipeToColor from "@/functions/recipe_to_color";
+import {recipeToEmojis, getImgUrl} from "@/functions/emojiUtils"
 
 export default {
     name: "MostViewedRecipes",
@@ -62,7 +69,9 @@ export default {
                 votes: doc.data().votes || 0,
             });
         },
-        recipeToColor
+        recipeToColor,
+        recipeToEmojis,
+        getImgUrl
     }
 }
 </script>
@@ -76,6 +85,13 @@ a {
 .row {
     font-weight: bold;
 
+}
+
+.emoji {
+    display: table-cell;
+    vertical-align: middle;
+    width: 1em;
+    height: 1em;
 }
 
 </style>
