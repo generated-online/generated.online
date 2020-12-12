@@ -158,8 +158,7 @@
     /*rgba(0, 0, 0, 0.8);*/
 
     .clip-text {
-        color: rgba(255, 255, 255, 0.9);
-        mix-blend-mode: multiply;
+        color: var(--bg-color);
         box-shadow: 10px 0 0 $textBGColor, -10px 0 0 $textBGColor;
         -moz-box-shadow: 10px 0 0 $textBGColor, -10px 0 0 $textBGColor;
         -webkit-box-shadow: 10px 0 0 $textBGColor, -10px 0 0 $textBGColor;

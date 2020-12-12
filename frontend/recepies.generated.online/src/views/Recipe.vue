@@ -1,6 +1,6 @@
 <template>
     <v-card :class="['mb-16','info-container',{'mt-8':$vuetify.breakpoint.mdAndUp}]">
-        <div v-show='recipe'>
+        <div v-if='recipe'>
             <!-- Title and Voting -->
             <div style="min-height: 100vh">
                 <v-container :class="['pb-6', 'pa-0']">
@@ -11,9 +11,9 @@
                                 {{ recipe.title }}
                             </div>
                         </v-col>
-                        <v-col cols="12" sm="auto">
+                        <v-col cols="12" sm="auto" align="center">
                             <div
-                                :style="{'width': 'fit-content', 'margin': 'autp', 'padding-top': $vuetify.breakpoint.xs? '1em':'0'}" class="ml-sm-4">
+                                :style="{'width': 'min-content', 'margin': 'auto', 'padding-top': $vuetify.breakpoint.xs? '1em':'0'}" class="ml-sm-4">
                                 <Voting :recipe='recipe' />
                             </div>
                         </v-col>
@@ -28,8 +28,8 @@
                                 :style="{'margin':$vuetify.breakpoint.xs?'auto': '0'}">
                                 <v-container class="pa-0">
                                     <!-- starting from md the ingredients should only have the width of min content-->
-                                    <v-row no-gutters
-                                        :style="{'width': ($vuetify.breakpoint.sm)? 'auto':'min-content'}">
+                                    <v-row no-gutters justify="center"
+                                        :style="{'width': ($vuetify.breakpoint.smAndDown)? 'auto':'min-content'}">
                                         <template v-for="(ingredient, n) in recipe.ingredients">
                                             <div :key="n" :style="{'width': 'max-content'}" :class="['boldy','ma-1','py-1','px-4']">
                                                 {{ ingredient }}

@@ -12,9 +12,9 @@
 </template>
 
 <script>
-    import Footer from "./views/Footer";
-    import recipeToColor from "@/functions/recipe_to_color";
-    import EmojieBackground from "@/components/EmojieBackground";
+import Footer from "./components/Footer";
+import recipeToColor from "@/functions/recipe_to_color";
+import EmojieBackground from "@/components/EmojieBackground";
 
     export default {
         components: {
@@ -103,7 +103,13 @@
         color: var(--bg-color) !important;
     }
 
-    .ais-SearchBox-input::placeholder {
+.boldyNoColor{
+  background: black;
+  padding: 20px  !important;
+  border-radius: 30px !important;
+}
+
+.ais-SearchBox-input::placeholder {
         color: var(--bg-color) !important;
 
     }
@@ -129,15 +135,10 @@
         box-shadow: unset !important;
     }
 
-
-    .v-divider {
-        border-color: rgba(0, 0, 0, 0.3) !important;
-    }
-
-    .shady {
-        border-radius: 5px;
-        box-shadow: 0 0 10px black;
-        background: rgba(0, 0, 0, 0.8);
-        color: white;
-    }
+.shady {
+  border-radius: 5px;
+  box-shadow: 0 0 10px black;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+}
 </style>
