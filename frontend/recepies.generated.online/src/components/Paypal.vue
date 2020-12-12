@@ -30,7 +30,7 @@ export default {
                         purchase_units: [{
                             description: "Postkarte " +
                                 window.location.href + " an " + this.sendTo.name + " " + this
-                                    .sendTo.street + " " + this.sendTo.zip + " " + this
+                                    .sendTo.street + " " + this.sendTo.plz + " "+this.sendTo.city + " " + this
                                     .sendTo.country,
                             amount: {
                                 currency_code: "EUR",
@@ -53,8 +53,7 @@ export default {
 
                 onApprove: function (data, actions) {
                     return actions.order.capture().then(function (details) {
-                        alert('Transaction completed by ' + details.payer.name.given_name +
-                            '!');
+                        alert('Postcarte erfolgreich bestellt! Sie befindet sich schon auf dem Weg!');
                     });
                 },
 
