@@ -25,10 +25,10 @@
                         <!-- ZUTATEN -->
                         <v-col cols="12" md="auto" lg="auto">
                             <div :class="['text-sm-h6', 'text-md-h6', 'text-h6']"
-                                :style="{'margin':$vuetify.breakpoint.xs?'auto': '0'}">
+                                :style="{'margin':$vuetify.breakpoint.xsOnly?'auto': '0'}">
                                 <v-container class="pa-0">
                                     <!-- starting from md the ingredients should only have the width of min content-->
-                                    <v-row no-gutters justify="center"
+                                    <v-row no-gutters :justify="$vuetify.breakpoint.smAndDown? 'center': 'left'"
                                         :style="{'width': ($vuetify.breakpoint.smAndDown)? 'auto':'min-content'}">
                                         <template v-for="(ingredient, n) in recipe.ingredients">
                                             <div :key="n" :style="{'width': 'max-content'}" :class="['boldy','ma-1','py-1','px-4']">
