@@ -11,7 +11,7 @@
                         {{ recipe.title }}
                     </span>
                 </h1>
-                <span class="ad clip-text">recipes.generated.online</span>
+                <span class="ad adPositionFront clip-text">recipes.generated.online</span>
             </div>
         </div>
 
@@ -34,7 +34,7 @@
                         <input type="text" placeholder="Land" v-model="country" disabled>
                     </div>
                 </div>
-                <p class="ad adPositionBack clip-text" style="background: black">recipes.generated.online</p>
+                <p class="ad adPositionBack clip-text" style="background: black">{{absender? 'gensendet von '+ absender + ' via ':''}}recipes.generated.online</p>
             </div>
         </div>
     </div>
@@ -53,8 +53,6 @@
 
             // get approximate line number, about 25 lines fit on the card
             const lines = this.recipe.instructions.length / 100 + this.recipe.ingredients.length
-
-            // console.log(lines);
             if (lines > 33) {
                 this.instructionSize = "0.6em"
             } else if (lines > 31) {
@@ -97,6 +95,10 @@
             "zip": {
                 type: String,
                 default: ""
+            },
+            "absender":{
+              type:String,
+              default: ""
             },
             "country": {
                 type: String,
@@ -233,10 +235,14 @@
         font-weight: bold;
     }
 
+    .adPositionFront {
+      line-height: 4em;
+    }
+
     .adPositionBack {
         position: absolute;
         bottom: 0;
-        left: 5%;
+        left: 2.5%;
         margin-left: 0.35em;
     }
 
