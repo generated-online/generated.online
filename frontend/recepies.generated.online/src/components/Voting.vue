@@ -14,7 +14,6 @@
 
 <script>
     import recipeToColor from "@/functions/recipe_to_color";
-
     export default {
         props: {
             "recipe": {

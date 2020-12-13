@@ -1,7 +1,8 @@
 <template>
     <v-app id="inspire" :style="cssVars">
         <v-main>
-            <EmojieBackground :recipe="recipe" :opacity="1" :color="backgroundColor" />
+            <EmojieBackground :recipe="recipe" :opacity="1" :color="backgroundColor" class="background"
+                :class="{'background-animation': addBackgroundID}" />
             <v-container>
                 <router-view :key="$route.path" @shareText="updateTitle($event)" @recipe="updateRecipe($event)">
                 </router-view>
@@ -21,6 +22,18 @@
             Footer,
             EmojieBackground
         },
+        data() {
+            return {
+                url: "",
+                shareText: "Schau dir diese coolen von einer KI generierten Rezepte an!",
+                recipe: null,
+                recipeID: null,
+                backgroundPosition: (window.innerWidth % 90) / 2 + "px",
+                backgroundColor: recipeToColor(null),
+                prevBackgroundColor: recipeToColor(null),
+                addBackgroundID: true,
+            };
+        },
         methods: {
             updateTitle(shareText) {
                 this.shareText = shareText;
@@ -35,6 +48,9 @@
                 }
                 this.prevBackgroundColor = String(this.backgroundColor);
                 this.backgroundColor = recipeToColor(this.recipeID);
+                // trigger animation
+                this.addBackgroundID = false
+                setTimeout( ( ) => {this.addBackgroundID = true}, 10)
             },
             nameToHSL(name) {
                 let fakeDiv = document.createElement("div");
@@ -80,18 +96,6 @@
                 return h
             }
         },
-        data() {
-            return {
-                url: "",
-                shareText: "Schau dir diese coolen von einer KI generierten Rezepte an!",
-                recipe: null,
-                recipeID: null,
-                backgroundPosition: (window.innerWidth % 90) / 2 + "px",
-                backgroundColor: recipeToColor(null),
-                prevBackgroundColor: recipeToColor(null),
-            };
-
-        },
         created() {
             this.url = window.location.href;
         },
@@ -116,12 +120,47 @@
 </script>
 
 <style lang="scss">
+
+    @keyframes color-transition {
+        from {
+            background-color: var(--prev-bg-color);
+        }
+
+        to {
+            background-color: var(--bg-color);
+        }
+    }
+    .background-animation {
+        animation: color-transition 1s forwards;
+        -webkit-animation: color-transition 1s forwards;
+        background-color: var(--prev-bg-color);
+    }
+
+    .background {
+        background-color: var(--prev-bg-color);
+        pointer-events: none;
+        position: absolute;
+        top: 0em;
+        right: 0;
+        left: 0;
+        overflow: hidden;
+        bottom: 0px;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        z-index: -1;
+    }
+
     $softPink: var(--bg-color);
 
     @keyframes color-filter {
         0% {
             filter: hue-rotate(-174deg)
         }
+
         100% {
             filter: var(--hue-filter)
         }

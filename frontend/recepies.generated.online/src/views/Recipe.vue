@@ -59,7 +59,7 @@
             </div>
         </v-card>
 
-        <div v-if="!loaded" class="loader">
+        <div v-if="!loaded" class="loader" >
             <img src="../assets/robokoch.gif" alt="loading animation" class="color-adapt"
                 style="display:block; height: 100px; width: 100px; margin: auto; margin-top: 30vh">
         </div>
@@ -115,10 +115,10 @@
                                 .limit(1)
                                 .get()
                                 .then((snap) => {
-                                    snap.docs.map(this.loadData);
+                                    this.$router.push("/recipe/" + snap.docs[0].id);
                                 });
                         } else {
-                            snap.docs.map(this.loadData);
+                            this.$router.push("/recipe/" + snap.docs[0].id);
                         }
                     })
                     .catch((err) => {
@@ -139,10 +139,10 @@
                 this.loaded = true
 
                 this.$emit('shareText', 'Schau dir dieses coole KI generierte Rezept an: ' + this.recipe['title']);
-                // this.$emit('recipeId', this.recipe.id);
                 this.$emit('recipe', this.recipe);
+
                 if (this.id === undefined) {
-                    this.$router.replace("/recipe/" + doc.id);
+                    this.$router.push("/recipe/" + doc.id);
                 }
             },
         }

@@ -1,13 +1,14 @@
 <template>
-    <div :style="backgroundMargin" class="background">
+    <div :style="backgroundMargin">
         <div v-for='_row in numRow' :key="_row">
             <!-- uneven rows vue starts indexing at 1 lol-->
             <div :style="row">
                 <div v-if="_row % 2 === 0" :style="uneven">
                     <div v-for='element in elementsInRow+2' :key="element" :style="emojiContainer"
                         class="emojie-container">
-                        <div class="emoji">
-                            <img :src="getImgUrl(line[element - 1])" :style="emoji">
+                        <div class="emojie">
+                            <img :class="[{'emojie-animation': showEmojies}, {'hide': !showEmojies}]" :src="getImgUrl(line[element - 1])"
+                                :style="emoji">
                         </div>
                     </div>
                 </div>
@@ -16,7 +17,8 @@
                     <div v-for='element in (elementsInRow+1)' :key="element" :style="emojiContainer"
                         class="emojie-container">
                         <div class="emoji">
-                            <img :src="getImgUrl(reverseLine[element - 1])" :style="emoji">
+                            <img :class="[{'emojie-animation': showEmojies}, {'hide': !showEmojies}]" :src="getImgUrl(reverseLine[element - 1])"
+                                :style="emoji">
                         </div>
                     </div>
                 </div>
@@ -56,6 +58,7 @@
         },
         data() {
             return {
+                showEmojies: false,
                 width: window.innerWidth,
                 height: window.innerHeight,
                 elementsInRow: 1,
@@ -96,11 +99,14 @@
                 var lines = getEmojiLines(this.recipe, this.elementsInRow)
                 this.line = lines[0]
                 this.reverseLine = lines[1]
+
+                // trigger animation
+                this.showEmojies = false
+                setTimeout(() => {
+                    this.showEmojies = true
+                }, 10)
             },
             getImgUrl
-        },
-        destroyed() {
-
         },
         mounted() {
             this.calculateElementsInRow()
@@ -120,7 +126,6 @@
             "height": function () {
                 this.calculateNumRows()
             },
-
             "width": function () {
                 this.calculateElementsInRow()
                 this.storeEmojiLines()
@@ -173,41 +178,33 @@
 </script>
 
 <style scoped>
-    @keyframes color-transition {
-        0% {
-            background: var(--prev-bg-color);
-        }
-
-        100% {
-            background: var(--bg-color);
-        }
-    }
-
-    .background {
-        animation: color-transition 0.5s linear infinite;
-        pointer-events: none;
-        position: absolute;
-        top: 0em;
-        right: 0;
-        left: 0;
-        overflow: hidden;
-        bottom: 0px;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-        z-index: -1;
-    }
-
+.hide {
+    display: none;
+}
     .emojie-container {
         float: left;
         text-align: center;
         display: table;
     }
 
+    @keyframes fade-in {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    .emojie-animation {
+        animation: fade-in 1s forwards;
+        -webkit-animation: fade-in 1s forwards;
+        opacity: 0;
+    }
+
     .emoji {
+
         display: table-cell;
         vertical-align: middle;
     }
