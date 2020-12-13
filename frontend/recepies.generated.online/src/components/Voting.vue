@@ -27,12 +27,10 @@
                 buttonLoading: false,
                 color: recipeToColor(this.recipe.id),
             };
-
         },
         methods: {
             upvote() {
                 if (!this.$cookies.isKey(this.recipe.id)) {
-
                     // this makes sure the button is not pressed multiple times
                     this.buttonLoading = true
 

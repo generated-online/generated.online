@@ -1,7 +1,7 @@
 <template>
     <v-app id="inspire" :style="cssVars">
         <v-main>
-            <EmojieBackground :recipe="recipe" :opacity="1" :color="backgroundColor" class="background"
+            <EmojieBackground :recipe="recipe" :opacity="1" :color="backgroundColor" class="background prev-color"
                 :class="{'background-animation': addBackgroundID}" />
             <v-container>
                 <router-view :key="$route.path" @shareText="updateTitle($event)" @recipe="updateRecipe($event)">
@@ -136,8 +136,15 @@
         background-color: var(--prev-bg-color);
     }
 
+    .prev-color {
+                background-color: var(--prev-bg-color);
+
+    }
+    .now-color {
+                background-color: var(--bg-color);
+
+    }
     .background {
-        background-color: var(--prev-bg-color);
         pointer-events: none;
         position: absolute;
         top: 0em;

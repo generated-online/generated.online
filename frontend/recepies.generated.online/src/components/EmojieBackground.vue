@@ -1,5 +1,5 @@
 <template>
-    <div :style="backgroundMargin">
+    <div :style="backgroundMargin" >
         <div v-for='_row in numRow' :key="_row">
             <!-- uneven rows vue starts indexing at 1 lol-->
             <div :style="row">
