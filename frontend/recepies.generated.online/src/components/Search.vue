@@ -1,5 +1,6 @@
 <template>
   <div>
+
     <ais-instant-search :search-client="searchClient" index-name="Recipes">
 
       <ais-search-box placeholder="Suche nach Rezepten..." attribute="title" submit-title="Suche"
@@ -11,27 +12,23 @@
           'ais-RefinementList-showMore--disabled': 'showMore-button--disbaled',
           }" />
 
-
-      <ais-hits class="ais-hits">
-
-        <router-link slot="item" slot-scope="{ item }" :style="'background-color:'+recipeToColor(item.objectID)"
-          class="search-item" :to="'/recipe/' + item.objectID">
-          <ais-highlight attribute="title" :hit="item" />
-          <div>
-            <span class="search-item-ingredients" v-for="ingredient in item.ingredients"
-              :key="ingredient+String(Math.floor(Math.random() * 10000))">{{ingredient}}</span>
-          </div>
-        </router-link>
-      </ais-hits>
-
       <ais-state-results class="text-center">
         <template slot-scope="{ state: { query }, results: { hits, nbPages } }">
+          <ais-hits class="ais-hits">
+            <div slot="item" slot-scope="{ item }" :style="'background-color:'+recipeToColor(item.objectID)"
+              class="search-item" @click="$router.push('/?s=' + query); $router.push('/recipe/' + item.objectID)">
+              <ais-highlight attribute="title" :hit="item" />
+              <div>
+                <span class="search-item-ingredients" v-for="ingredient in item.ingredients"
+                  :key="ingredient+String(Math.floor(Math.random() * 10000))">{{ingredient}}</span>
+              </div>
+            </div>
+          </ais-hits>
           <!-- show no result if query with no hits -->
           <v-btn v-if="query && hits.length == 0" large class="boldy-red ma-auto px-4 py-1">
-            <h2 style="width: fit-content" class="text-capitalize">Keine Treffer</h2>
+            <h2 style="width: fit-content" class="text-capitalize">Keine Treffer {{query}}</h2>
             <v-icon style="padding-left:0.5em">error</v-icon>
           </v-btn>
-
           <!-- hide pagination if 1 or less pages -->
           <ais-pagination v-if="nbPages > 1" />
           <div v-if="hits.length == 0" style="text-align:center">
@@ -72,12 +69,14 @@
           console.log(err);
         });
       }
+      console.log(algoliaClient.search(requests));
       return algoliaClient.search(requests);
     },
     searchForFacetValues: function (requests) {
       return algoliaClient.searchForFacetValues(requests);
     },
-  };
+  }
+
 
   const loaded = true;
 
@@ -85,7 +84,7 @@
     data() {
       return {
         searchClient,
-        nbHits: 0
+        nbHits: 0,
       }
     },
     methods: {
@@ -93,8 +92,26 @@
     },
     components: {
       generateRecipeButton
-    }
+    },
+    mounted() {
+      const linkQuery = this.$route.query.s || ''
+      const searchArr = [{
+        indexName: 'Recipes',
+        params: {
+          facets: ['filtered_ingredients'],
+          maxValuesPerFacet: 20,
+          query: linkQuery,
+          tagFilters: ""
+        }
+      }]
 
+      // wait for dom ?!
+      // https://codesandbox.io/s/instantsearchjs-app-9re0o?file=/src/app.js:132-214 
+      setTimeout(() => {
+        document.querySelector('.ais-SearchBox-input').value = linkQuery;
+        this.searchClient.search(searchArr);
+      }, 100)
+    },
   };
 </script>
 

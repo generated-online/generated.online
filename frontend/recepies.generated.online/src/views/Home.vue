@@ -4,33 +4,32 @@
             <b class="boldy" style="font-size:6vw">KI generierte Rezepte!</b>
         </div>
         <div :style="searchWidth">
-            <Search/>
+            <Search />
         </div>
     </v-card>
 </template>
 
 <script>
-import Search from "../components/Search";
-import EmojieBackground from "@/components/EmojieBackground"
+    import Search from "../components/Search";
+    import EmojieBackground from "@/components/EmojieBackground"
 
-
-export default {
-    name: "info",
-    components: {
-        Search,
-        EmojieBackground
-    },
-    created() {
-        this.$emit('shareText', "Schau dir diese coolen von einer KI generierten Rezepte an!");
-        this.$emit('recipe', null);
-    },
-    computed: {
-        searchWidth() {
-            return {
-                "width": this.$vuetify.breakpoint.xs ? '99%' : '80%',
-                "margin": "auto"
+    export default {
+        name: "info",
+        components: {
+            Search,
+            EmojieBackground
+        },
+        created() {
+            this.$emit('shareText', "Schau dir diese coolen von einer KI generierten Rezepte an!");
+            this.$emit('recipe', null);
+        },
+        computed: {
+            searchWidth() {
+                return {
+                    "width": this.$vuetify.breakpoint.xs ? '99%' : '80%',
+                    "margin": "auto"
+                }
             }
         }
-    }
-};
+    };
 </script>
