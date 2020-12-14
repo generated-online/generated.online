@@ -120,6 +120,12 @@
 </script>
 
 <style lang="scss">
+// https://stackoverflow.com/questions/1373142/preloading-css-images
+// css trick to preload loading image
+body::after{
+   position:absolute; width:0; height:0; overflow:hidden; z-index:-1; // hide images
+   content: url('/robokoch.gif');   // load images
+}
 
     @keyframes color-transition {
         from {
@@ -131,8 +137,8 @@
         }
     }
     .background-animation {
-        animation: color-transition 1s forwards;
-        -webkit-animation: color-transition 1s forwards;
+        animation: color-transition 2s forwards;
+        -webkit-animation: color-transition 2s forwards;
         background-color: var(--prev-bg-color);
     }
 

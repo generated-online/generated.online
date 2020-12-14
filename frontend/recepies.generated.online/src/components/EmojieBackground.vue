@@ -198,8 +198,8 @@
     }
 
     .emojie-animation {
-        animation: fade-in 1s forwards;
-        -webkit-animation: fade-in 1s forwards;
+        animation: fade-in 2s forwards;
+        -webkit-animation: fade-in 2s forwards;
         opacity: 0;
     }
 

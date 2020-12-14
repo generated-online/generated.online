@@ -60,7 +60,7 @@
         </v-card>
 
         <div v-if="!loaded" class="loader" >
-            <img src="../assets/robokoch.gif" alt="loading animation" class="color-adapt"
+            <img src="/robokoch.gif" alt="loading animation"
                 style="display:block; height: 100px; width: 100px; margin: auto; margin-top: 30vh">
         </div>
     </div>
