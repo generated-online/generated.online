@@ -3,7 +3,7 @@
         :style="'transform: scale(' + scaling()+'); transform-origin: top left; width: '+(horizontal?'max-content':'min-content')+'; height: '+height+'px'">
         <div class="postcard-body"
             :style="{'margin-bottom': horizontal ? 0 : bottomMargin, 'margin-right': horizontal ? centerMargin : 0, 'float':'left'}">
-            <EmojieBackground :recipe="recipe" :opacity="1" color="var(--bg-color)" />
+            <EmojieBackground :recipe="recipe" :opacity="1" color="var(--bg-color)" class="background now-color"/>
             <div class="postcard-inner">
                 <h1 :style="'line-height: 1.3em; font-size:' + titleSize">
                     <span class="clip-text">
@@ -16,9 +16,8 @@
 
         <div class="postcard-body" :style="{'background':'white', 'float': horizontal?'right':'left'}">
             <div>
-                <div class="half-postcard">
+                <div class="half-postcard" >
                     <h2>{{ recipe.title }}</h2>
-
                     <p v-for="ingredient in recipe.ingredients" v-bind:key="ingredient"
                         :style="'font-size:'+ instructionSize">{{ ingredient }}</p>
                     <br>
@@ -53,7 +52,6 @@
 
             // get approximate line number, about 25 lines fit on the card
             const lines = this.recipe.instructions.length / 100 + this.recipe.ingredients.length
-
             if (lines > 33) {
                 this.instructionSize = "0.6em"
             } else if (lines > 31) {

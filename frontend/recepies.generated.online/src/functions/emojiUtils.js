@@ -49,6 +49,9 @@ export function recipeToEmojis(recipe) {
         // load random keys as words
         matchingEmos = shuffleArray(EmojiStorage.allEmos)
     } else {
+        // let wordArray = [...recipe.ingredients]
+        // wordArray.push(recipe.title);
+
         words = recipe.ingredients.toString().replaceAll(",", " ").split(" ")
         words.forEach((word) => {
             wordToEmoji(word, matchingEmos)

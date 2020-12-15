@@ -22,7 +22,6 @@ export default {
             "gauda": "käse",
             "emmenthaler": "käse",
             "erdnüsse": "erdnuss",
-            "haselnüsse": "haselnuss",
             "manderine": "orange",
             "clementine": "orange",
             "schwammerl": "pilz",
