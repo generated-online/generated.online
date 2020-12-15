@@ -3,7 +3,7 @@
         <v-card class="footer-container text-center" flat style="background: transparent" tile width="100%">
             <v-card-text :style="{'margin-right': $vuetify.breakpoint.smAndDown? '0.3em':'auto',
             'width': $vuetify.breakpoint.smAndDown? 'min-content':'max-content'}"
-                         class="py-1 px-0 text center allIcons">
+                         class="py-1 px-0 text center allIcons" :class="{'background-animation': addBackgroundID}">
                 <v-btn class="mx-2 my-1 boldy remove-acive" icon to="/">
                     <v-icon class="vue-icon" size="30">search</v-icon>
                 </v-btn>
@@ -43,13 +43,17 @@ Vue.use(VueSocialSharing);
 export default {
     name: "big-footer",
     props: {
-        "shareText": {
+        shareText: {
             type: String,
             default: "Schau dir diese coolen von einer KI generierten Rezepte an!"
         },
-        "recipeId": {
+        recipeId: {
             type: String,
             default: null
+        },
+        addBackgroundID: {
+            trype: Boolean,
+            default: false
         }
     },
     components: {
@@ -98,7 +102,7 @@ a:link {
 
 .allIcons {
   margin-left: auto;
-  background: var(--bg-color);
+  background: var(--prev-bg-color);
   border-radius: 35px !important;
   pointer-events: all;
   margin-bottom: 0.3em;

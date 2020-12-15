@@ -187,19 +187,9 @@
         display: table;
     }
 
-    @keyframes fade-in {
-        from {
-            opacity: 0;
-        }
-
-        to {
-            opacity: 1;
-        }
-    }
-
     .emojie-animation {
-        animation: fade-in 2s forwards;
-        -webkit-animation: fade-in 2s forwards;
+        animation: fade-in 1s forwards;
+        -webkit-animation: fade-in 1s forwards;
         opacity: 0;
     }
 

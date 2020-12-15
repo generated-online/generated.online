@@ -8,7 +8,7 @@
                 </router-view>
             </v-container>
         </v-main>
-        <Footer :shareText="shareText" :recipeId="recipeID" />
+        <Footer :shareText="shareText" :recipeId="recipeID" :addBackgroundID="addBackgroundID" />
     </v-app>
 </template>
 
@@ -50,7 +50,9 @@
                 this.backgroundColor = recipeToColor(this.recipeID);
                 // trigger animation
                 this.addBackgroundID = false
-                setTimeout( ( ) => {this.addBackgroundID = true}, 10)
+                setTimeout(() => {
+                    this.addBackgroundID = true
+                }, 10)
             },
             nameToHSL(name) {
                 let fakeDiv = document.createElement("div");
@@ -120,12 +122,16 @@
 </script>
 
 <style lang="scss">
-// https://stackoverflow.com/questions/1373142/preloading-css-images
-// css trick to preload loading image
-body::after{
-   position:absolute; width:0; height:0; overflow:hidden; z-index:-1; // hide images
-   content: url('/robokoch.gif');   // load images
-}
+    // https://stackoverflow.com/questions/1373142/preloading-css-images
+    // css trick to preload loading image
+    body::after {
+        position: absolute;
+        width: 0;
+        height: 0;
+        overflow: hidden;
+        z-index: -1; // hide images
+        content: url('/robokoch.gif'); // load images
+    }
 
     @keyframes color-transition {
         from {
@@ -136,6 +142,7 @@ body::after{
             background-color: var(--bg-color);
         }
     }
+
     .background-animation {
         animation: color-transition 2s forwards;
         -webkit-animation: color-transition 2s forwards;
@@ -143,13 +150,15 @@ body::after{
     }
 
     .prev-color {
-                background-color: var(--prev-bg-color);
+        background-color: var(--prev-bg-color);
 
     }
+
     .now-color {
-                background-color: var(--bg-color);
+        background-color: var(--bg-color);
 
     }
+
     .background {
         pointer-events: none;
         position: absolute;
@@ -203,9 +212,18 @@ body::after{
 
     .boldy-border {
         border: 2px solid var(--bg-color) !important;
-        ;
         border-radius: 15px;
         padding: 10px
+    }
+
+    @keyframes fade-in {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
     }
 
     .boldy {
@@ -213,6 +231,9 @@ body::after{
         padding: 20px !important;
         border-radius: 30px !important;
         color: var(--bg-color) !important;
+        animation: fade-in 1s forwards;
+        -webkit-animation: fade-in 1s forwards;
+        opacity: 0;
     }
 
     .boldyNoColor {

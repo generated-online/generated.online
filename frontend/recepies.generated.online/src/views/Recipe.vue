@@ -149,7 +149,7 @@
     };
 </script>
 
-<style scoped lang="scss">
+<style scoped lang="scss">    
     .loader {
         position: absolute;
         top: 0;
@@ -160,6 +160,9 @@
     }
 
     .instruction {
+        animation: fade-in 1s forwards;
+        -webkit-animation: fade-in 1s forwards;
+        opacity: 0;
         background: rgba(0, 0, 0, 1);
         color: var(--bg-color);
         border-radius: 15px;
