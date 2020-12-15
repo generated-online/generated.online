@@ -194,7 +194,6 @@
     }
 
     .emoji {
-
         display: table-cell;
         vertical-align: middle;
     }
