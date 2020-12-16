@@ -4,8 +4,8 @@
             <img src="../assets/robokoch.png" class="emoji">
             Beschde Rezepte
         </v-row>
-        <v-row v-for="recipe in recipes" :style="{'color':(recipeToColor(recipe.id) +' !important')}" class="row"
-            no-gutters :key="recipe.id">
+        <v-row v-for="recipe in recipes" :style="{'color':(recipeToColor(recipe.id) +' !important')}" class="row" :key="recipe.id"
+               no-gutters>
             <router-link :to="'/recipe/' + recipe.id" class="boldyNoColor px-4 py-1 mb-4" style="width:100%">
                 <v-row cols="12" no-gutters align="center">
                     <v-col align="center" class="text-h3" cols="auto" style="min-width: 1.75em">
@@ -19,7 +19,6 @@
                             <img v-for="emoji in recipeToEmojis(recipe).map(getImgUrl)" :src="emoji" class="emoji pr-2" :key="emoji">
                         </v-row>
                     </v-col>
-
                 </v-row>
             </router-link>
         </v-row>

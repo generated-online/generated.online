@@ -18,20 +18,14 @@ export default {
                     label: 'paypal',
                     tagline: false
                 },
-
                 createOrder: (data, actions) => {
-                    // console.log(this.recipeID);
-                    // console.log(this.sendTo);
                     return actions.order.create({
                         //intent: 'CAPTURE', // DEV ONLY
                         "application_context": {
                             shipping_preference: "SET_PROVIDED_ADDRESS",
                         },
                         purchase_units: [{
-                            description: "Postkarte " +
-                                window.location.href + " an " + this.sendTo.name + " " + this
-                                    .sendTo.street + " " + this.sendTo.plz + " "+this.sendTo.city + " " + this
-                                    .sendTo.country+ " von " + this.sendTo.absender,
+                            description: this.recipeID + " an " + this.sendTo.name +  " von " + this.sendTo.absender,
                             amount: {
                                 currency_code: "EUR",
                                 value: this.amount
@@ -58,7 +52,8 @@ export default {
                 },
 
                 onError: function (err) {
-                    console.log(err);
+                    // Error Handeling
+                    alert("Fehler, bitte versuche es erneut, oder sende eine e-mail an contact@moritzwolf.com", err)
                 }
             }).render('#paypal-button-container');
         }
