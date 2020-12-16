@@ -16,10 +16,9 @@
                             {{ recipe.title }}
                         </v-row>
                         <v-row class="mb-1 text-h6">
-                            <img v-for="emoji in recipeToEmojis(recipe).map(getImgUrl)" :src="emoji" class="emoji pr-2">
+                            <img v-for="emoji in recipeToEmojis(recipe).map(getImgUrl)" :src="emoji" class="emoji pr-2" :key="emoji">
                         </v-row>
                     </v-col>
-
                 </v-row>
             </router-link>
         </v-row>
