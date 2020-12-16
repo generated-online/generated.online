@@ -39,7 +39,6 @@
                     <option value="CH">Schweiz</option>
                   </select>
                 </div>
-
               </div>
             </div>
             <v-row class="boldy-border ma-0 mb-5" cols="12">

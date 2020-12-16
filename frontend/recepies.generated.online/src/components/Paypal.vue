@@ -52,7 +52,8 @@ export default {
                 },
 
                 onError: function (err) {
-                    console.log(err);
+                    // Error Handeling
+                    alert("Fehler, bitte versuche es erneut, oder sende eine e-mail an contact@moritzwolf.com", err)
                 }
             }).render('#paypal-button-container');
         }
