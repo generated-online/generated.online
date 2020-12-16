@@ -26,7 +26,7 @@
             <div class="address boldy-border mb-5">
               <h2>Die Karte geht an:</h2>
               <div class="pt-3">
-                <input v-model="name" class="shady" placeholder="❌ Name" type="text">
+                <input v-model="name" class="shady" placeholder="❌ Name" type="text" maxlength="16">
                 <input v-model="street" class="shady" placeholder="❌ Straße" type="text">
                 <br>
                 <input v-model.number="plz" class="shady" placeholder="❌ Postleitzahl" type="number">
