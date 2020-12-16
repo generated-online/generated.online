@@ -1,11 +1,11 @@
 <template>
     <v-card class="info-container">
         <v-container :class="['mb-16',{'mt-8': $vuetify.breakpoint.mdAndUp}]">
-            <h1 class=text-span style="font-size:3em">Was ist das hier?</h1>
+            <h1 class="text-span boldy" style="font-size:3em">Was ist das hier?</h1>
             <br>
-            <h2 class="project-description">
+            <h2 class="project-description boldy">
             <span class=text-span>
-                Stell dir vor jemand schaut sich alle Rezepte von chefkoch.de an,
+                Stell dir vor jemand schaut sich ganz viele Rezepte an,
                 filtert alle unbedeutenten und schlechten Rezepte raus und erstellt
                 neue Rezepte basierend auf diesem Datensatz.
             </span>
