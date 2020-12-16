@@ -4,7 +4,7 @@
             <img :src="getImgUrl('womanCook')" class="emoji">
             Beschde Rezepte
         </v-row>
-        <v-row v-for="recipe in recipes" :style="{'color':(recipeToColor(recipe.id) +' !important')}" class="row"
+        <v-row v-for="recipe in recipes" :style="{'color':(recipeToColor(recipe.id) +' !important')}" class="row" :key="recipe.id"
                no-gutters>
             <router-link :to="'/recipe/' + recipe.id" class="boldyNoColor px-4 py-1 mb-4" style="width:100%">
                 <v-row cols="12" no-gutters align="center" >
