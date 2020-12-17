@@ -80,8 +80,6 @@ const searchClient = {
 }
 
 
-const loaded = true;
-
 export default {
     data() {
         return {
@@ -98,6 +96,21 @@ export default {
     },
     components: {
         generateRecipeButton
+    },
+    mounted() {
+        this.routing.router.write = function (routeState) {
+            var _this = this;
+
+            var url = this.createURL(routeState);
+            if (this.writeTimer) {
+                window.clearTimeout(this.writeTimer);
+            }
+
+            this.writeTimer = window.setTimeout(function () {
+                window.history.replaceState(routeState, '', url);
+                _this.writeTimer = undefined;
+            }, this.writeDelay);
+        }
     }
 };
 </script>
