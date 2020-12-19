@@ -215,7 +215,6 @@
 
     .postcard-body {
         position: relative;
-        box-shadow: 0px 0px 10px white;
         width: 1440px;
         height: 1040px;
     }

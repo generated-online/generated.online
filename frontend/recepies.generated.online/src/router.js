@@ -5,8 +5,11 @@ import Home from '@/views/Home.vue'
 import Info from "@/views/Info.vue"
 import Highscore from "@/views/Highscore";
 import GetRandomRecipe from "@/views/RandomRecipe";
+import PostcardDownload from "@/views/PostcardDownload";
 
 import firebase from 'firebase'
+import qs from 'qs';
+
 
 Vue.use(Router);
 
@@ -19,15 +22,21 @@ meta: {
 
 const router = new Router({
     mode: 'history',
-    routes: [{
-        path: '/',
-        name: 'home',
-        component: Home
-    },
+    routes: [
+        {
+            path: '/',
+            name: 'home',
+            component: Home
+        },
         {
             path: '/recipe/:id',
             name: 'specific-recipe',
             component: Recipe,
+        },
+        {
+            path: '/recipe/:id/download',
+            name: 'postcard-download',
+            component: PostcardDownload,
         },
         {
             path: '/recipe',
@@ -48,7 +57,15 @@ const router = new Router({
             path: "*",
             redirect: "/"
         }
-    ]
+    ],
+    parseQuery(query) {
+        return qs.parse(query);
+    },
+    stringifyQuery(query) {
+        var result = qs.stringify(query);
+
+        return result ? ('?' + result) : '';
+    }
 });
 
 router.beforeEach((to, from, next) => {
