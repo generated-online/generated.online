@@ -71,7 +71,7 @@
 import firebase from "firebase";
 import Voting from "@/components/Voting"
 import EmojieBackground from "@/components/EmojieBackground"
-import PayPalPostcard from "@/components/PayPalPostcard"
+import PayPalPostcard from "@/components/postcard-stuff/PayPalPostcard"
 
 export default {
     name: "Recipe",

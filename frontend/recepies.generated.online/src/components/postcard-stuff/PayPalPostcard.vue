@@ -84,9 +84,9 @@
 </template>
 
 <script>
-  import Postcard from "@/components/Postcard"
-  import Paypal from "@/components/Paypal"
-  import MoneyBar from "@/components/MoneyBar";
+  import Postcard from "@/components/postcard-stuff/Postcard"
+  import Paypal from "@/components/postcard-stuff/Paypal"
+  import MoneyBar from "@/components/postcard-stuff/MoneyBar";
 
   export default {
     components: {
