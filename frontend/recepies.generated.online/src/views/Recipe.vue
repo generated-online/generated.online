@@ -8,14 +8,14 @@
                         <v-row no-gutters>
                             <v-col>
                                 <div :class="['text-sm-h3', 'text-md-h2', 'text-h4', {'text-center': $vuetify.breakpoint.xs}, 'boldy']"
-                                    style="word-break: break-word">
+                                     style="word-break: break-word">
                                     {{ recipe.title }}
                                 </div>
                             </v-col>
-                            <v-col cols="12" sm="auto" align="center">
+                            <v-col align="center" cols="12" sm="auto">
                                 <div :style="{'width': 'min-content', 'margin': 'auto', 'padding-top': $vuetify.breakpoint.xs? '1em':'0'}"
-                                    class="ml-sm-4">
-                                    <Voting :recipe='recipe' />
+                                     class="ml-sm-4">
+                                    <Voting :recipe='recipe'/>
                                 </div>
                             </v-col>
                         </v-row>
@@ -24,20 +24,21 @@
                     <v-container class="pa-0 pb-6">
                         <v-row no-gutters>
                             <!-- ZUTATEN -->
-                            <v-col cols="12" md="auto" lg="auto">
+                            <v-col cols="12" lg="auto" md="auto">
                                 <div :class="['text-sm-h6', 'text-md-h6', 'text-h6']"
-                                    :style="{'margin':$vuetify.breakpoint.xs?'auto': '0'}">
+                                     :style="{'margin':$vuetify.breakpoint.xs?'auto': '0'}">
                                     <v-container class="pa-0">
                                         <!-- starting from md the ingredients should only have the width of min content-->
-                                        <v-row no-gutters justify="center"
-                                            :style="{'width': ($vuetify.breakpoint.smAndDown)? 'auto':'min-content'}">
+                                        <v-row :style="{'width': ($vuetify.breakpoint.smAndDown)? 'auto':'min-content'}"
+                                               :justify="$vuetify.breakpoint.smAndDown?'center': 'start'"
+                                               no-gutters>
                                             <template v-for="(ingredient, n) in recipe.ingredients">
-                                                <div :key="n" :style="{'width': 'max-content'}"
-                                                    :class="['boldy','ma-1','py-1','px-4']">
+                                                <div :key="n" :class="['boldy','ma-1','py-1','px-4']"
+                                                     :style="{'width': 'max-content'}">
                                                     {{ ingredient }}
                                                 </div>
                                                 <v-responsive v-if="!$vuetify.breakpoint.smAndDown" :key="`width-${n}`"
-                                                    width="100%"></v-responsive>
+                                                              width="100%"></v-responsive>
                                             </template>
                                         </v-row>
                                     </v-container>
@@ -55,120 +56,87 @@
                 </div>
 
                 <!--  Postcard -->
-                <PayPalPostcard :recipe='recipe' />
+                <PayPalPostcard :recipe='recipe'/>
             </div>
         </v-card>
 
-        <div v-if="!loaded" class="loader" >
-            <img src="/robokoch.gif" alt="loading animation"
-                style="display:block; height: 100px; width: 100px; margin: auto; margin-top: 30vh">
+        <div v-if="!loaded" class="loader">
+            <img alt="loading animation" src="/robokoch.gif"
+                 style="display:block; height: 100px; width: 100px; margin: auto; margin-top: 30vh">
         </div>
     </div>
 </template>
 
 <script>
-    import firebase from "firebase";
-    import Voting from "@/components/Voting"
-    import EmojieBackground from "@/components/EmojieBackground"
-    import PayPalPostcard from "@/components/PayPalPostcard"
+import firebase from "firebase";
+import Voting from "@/components/Voting"
+import EmojieBackground from "@/components/EmojieBackground"
+import PayPalPostcard from "@/components/PayPalPostcard"
 
-    export default {
-        name: "recipe",
-        components: {
-            Voting,
-            EmojieBackground,
-            PayPalPostcard
-        },
-        data() {
-            return {
-                id: "",
-                recipe: undefined,
-                error: "",
-                loaded: false,
+export default {
+    name: "Recipe",
+    components: {
+        Voting,
+        EmojieBackground,
+        PayPalPostcard
+    },
+    data() {
+        return {
+            recipe: undefined,
+            loaded: false,
+        };
+    },
+    created() {
+        let db = firebase.firestore();
+        const ref = db.collection("recipes")
+
+        ref
+            .doc(this.$route.params.id)
+            .get()
+            .then((doc) => {
+                this.loadData(doc);
+            });
+
+    },
+    methods: {
+        loadData(doc) {
+            this.recipe = {
+                id: doc.id,
+                ingredients: doc.data().ingredients,
+                title: doc.data().title,
+                instructions: doc.data().instructions,
+                votes: doc.data().votes || 0,
             };
+            // data loaded
+            this.loaded = true
+
+            this.$emit('shareText', 'Schau dir dieses coole KI generierte Rezept an: ' + this.recipe['title']);
+            this.$emit('recipe', this.recipe);
         },
-        created() {
-
-            let db = firebase.firestore();
-            const ref = db.collection("recipes")
-
-            this.id = this.$route.params.id;
-            let key = "";
-
-            if (typeof this.id !== "undefined") {
-                ref
-                    .doc(this.id)
-                    .get()
-                    .then((doc) => {
-                        this.loadData(doc);
-                    });
-            } else {
-                key = ref.doc().id;
-                ref
-                    .where(firebase.firestore.FieldPath.documentId(), ">=", key)
-                    .limit(1)
-                    .get()
-                    .then((snap) => {
-                        if (snap.size === 0) {
-                            ref
-                                .where(firebase.firestore.FieldPath.documentId(), "<", key)
-                                .limit(1)
-                                .get()
-                                .then((snap) => {
-                                    this.$router.push("/recipe/" + snap.docs[0].id);
-                                });
-                        } else {
-                            this.$router.push("/recipe/" + snap.docs[0].id);
-                        }
-                    })
-                    .catch((err) => {
-                        this.error = err;
-                    });
-            }
-        },
-        methods: {
-            loadData(doc) {
-                this.recipe = {
-                    id: doc.id,
-                    ingredients: doc.data().ingredients,
-                    title: doc.data().title,
-                    instructions: doc.data().instructions,
-                    votes: doc.data().votes || 0,
-                };
-                // data loaded
-                this.loaded = true
-
-                this.$emit('shareText', 'Schau dir dieses coole KI generierte Rezept an: ' + this.recipe['title']);
-                this.$emit('recipe', this.recipe);
-
-                if (this.id === undefined) {
-                    this.$router.push("/recipe/" + doc.id);
-                }
-            },
-        }
-    };
+    }
+};
 </script>
 
-<style scoped lang="scss">    
-    .loader {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: var(--bg-color);
-    }
+<style lang="scss" scoped>
+.loader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--bg-color);
+}
 
-    .instruction {
-        animation: fade-in 1s forwards;
-        -webkit-animation: fade-in 1s forwards;
-        opacity: 0;
-        background: rgba(0, 0, 0, 1);
-        color: var(--bg-color);
-        border-radius: 15px;
-        padding: 15px;
-        font-size: 1.5em;
-        text-align: justify;
-        display: block;
-    }
+.instruction {
+  animation: fade-in 1s forwards;
+  -webkit-animation: fade-in 1s forwards;
+  opacity: 0;
+  background: rgba(0, 0, 0, 1);
+  color: var(--bg-color);
+  border-radius: 15px;
+  padding: 15px;
+  font-size: 1.5em;
+  text-align: justify;
+  display: block;
+}
 </style>
