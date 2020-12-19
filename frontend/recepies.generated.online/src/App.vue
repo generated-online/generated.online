@@ -4,7 +4,7 @@
             <EmojieBackground :recipe="recipe" :opacity="1" :color="backgroundColor" class="background prev-color"
                 :class="{'background-animation': addBackgroundID}" />
             <v-container>
-                <router-view :key="$route.path" @shareText="updateTitle($event)" @recipe="updateRecipe($event)">
+                <router-view :key="$route.fullPath" @shareText="updateTitle($event)" @recipe="updateRecipe($event)">
                 </router-view>
             </v-container>
         </v-main>
