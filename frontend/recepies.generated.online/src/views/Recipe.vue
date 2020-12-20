@@ -29,8 +29,8 @@
                                      :style="{'margin':$vuetify.breakpoint.xs?'auto': '0'}">
                                     <v-container class="pa-0">
                                         <!-- starting from md the ingredients should only have the width of min content-->
-                                        <v-row :style="{'width': ($vuetify.breakpoint.smAndDown)? 'auto':'min-content'}"
-                                               :justify="$vuetify.breakpoint.smAndDown?'center': 'start'"
+                                        <v-row :justify="$vuetify.breakpoint.smAndDown?'center': 'start'"
+                                               :style="{'width': ($vuetify.breakpoint.smAndDown)? 'auto':'min-content'}"
                                                no-gutters>
                                             <template v-for="(ingredient, n) in recipe.ingredients">
                                                 <div :key="n" :class="['boldy','ma-1','py-1','px-4']"
@@ -68,10 +68,10 @@
 </template>
 
 <script>
-import firebase from "firebase";
 import Voting from "@/components/Voting"
 import EmojieBackground from "@/components/EmojieBackground"
 import PayPalPostcard from "@/components/postcard-stuff/PayPalPostcard"
+import {loadRecipe} from "@/functions/recipeUtils";
 
 export default {
     name: "Recipe",
@@ -87,32 +87,13 @@ export default {
         };
     },
     created() {
-        let db = firebase.firestore();
-        const ref = db.collection("recipes")
-
-        ref
-            .doc(this.$route.params.id)
-            .get()
-            .then((doc) => {
-                this.loadData(doc);
-            });
-
-    },
-    methods: {
-        loadData(doc) {
-            this.recipe = {
-                id: doc.id,
-                ingredients: doc.data().ingredients,
-                title: doc.data().title,
-                instructions: doc.data().instructions,
-                votes: doc.data().votes || 0,
-            };
-            // data loaded
-            this.loaded = true
-
+        loadRecipe(this.$route.params.id).then((recipe) => {
+            this.recipe = recipe;
+            this.loaded = true;
             this.$emit('shareText', 'Schau dir dieses coole KI generierte Rezept an: ' + this.recipe['title']);
             this.$emit('recipe', this.recipe);
-        },
+        });
+
     }
 };
 </script>
