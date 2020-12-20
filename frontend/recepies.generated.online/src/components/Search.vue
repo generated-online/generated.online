@@ -13,17 +13,12 @@
                                  attribute="filtered_ingredients" class="bg-color"
                                  operator="and" searchable-placeholder="Suche nach Zutaten..."/>
 
-            <ais-state-results class="text-center">
+            <ais-state-results>
                 <template slot-scope="{ state: { query }, results: { hits, nbPages } }">
-                    <ais-hits class="ais-hits">
-                        <div slot="item" slot-scope="{ item }" :style="'background-color:'+recipeToColor(item.objectID)"
-                             class="search-item" @click="$router.push('/recipe/' + item.objectID)">
-                            <ais-highlight :hit="item" attribute="title"/>
-                            <div>
-                <span v-for="ingredient in item.ingredients" :key="ingredient+String(Math.floor(Math.random() * 10000))"
-                      class="search-item-ingredients">{{ ingredient }}</span>
-                            </div>
-                        </div>
+                    <ais-hits>
+                        <v-row slot="item" slot-scope="{ item }" :style="{'color':(recipeToColor(item.objectID) +' !important')}" >
+                            <RecipeCard :recipe="{'id': item.objectID, 'votes':0, 'title':item.title, 'ingredients':item.ingredients}"/>
+                        </v-row>
                     </ais-hits>
                     <!-- show no result if query with no hits -->
                     <v-btn v-if="query && hits.length == 0" class="boldy-red ma-auto px-4 py-1" large>
@@ -47,6 +42,8 @@ import {history} from 'instantsearch.js/es/lib/routers';
 import {simple} from 'instantsearch.js/es/lib/stateMappings';
 import algoliasearch from 'algoliasearch/lite'
 import 'instantsearch.css/themes/algolia-min.css'
+
+import RecipeCard from "@/components/RecipeCard";
 import recipeToColor from "@/functions/recipe_to_color";
 import generateRecipeButton from "@/components/generateRecipeButton";
 
@@ -92,12 +89,14 @@ export default {
         }
     },
     methods: {
-        recipeToColor
+        recipeToColor,
     },
     components: {
-        generateRecipeButton
+        generateRecipeButton,
+        RecipeCard
     },
     mounted() {
+        // this makes sure that the provided search history uses replace state instead of push state
         this.routing.router.write = function (routeState) {
             var _this = this;
 
@@ -129,10 +128,11 @@ export default {
 .ais-Hits-item {
   border: none !important;
   padding: 0 !important;
+  margin-left: 1em;
+  margin-right: 1em;
+  margin-top: 0;
   width: 100%;
   box-shadow: none;
-  height: 3em;
-  overflow: hidden;
 }
 
 .search-item {

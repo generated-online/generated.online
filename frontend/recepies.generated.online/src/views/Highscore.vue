@@ -7,7 +7,7 @@
         <v-row v-for="recipe in recipes" :key="recipe.id" :style="{'color':(recipeToColor(recipe.id) +' !important')}"
                class="row"
                no-gutters>
-            <RecipeCard :recipe="recipe" :recipe-to-emojis="recipeToEmojis(recipe)"/>
+            <RecipeCard :recipe="recipe"/>
         </v-row>
     </v-container>
 </template>
@@ -15,7 +15,6 @@
 <script>
 import firebase from "firebase";
 import recipeToColor from "@/functions/recipe_to_color";
-import {recipeToEmojis} from "@/functions/emojiUtils"
 import RecipeCard from "@/components/RecipeCard";
 
 export default {
@@ -60,7 +59,6 @@ export default {
             });
         },
         recipeToColor,
-        recipeToEmojis,
     }
 }
 </script>

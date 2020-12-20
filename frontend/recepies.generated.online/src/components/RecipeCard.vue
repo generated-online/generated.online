@@ -9,23 +9,24 @@
                     {{ recipe.title }}
                 </v-row>
                 <v-row class="mb-1 text-h6">
-                    <img v-for="emoji in recipeToEmojis.map(getImgUrl)" :key="emoji" :src="emoji" class="emoji pr-2">
+                    <img v-for="emoji in recipeToEmojis(recipe).map(getImgUrl)" :key="emoji" :src="emoji" class="emoji pr-2">
                 </v-row>
+<!--                todo: hover show ingredients-->
             </v-col>
         </v-row>
     </router-link>
 </template>
 <script>
-import {getImgUrl} from "@/functions/emojiUtils"
+import {getImgUrl,recipeToEmojis} from "@/functions/emojiUtils"
 
 export default {
     name: 'RecipeCard',
     props: {
         recipe: {},
-        recipeToEmojis: {}
     },
     methods: {
-        getImgUrl
+        getImgUrl,
+        recipeToEmojis
     }
 }
 </script>
