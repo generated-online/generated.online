@@ -5,19 +5,75 @@
             <ais-search-box attribute="title" placeholder="Suche nach Rezepten..." reset-title="Lösche alles"
                             show-loading-indicator submit-title="Suche"/>
 
-            <ais-refinement-list :class-names="{
-          'ais-RefinementList-showMore': 'showMore-button',
-          'ais-RefinementList-showMore--disabled': 'showMore-button--disbaled',
-          }" :limit="5" :searchable="false" :show-more="true"
+            <ais-refinement-list :limit="0" :searchable="false" :show-more="true"
                                  :sort-by="['count:desc']"
-                                 attribute="filtered_ingredients" class="bg-color"
-                                 operator="and" searchable-placeholder="Suche nach Zutaten..."/>
+                                 attribute="filtered_ingredients"
+                                 operator="and" searchable-placeholder="Suche nach Zutaten...">
+
+                <v-col slot-scope="{
+                                      items,
+                                      isShowingMore,
+                                      canToggleShowMore,
+                                      refine,
+                                      createURL,
+                                      toggleShowMore,
+                                      canRefine
+                                    }"
+                >
+                    <!--                    here we have one centered flex row filled with refinements/ingredients -->
+                    <v-row cols="auto" justify="center">
+                        <v-col v-for="item in items"
+                               :class="[ 'ma-1' ,'py-1', 'px-2',{'boldy':!item.isRefined, 'boldy-red':item.isRefined}]"
+                               :href="createURL(item.value)"
+                               align="center"
+                               cols="auto"
+                               @click.prevent="refine(item.value)"
+                        >
+                            {{ item.count.toLocaleString() }} x <img :src="wordToEmoji(item.label)" class="emoji"/>
+                            <ais-highlight v-if="!wordToEmoji(item.label)" :hit="item" attribute="item"/>
+                        </v-col>
+                    </v-row>
+                    <!-- this row contains just buttons for showing/hiding/clearing refinements-->
+                    <v-row class="mt-3" justify="center">
+                        <ais-clear-refinements>
+                            <div slot-scope="{ canRefine, refine, createURL }">
+                                <v-btn v-if="canRefine"
+                                       :href="createURL()"
+                                       class="black-button"
+                                       @click.prevent="refine"
+                                >
+                                    Zutaten löschen
+                                </v-btn>
+                                <!-- this is only used here because outside this tag i can not use the canRefine variable-->
+                                <v-btn v-if="isShowingMore && !canRefine"
+                                       class="black-button"
+                                       @click.prevent="toggleShowMore"
+                                >
+                                    Erweiterte Suche Schließen
+                                </v-btn>
+                            </div>
+                        </ais-clear-refinements>
+                        <!-- for some reason canRefine works differently in the ais-clear-refinement tag
+                             can not use it to hide this button when a refinement is active-->
+                        <v-btn
+                                v-if="canToggleShowMore && !isShowingMore"
+                                class="black-button"
+                                @click="toggleShowMore"
+                        >
+                            {{ !isShowingMore ? 'Erweiterte Suche' : 'Erweiterte Suche Schließen' }}
+                        </v-btn>
+                    </v-row>
+                </v-col>
+            </ais-refinement-list>
+
 
             <ais-state-results>
                 <template slot-scope="{ state: { query }, results: { hits, nbPages } }">
                     <ais-hits>
-                        <v-row slot="item" slot-scope="{ item }" :style="{'color':(recipeToColor(item.objectID) +' !important')}" >
-                            <RecipeCard :recipe="{'id': item.objectID, 'votes':0, 'title':item.title, 'ingredients':item.ingredients}"/>
+                        <v-row slot="item" slot-scope="{ item }"
+                               :style="{'color':(recipeToColor(item.objectID) +' !important')}">
+                            <RecipeCard
+                                    :recipe="{'id': item.objectID, 'votes':0, 'title':item.title, 'ingredients':item.ingredients}"/>
                         </v-row>
                     </ais-hits>
                     <!-- show no result if query with no hits -->
@@ -46,6 +102,7 @@ import 'instantsearch.css/themes/algolia-min.css'
 import RecipeCard from "@/components/RecipeCard";
 import recipeToColor from "@/functions/recipe_to_color";
 import generateRecipeButton from "@/components/generateRecipeButton";
+import {wordToEmoji} from "@/functions/emojiUtils";
 
 const algoliaClient = algoliasearch(
     '7KL69V3MEL', // Application ID
@@ -90,6 +147,7 @@ export default {
     },
     methods: {
         recipeToColor,
+        wordToEmoji
     },
     components: {
         generateRecipeButton,
@@ -117,7 +175,7 @@ export default {
 <style lang="scss">
 /* add bottom margin to search box */
 .ais-SearchBox {
-  margin-bottom: 1em;
+  //margin-bottom: 0.5em;
 }
 
 /* change search result from grid/box to row */
@@ -156,26 +214,10 @@ export default {
   padding-top: 25px !important;
 }
 
-.showMore-button,
-.showMore-button:focus {
-  background-color: transparent;
-  color: black;
-  border: thin solid black;
-}
-
 .ais-SearchBox-submitIcon {
   width: 1.5em !important;
   height: 1.5em !important;
   margin-left: 1em !important;
-}
-
-.showMore-button:hover {
-  background-color: lightgray;
-}
-
-.showMore-button--disbaled,
-.showMore-button--disabled:hover {
-  display: none;
 }
 
 .ais-SearchBox-input {
@@ -204,5 +246,10 @@ input::placeholder {
 
 path {
   fill: white !important;
+}
+
+.emoji {
+  vertical-align: middle;
+  height: 1em;
 }
 </style>
