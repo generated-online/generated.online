@@ -1,6 +1,18 @@
 <template>
-    <div  class="shady" style=" overflow: auto;">
-        <Postcard :absender='query.absender' id="all"
+    <div class="shady" style="overflow: auto;">
+        <v-row align="center" justify="center" class="center">
+            <v-col>
+                <v-row align="center" class="loadingBox shady" no-gutters>
+                    <v-col cols="auto" class="ma-1">
+                        <v-progress-circular class="loading" size="40" color="black" indeterminate></v-progress-circular>
+                    </v-col>
+                    <v-col cols="auto" class="ma-1">
+                        {{ loadingText }}
+                    </v-col>
+                </v-row>
+            </v-col>
+        </v-row>
+        <Postcard class="shady" id="all" :absender='query.absender'
                   :country='query.country'
                   :horizontal="false"
                   :name='query.name'
@@ -17,12 +29,14 @@ import html2canvas from "html2canvas";
 
 export default {
     name: "PostcardDownload",
-    components:{
+    components: {
         Postcard
     },
-    data(){
+    data() {
         return {
-            query: () => {}
+            loadingText: "Erstelle Bilder",
+            query: () => {
+            }
         }
     },
     created() {
@@ -30,17 +44,22 @@ export default {
     },
     mounted() {
         // should do this after the background is fully loaded, maybe there is an elegant way of doing this
-        setTimeout(()=>{this.saveImages(); this.$router.back()},500);
+        setTimeout(() => {
+            this.loadingText = "Download gestartet"
+            this.saveImages();
+            // this is just for visual purposes
+            setTimeout(() => {this.$router.back()}, 1000)
+        }, 250);
     },
     methods: {
         saveImages() {
-            for (let selector_name of ["postcard-front", "postcard-back"].values()){
-                const el = document.querySelector('#'+selector_name)
+            for (let selector_name of ["postcard-front", "postcard-back"].values()) {
+                const el = document.querySelector('#' + selector_name)
                 html2canvas(el, {
                     scrollX: 0,
                     scrollY: -window.scrollY,
                 }).then(canvas => {
-                    this.saveAs(canvas.toDataURL(), selector_name+'_'+this.query.recipe.id+'_'+this.query.name+'.png');
+                    this.saveAs(canvas.toDataURL(), selector_name + '_' + this.query.recipe.id + '_' + this.query.name + '.png');
                 });
             }
         },
@@ -61,5 +80,23 @@ export default {
 </script>
 
 <style scoped>
+.loadingBox {
+    margin: auto;
+    padding: 2px;
+    width: fit-content;
+    border-radius: 50px;
+    box-shadow: 0 0 10px rgba(128, 128, 128, 0.8);
+    background: rgba(228, 228, 228, 0.9);
+    color:black;
+}
+.center{
+    height:100vh;
+    width: 100vw;
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    margin: auto;
+}
 
 </style>

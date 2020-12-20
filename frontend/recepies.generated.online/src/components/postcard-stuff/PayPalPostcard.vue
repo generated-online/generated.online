@@ -8,24 +8,13 @@
             <v-row no-gutters>
                 <v-col ref="postcardCol" cols="12" lg="6" md="6">
                     <!-- Postcards -->
-                    <div :style="'height: ' +postcardHeight+'px; overflow: hidden'">
+                    <div :style="'height: ' +postcardHeight+'px; overflow: hidden'" @click="downloadPostcard()">
                         <Postcard ref="postcard" :absender='absender' :country='country'
                                   :horizontal="$vuetify.breakpoint.smOnly"
                                   :name='name' :parent-width="postcardWidth" :recipe='recipe' :street='street'
                                   :zip='zipCode()'
                                   @height="postcardHeight=$event"/>
                     </div>
-                    <v-row class="mt-4" justify="center">
-                        <v-btn :to="{'name': 'postcard-download', 'query':{
-                            'absender':absender,
-                            'country':country,
-                            'name':name,
-                            'recipe':recipe,
-                            'street':street,
-                            'zip':zipCode()}}">
-                            Download Images
-                        </v-btn>
-                    </v-row>
                 </v-col>
 
                 <v-col :style="{
@@ -106,7 +95,6 @@
 import Postcard from "@/components/postcard-stuff/Postcard"
 import Paypal from "@/components/postcard-stuff/Paypal"
 import MoneyBar from "@/components/postcard-stuff/MoneyBar";
-import html2canvas from "html2canvas";
 
 export default {
     components: {
@@ -164,6 +152,18 @@ export default {
             } else {
                 return 100.
             }
+        },
+        downloadPostcard() {
+            this.$router.push({
+                'name': 'postcard-download', 'query': {
+                    'absender': this.absender,
+                    'country': this.country,
+                    'name': this.name,
+                    'recipe': this.recipe,
+                    'street': this.street,
+                    'zip': this.zipCode()
+                }
+            })
         }
     }
 }
