@@ -32,7 +32,7 @@
                         <input type="text" placeholder="Land" v-model="country" disabled>
                     </div>
                 </div>
-                <p class="ad adPositionBack clip-text" style="background: black">{{absender? 'gensendet von '+ absender + ' via ':''}}recipes.generated.online</p>
+                <p class="ad adPositionBack clip-text" style="background: black">{{absender? 'gesendet von '+ absender + ' via ':''}}recipes.generated.online</p>
             </div>
         </div>
     </div>
