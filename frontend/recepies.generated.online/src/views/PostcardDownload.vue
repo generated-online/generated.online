@@ -12,7 +12,7 @@
                 </v-row>
             </v-col>
         </v-row>
-        <Postcard class="shady" id="all" :absender='query.absender'
+        <Postcard class="shady" :absender='query.absender'
                   :country='query.country'
                   :horizontal="false"
                   :name='query.name'
@@ -52,10 +52,10 @@ export default {
         }, 250);
     },
     methods: {
-        saveImages() {
+        async saveImages() {
             for (let selector_name of ["postcard-front", "postcard-back"].values()) {
-                const el = document.querySelector('#' + selector_name)
-                html2canvas(el, {
+                const postcardPart = document.querySelector('#' + selector_name)
+                await html2canvas(postcardPart, {
                     scrollX: 0,
                     scrollY: -window.scrollY,
                 }).then(canvas => {
