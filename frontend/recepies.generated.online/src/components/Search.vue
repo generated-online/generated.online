@@ -45,7 +45,7 @@
                                     Zutaten löschen
                                 </v-btn>
                                 <!-- this is only used here because outside this tag i can not use the canRefine variable-->
-                                <v-btn v-if="isShowingMore && !canRefine"
+                                <v-btn v-if="canToggleShowMore && isShowingMore && !canRefine"
                                        class="black-button"
                                        @click.prevent="toggleShowMore"
                                 >
