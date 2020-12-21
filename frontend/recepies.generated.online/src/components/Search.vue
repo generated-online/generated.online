@@ -1,5 +1,19 @@
 <template>
     <div>
+        <v-btn
+                v-show="showScrollUpButton"
+                v-scroll="onScroll"
+                bottom
+                color="primary"
+                dark
+                fab
+                fixed
+                :right="$vuetify.breakpoint.mdAndUp"
+                :style="$vuetify.breakpoint.smAndDown?'left: 50%; transform: translateX(-50%)':''"
+                @click="toTop"
+        >
+            <v-icon>keyboard_arrow_up</v-icon>
+        </v-btn>
         <ais-instant-search :routing="routing" :search-client="searchClient" index-name="Recipes">
 
             <ais-search-box attribute="title" placeholder="Suche nach Rezepten..." reset-title="Lösche alles"
@@ -87,10 +101,12 @@
                                         :recipe="{'id': item.objectID, 'votes':0, 'title':item.title, 'ingredients':item.ingredients}"/>
                             </v-row>
                             <!--automatically load next page-->
-                                <v-row align="center" class="loadingBox shady" no-gutters :style="'opacity: '+ (isLastPage?0:1)">
-                                    <v-progress-circular color="black" indeterminate size="40" ></v-progress-circular>
-                                    <div v-if="!isLastPage && scrolledToBottom" >{{ refineNext() }}</div>
-                                </v-row>
+                            <!--somehow this does not work in mobile -> dont show-->
+                            <v-row v-if="!$vuetify.breakpoint.xsOnly" :style="'opacity: '+ (isLastPage?0:1)" align="center" class="loadingBox shady"
+                                   no-gutters>
+                                <v-progress-circular color="black" indeterminate size="40"></v-progress-circular>
+                                <div v-if="!isLastPage && scrolledToBottom">{{ refineNext() }}</div>
+                            </v-row>
                         </v-col>
 
 
@@ -120,9 +136,7 @@ import {history} from 'instantsearch.js/es/lib/routers';
 import {simple} from 'instantsearch.js/es/lib/stateMappings';
 import algoliasearch from 'algoliasearch/lite'
 import 'instantsearch.css/themes/algolia-min.css'
-import {
-    createInfiniteHitsSessionStorageCache
-} from 'instantsearch.js/es/lib/infiniteHitsCache'
+import {createInfiniteHitsSessionStorageCache} from 'instantsearch.js/es/lib/infiniteHitsCache'
 
 import RecipeCard from "@/components/RecipeCard";
 import recipeToColor from "@/functions/recipe_to_color";
@@ -169,12 +183,23 @@ export default {
                 stateMapping: simple(),
             },
             cache: createInfiniteHitsSessionStorageCache(),
-            scrolledToBottom: false
+            scrolledToBottom: false,
+            showScrollUpButton: false
         }
     },
     methods: {
         recipeToColor,
-        wordToEmoji
+        wordToEmoji,
+        onScroll(e) {
+            if (typeof window === 'undefined') return
+            const top = window.pageYOffset || e.target.scrollTop || 0
+            this.showScrollUpButton = top > 20
+            this.scrolledToBottom = Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight >= document.documentElement.offsetHeight - 20
+
+        },
+        toTop() {
+            this.$vuetify.goTo(0)
+        },
     },
     components: {
         generateRecipeButton,
@@ -194,12 +219,6 @@ export default {
                 window.history.replaceState(routeState, '', url);
                 _this.writeTimer = undefined;
             }, this.writeDelay);
-        }
-
-        // find out when on bottom
-        window.onscroll = () => {
-            let bottomOfWindow = Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight === document.documentElement.offsetHeight
-            this.scrolledToBottom = bottomOfWindow
         }
     }
 };
