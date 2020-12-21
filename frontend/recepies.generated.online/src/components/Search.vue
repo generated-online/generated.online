@@ -39,17 +39,22 @@
                             <div slot-scope="{ canRefine, refine, createURL }">
                                 <v-btn v-if="canRefine"
                                        :href="createURL()"
-                                       class="black-button ma-2"
+                                       class="boldyNoColor ma-2"
                                        @click.prevent="refine"
+                                       dark
+                                       style="color: rgb(231, 55, 61)"
                                 >
-                                    Zutaten löschen
+                                    <v-icon class="mx-1">delete</v-icon>
+                                    <v-icon class="mx-1">filter_alt</v-icon>
                                 </v-btn>
                                 <!-- this is only used here because outside this tag i can not use the canRefine variable-->
                                 <v-btn v-if="canToggleShowMore && isShowingMore && !canRefine"
-                                       class="black-button ma-2"
+                                       class="boldy ma-2"
                                        @click.prevent="toggleShowMore"
+                                       dark
                                 >
-                                    Erweiterte Suche Schließen
+                                    <v-icon class="mx-1">close_fullscreen</v-icon>
+                                    <v-icon class="mx-1">filter_alt</v-icon>
                                 </v-btn>
                             </div>
                         </ais-clear-refinements>
@@ -57,10 +62,11 @@
                              can not use it to hide this button when a refinement is active-->
                         <v-btn
                                 v-if="canToggleShowMore && !isShowingMore"
-                                class="black-button ma-2"
+                                class="boldy ma-2"
                                 @click="toggleShowMore"
+                                dark
                         >
-                            {{ !isShowingMore ? 'Erweiterte Suche' : 'Erweiterte Suche Schließen' }}
+                            <v-icon class="mx-1">filter_alt</v-icon>
                         </v-btn>
                     </v-row>
                 </v-col>

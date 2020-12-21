@@ -70,6 +70,7 @@
                     '--prev-bg-color': this.prevBackgroundColor,
                     "background-color": "transparent",
                     "green": "rgb(195, 211, 91)",
+                    "red": "rgb(231, 55, 61)"
                 }
             }
         }
@@ -151,6 +152,25 @@
     .bg-green {
         background: rgb(195, 211, 91);
     }
+    .bg-black {
+      background-color: rgb(0, 0, 0);
+    }
+
+    .boldy {
+      background: black;
+      padding: 20px !important;
+      border-radius: 30px !important;
+      color: var(--bg-color) !important;
+      animation: fade-in 1s forwards;
+      -webkit-animation: fade-in 1s forwards;
+      opacity: 0;
+    }
+
+    .boldyNoColor {
+      background: black;
+      padding: 20px !important;
+      border-radius: 30px !important;
+    }
 
     .boldy-red {
         color: black !important;
@@ -180,22 +200,6 @@
         to {
             opacity: 1;
         }
-    }
-
-    .boldy {
-        background: black;
-        padding: 20px !important;
-        border-radius: 30px !important;
-        color: var(--bg-color) !important;
-        animation: fade-in 1s forwards;
-        -webkit-animation: fade-in 1s forwards;
-        opacity: 0;
-    }
-
-    .boldyNoColor {
-        background: black;
-        padding: 20px !important;
-        border-radius: 30px !important;
     }
 
     .ais-SearchBox-input::placeholder {
