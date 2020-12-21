@@ -10,7 +10,7 @@
                                  attribute="filtered_ingredients"
                                  operator="and" searchable-placeholder="Suche nach Zutaten...">
 
-                <v-col slot-scope="{
+                <v-col v-if="canToggleShowMore" slot-scope="{
                                       items,
                                       isShowingMore,
                                       canToggleShowMore,
@@ -20,7 +20,7 @@
                                       canRefine
                                     }"
                 >
-                    <!--                    here we have one centered flex row filled with refinements/ingredients -->
+                    <!--here we have one centered flex row filled with refinements/ingredients -->
                     <v-row cols="auto" justify="center">
                         <v-col v-for="item in items"
                                :class="[ 'ma-1' ,'py-1', 'px-2',{'boldy':!item.isRefined, 'boldy-red':item.isRefined}]"
@@ -34,19 +34,19 @@
                         </v-col>
                     </v-row>
                     <!-- this row contains just buttons for showing/hiding/clearing refinements-->
-                    <v-row class="mt-3" justify="center">
+                    <v-row justify="center">
                         <ais-clear-refinements>
                             <div slot-scope="{ canRefine, refine, createURL }">
                                 <v-btn v-if="canRefine"
                                        :href="createURL()"
-                                       class="black-button"
+                                       class="black-button ma-2"
                                        @click.prevent="refine"
                                 >
                                     Zutaten löschen
                                 </v-btn>
                                 <!-- this is only used here because outside this tag i can not use the canRefine variable-->
                                 <v-btn v-if="canToggleShowMore && isShowingMore && !canRefine"
-                                       class="black-button"
+                                       class="black-button ma-2"
                                        @click.prevent="toggleShowMore"
                                 >
                                     Erweiterte Suche Schließen
@@ -57,35 +57,40 @@
                              can not use it to hide this button when a refinement is active-->
                         <v-btn
                                 v-if="canToggleShowMore && !isShowingMore"
-                                class="black-button"
+                                class="black-button ma-2"
                                 @click="toggleShowMore"
                         >
                             {{ !isShowingMore ? 'Erweiterte Suche' : 'Erweiterte Suche Schließen' }}
                         </v-btn>
                     </v-row>
                 </v-col>
+                <div v-else>
+
+                </div>
             </ais-refinement-list>
 
-
-            <ais-state-results>
+            <ais-state-results >
                 <template slot-scope="{ state: { query }, results: { hits, nbPages } }">
-                    <ais-hits>
+
+                    <ais-infinite-hits v-if="query && hits.length !== 0">
                         <v-row slot="item" slot-scope="{ item }"
                                :style="{'color':(recipeToColor(item.objectID) +' !important')}">
                             <RecipeCard
                                     :recipe="{'id': item.objectID, 'votes':0, 'title':item.title, 'ingredients':item.ingredients}"/>
                         </v-row>
-                    </ais-hits>
+                    </ais-infinite-hits>
                     <!-- show no result if query with no hits -->
-                    <v-btn v-if="query && hits.length == 0" class="boldy-red ma-auto px-4 py-1" large>
-                        <h2 class="text-capitalize" style="width: fit-content">Keine Treffer {{ query }}</h2>
-                        <v-icon style="padding-left:0.5em">error</v-icon>
-                    </v-btn>
+                    <v-row v-if="query && hits.length === 0" justify="center">
+                        <v-btn  class="boldy-red px-4 py-1 my-6" large>
+                            <h2 class="text-capitalize" style="width: fit-content">Keine Treffer</h2>
+                            <v-icon style="padding-left:0.5em">error</v-icon>
+                        </v-btn>
+                    </v-row>
                     <!-- hide pagination if 1 or less pages -->
-                    <ais-pagination v-if="nbPages > 1"/>
-                    <div v-if="hits.length == 0" style="text-align:center">
+                    <!--                    <ais-pagination v-if="nbPages > 1"/>-->
+                    <v-row v-if="hits.length === 0" justify="center">
                         <generateRecipeButton/>
-                    </div>
+                    </v-row>
                 </template>
             </ais-state-results>
 
@@ -173,10 +178,6 @@ export default {
 </script>
 
 <style lang="scss">
-/* add bottom margin to search box */
-.ais-SearchBox {
-  //margin-bottom: 0.5em;
-}
 
 /* change search result from grid/box to row */
 .ais-Hits-list {
@@ -203,10 +204,6 @@ export default {
 
 .search-item-ingredients {
   font-size: 0.75em !important
-}
-
-.ais-RefinementList {
-  padding-bottom: 25px !important;
 }
 
 .ais-Pagination {
