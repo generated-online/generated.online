@@ -7,7 +7,13 @@ Vue.use(Vuex)
 Vue.config.devtools = process.env.NODE_ENV === 'development'
 
 export default new Vuex.Store({
-    state: {},
-    mutations: {},
+    state: {
+        scrolledToBottom: false
+    },
+    mutations: {
+        setScroll(state, payload){
+            state.scrolledToBottom = payload
+        }
+    },
     actions: {}
 })

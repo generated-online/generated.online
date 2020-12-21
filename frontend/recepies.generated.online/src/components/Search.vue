@@ -1,20 +1,5 @@
 <template>
     <div>
-<!-- it looks like this fucks up refinement-->
-        <v-btn
-                v-show="showScrollUpButton"
-                v-scroll="onScroll"
-                bottom
-                dark
-                fab
-                fixed
-                :right="$vuetify.breakpoint.mdAndUp"
-                :style="($vuetify.breakpoint.smAndDown?'left: 50%; transform: translateX(-50%)':'')"
-                class="boldy"
-                @click="toTop"
-        >
-            <v-icon>keyboard_arrow_up</v-icon>
-        </v-btn>
         <ais-instant-search :routing="routing" :search-client="searchClient" index-name="Recipes">
 
             <ais-search-box attribute="title" placeholder="Suche nach Rezepten..." reset-title="Lösche alles"
@@ -22,8 +7,9 @@
 
             <ais-refinement-list :limit="0" :searchable="false" :show-more="true"
                                  :sort-by="['count:desc']"
-                                 attribute="filtered_ingredients"
-                                 operator="and" searchable-placeholder="Suche nach Zutaten..." :transform-items="transformIngredient">
+                                 :transform-items="transformIngredient"
+                                 attribute="filtered_ingredients" operator="and"
+                                 searchable-placeholder="Suche nach Zutaten...">
 
                 <v-col v-if="canToggleShowMore" slot-scope="{
                                       items,
@@ -43,7 +29,8 @@
                                cols="auto"
                                @click.prevent="refine(item.value)"
                         >
-                            {{ item.count.toLocaleString() }} x <img v-if="item.emoji" :src="item.emoji" class="emoji" :alt="item.label"/>
+                            {{ item.count.toLocaleString() }} x <img v-if="item.emoji" :alt="item.label" :src="item.emoji"
+                                                                     class="emoji"/>
                             <ais-highlight v-if="!item.emoji" :hit="item" attribute="item"/>
                         </v-col>
                     </v-row>
@@ -92,9 +79,8 @@
             <ais-state-results>
                 <template slot-scope="{ state: { query }, results: { hits, nbPages } }">
 
-                    <ais-infinite-hits v-if="query && hits.length !== 0" :cache="cache"
-                                       :transform-items="transformItems">
-                        <v-col slot-scope="{ items, isLastPage, refineNext  }">
+                    <ais-infinite-hits v-if="query && hits.length !== 0" :cache="cache">
+                        <v-col slot-scope="{ items, filteredItems,isLastPage, refineNext  }">
                             <v-row v-for="item in items"
                                    :style="{'color':(recipeToColor(item.objectID) +' !important')}">
                                 <RecipeCard
@@ -102,7 +88,8 @@
                             </v-row>
                             <!--automatically load next page-->
                             <!--somehow this does not work in mobile -> dont show-->
-                            <v-row v-if="!$vuetify.breakpoint.xsOnly" :style="'opacity: '+ (isLastPage?0:1)" align="center" class="loadingBox shady"
+                            <v-row v-if="!$vuetify.breakpoint.xsOnly" :style="'opacity: '+ (isLastPage?0:1)"
+                                   align="center" class="loadingBox shady"
                                    no-gutters>
                                 <v-progress-circular color="black" indeterminate size="40"></v-progress-circular>
                                 <div v-if="!isLastPage && scrolledToBottom">{{ refineNext() }}</div>
@@ -126,8 +113,8 @@
                     </v-row>
                 </template>
             </ais-state-results>
-
         </ais-instant-search>
+
     </div>
 </template>
 
@@ -183,25 +170,16 @@ export default {
                 stateMapping: simple(),
             },
             cache: createInfiniteHitsSessionStorageCache(),
-            scrolledToBottom: false,
-            showScrollUpButton: false
+            scrolledToBottom: false
         }
     },
     methods: {
         recipeToColor,
         wordToEmoji,
-        onScroll(e) {
-            if (typeof window === 'undefined') return
-            const top = window.pageYOffset || e.target.scrollTop || 0
-            this.showScrollUpButton = top > 20
-            this.scrolledToBottom = Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight >= document.documentElement.offsetHeight - 20
-
-        },
-        toTop() {
-            this.$vuetify.goTo(0)
-        },
-        transformIngredient(ingredients){
-            ingredients.map((ingredient) => {ingredient.emoji = wordToEmoji(ingredient.label)})
+        transformIngredient(ingredients) {
+            ingredients.map((ingredient) => {
+                ingredient.emoji = wordToEmoji(ingredient.label)
+            })
             return ingredients
         }
     },
@@ -224,6 +202,16 @@ export default {
                 _this.writeTimer = undefined;
             }, this.writeDelay);
         }
+
+        // listen for scrolled to bottom
+        let whitelist = ['setScroll'];
+        this.$store.subscribe((mutation, state) => {
+            if (whitelist.includes(mutation.type)) {
+            console.log(state, state.scrolledToBottom)
+                this.scrolledToBottom = state.scrolledToBottom
+            }
+        });
+
     }
 };
 </script>

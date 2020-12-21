@@ -76,6 +76,7 @@ router.beforeEach((to, from, next) => {
         verified = firebase.auth().currentUser.emailVerified;
         validated = true
     }
+    console.log(to)
 
     const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 
