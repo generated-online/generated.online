@@ -1,5 +1,6 @@
 <template>
     <div>
+<!-- it looks like this fucks up refinement-->
         <v-btn
                 v-show="showScrollUpButton"
                 v-scroll="onScroll"
@@ -22,7 +23,7 @@
             <ais-refinement-list :limit="0" :searchable="false" :show-more="true"
                                  :sort-by="['count:desc']"
                                  attribute="filtered_ingredients"
-                                 operator="and" searchable-placeholder="Suche nach Zutaten...">
+                                 operator="and" searchable-placeholder="Suche nach Zutaten..." :transform-items="transformIngredient">
 
                 <v-col v-if="canToggleShowMore" slot-scope="{
                                       items,
@@ -42,8 +43,8 @@
                                cols="auto"
                                @click.prevent="refine(item.value)"
                         >
-                            {{ item.count.toLocaleString() }} x <img :src="wordToEmoji(item.label)" class="emoji" :alt="item.label"/>
-                            <ais-highlight v-if="!wordToEmoji(item.label)" :hit="item" attribute="item"/>
+                            {{ item.count.toLocaleString() }} x <img v-if="item.emoji" :src="item.emoji" class="emoji" :alt="item.label"/>
+                            <ais-highlight v-if="!item.emoji" :hit="item" attribute="item"/>
                         </v-col>
                     </v-row>
                     <!-- this row contains just buttons for showing/hiding/clearing refinements-->
@@ -199,6 +200,10 @@ export default {
         toTop() {
             this.$vuetify.goTo(0)
         },
+        transformIngredient(ingredients){
+            ingredients.map((ingredient) => {ingredient.emoji = wordToEmoji(ingredient.label)})
+            return ingredients
+        }
     },
     components: {
         generateRecipeButton,
