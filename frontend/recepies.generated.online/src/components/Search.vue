@@ -4,12 +4,12 @@
                 v-show="showScrollUpButton"
                 v-scroll="onScroll"
                 bottom
-                color="primary"
                 dark
                 fab
                 fixed
                 :right="$vuetify.breakpoint.mdAndUp"
-                :style="$vuetify.breakpoint.smAndDown?'left: 50%; transform: translateX(-50%)':''"
+                :style="($vuetify.breakpoint.smAndDown?'left: 50%; transform: translateX(-50%)':'')"
+                class="boldy"
                 @click="toTop"
         >
             <v-icon>keyboard_arrow_up</v-icon>
@@ -39,11 +39,10 @@
                         <v-col v-for="item in items"
                                :class="[ 'ma-1' ,'py-1', 'px-2',{'boldy':!item.isRefined, 'boldy-red':item.isRefined}]"
                                :href="createURL(item.value)"
-                               align="center"
                                cols="auto"
                                @click.prevent="refine(item.value)"
                         >
-                            {{ item.count.toLocaleString() }} x <img :src="wordToEmoji(item.label)" class="emoji"/>
+                            {{ item.count.toLocaleString() }} x <img :src="wordToEmoji(item.label)" class="emoji" :alt="item.label"/>
                             <ais-highlight v-if="!wordToEmoji(item.label)" :hit="item" attribute="item"/>
                         </v-col>
                     </v-row>
