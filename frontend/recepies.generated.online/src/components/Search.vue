@@ -40,9 +40,9 @@
                                 <v-btn v-if="canRefine"
                                        :href="createURL()"
                                        class="boldyNoColor ma-2"
-                                       @click.prevent="refine"
                                        dark
                                        style="color: rgb(231, 55, 61)"
+                                       @click.prevent="refine"
                                 >
                                     <v-icon class="mx-1">delete</v-icon>
                                     <v-icon class="mx-1">filter_alt</v-icon>
@@ -50,8 +50,8 @@
                                 <!-- this is only used here because outside this tag i can not use the canRefine variable-->
                                 <v-btn v-if="canToggleShowMore && isShowingMore && !canRefine"
                                        class="boldy ma-2"
-                                       @click.prevent="toggleShowMore"
                                        dark
+                                       @click.prevent="toggleShowMore"
                                 >
                                     <v-icon class="mx-1">close_fullscreen</v-icon>
                                     <v-icon class="mx-1">filter_alt</v-icon>
@@ -63,8 +63,8 @@
                         <v-btn
                                 v-if="canToggleShowMore && !isShowingMore"
                                 class="boldy ma-2"
-                                @click="toggleShowMore"
                                 dark
+                                @click="toggleShowMore"
                         >
                             <v-icon class="mx-1">filter_alt</v-icon>
                         </v-btn>
@@ -75,25 +75,36 @@
                 </div>
             </ais-refinement-list>
 
-            <ais-state-results >
+            <ais-state-results>
                 <template slot-scope="{ state: { query }, results: { hits, nbPages } }">
 
-                    <ais-infinite-hits v-if="query && hits.length !== 0">
-                        <v-row slot="item" slot-scope="{ item }"
-                               :style="{'color':(recipeToColor(item.objectID) +' !important')}">
-                            <RecipeCard
-                                    :recipe="{'id': item.objectID, 'votes':0, 'title':item.title, 'ingredients':item.ingredients}"/>
-                        </v-row>
+                    <ais-infinite-hits v-if="query && hits.length !== 0" :cache="cache"
+                                       :transform-items="transformItems">
+                        <v-col slot-scope="{ items, isLastPage, refineNext  }">
+                            <v-row v-for="item in items"
+                                   :style="{'color':(recipeToColor(item.objectID) +' !important')}">
+                                <RecipeCard
+                                        :recipe="{'id': item.objectID, 'votes':0, 'title':item.title, 'ingredients':item.ingredients}"/>
+                            </v-row>
+                            <!--automatically load next page-->
+                                <v-row align="center" class="loadingBox shady" no-gutters :style="'opacity: '+ (isLastPage?0:1)">
+                                    <v-progress-circular color="black" indeterminate size="40" ></v-progress-circular>
+                                    <div v-if="!isLastPage && scrolledToBottom" >{{ refineNext() }}</div>
+                                </v-row>
+                        </v-col>
+
+
                     </ais-infinite-hits>
+
                     <!-- show no result if query with no hits -->
                     <v-row v-if="query && hits.length === 0" justify="center">
-                        <v-btn  class="boldy-red px-4 py-1 my-6" large>
+                        <v-btn class="boldy-red px-4 py-1 my-6" large>
                             <h2 class="text-capitalize" style="width: fit-content">Keine Treffer</h2>
                             <v-icon style="padding-left:0.5em">error</v-icon>
                         </v-btn>
                     </v-row>
-                    <!-- hide pagination if 1 or less pages -->
-                    <!--                    <ais-pagination v-if="nbPages > 1"/>-->
+
+                    <!-- random recipe button-->
                     <v-row v-if="hits.length === 0" justify="center">
                         <generateRecipeButton/>
                     </v-row>
@@ -109,6 +120,9 @@ import {history} from 'instantsearch.js/es/lib/routers';
 import {simple} from 'instantsearch.js/es/lib/stateMappings';
 import algoliasearch from 'algoliasearch/lite'
 import 'instantsearch.css/themes/algolia-min.css'
+import {
+    createInfiniteHitsSessionStorageCache
+} from 'instantsearch.js/es/lib/infiniteHitsCache'
 
 import RecipeCard from "@/components/RecipeCard";
 import recipeToColor from "@/functions/recipe_to_color";
@@ -154,6 +168,8 @@ export default {
                 router: history(),
                 stateMapping: simple(),
             },
+            cache: createInfiniteHitsSessionStorageCache(),
+            scrolledToBottom: false
         }
     },
     methods: {
@@ -179,50 +195,21 @@ export default {
                 _this.writeTimer = undefined;
             }, this.writeDelay);
         }
+
+        // find out when on bottom
+        window.onscroll = () => {
+            let bottomOfWindow = Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight === document.documentElement.offsetHeight
+            this.scrolledToBottom = bottomOfWindow
+        }
     }
 };
 </script>
 
 <style lang="scss">
 
+// SEARCH
+
 /* change search result from grid/box to row */
-.ais-Hits-list {
-  padding-left: 0 !important;
-}
-
-.ais-Hits-item {
-  border: none !important;
-  padding: 0 !important;
-  margin-left: 1em;
-  margin-right: 1em;
-  margin-top: 0;
-  width: 100%;
-  box-shadow: none;
-}
-
-.search-item {
-  height: 100%;
-  padding: 0.5em;
-  text-decoration: none;
-  color: black !important;
-  font-weight: 600;
-}
-
-.search-item-ingredients {
-  font-size: 0.75em !important
-}
-
-.ais-Pagination {
-  padding-bottom: 50px !important;
-  padding-top: 25px !important;
-}
-
-.ais-SearchBox-submitIcon {
-  width: 1.5em !important;
-  height: 1.5em !important;
-  margin-left: 1em !important;
-}
-
 .ais-SearchBox-input {
   padding-left: 50px !important;
   font-size: 2em;
@@ -239,6 +226,12 @@ export default {
   }
 }
 
+.ais-SearchBox-submitIcon {
+  width: 1.5em !important;
+  height: 1.5em !important;
+  margin-left: 1em !important;
+}
+
 input:focus {
   outline: none;
 }
@@ -247,12 +240,38 @@ input::placeholder {
   color: white !important;
 }
 
+// sarch icon is made white here
 path {
   fill: white !important;
+}
+
+// and this is for the results
+.ais-Hits-list {
+  padding-left: 0 !important;
+}
+
+.ais-Hits-item {
+  border: none !important;
+  padding: 0 !important;
+  margin-left: 1em;
+  margin-right: 1em;
+  margin-top: 0;
+  width: 100%;
+  box-shadow: none;
 }
 
 .emoji {
   vertical-align: middle;
   height: 1em;
+}
+
+.loadingBox {
+  margin: auto;
+  padding: 2px;
+  width: fit-content;
+  border-radius: 50px;
+  box-shadow: 0 0 10px rgba(128, 128, 128, 0.8);
+  background: rgba(228, 228, 228, 0.9);
+  color: black;
 }
 </style>

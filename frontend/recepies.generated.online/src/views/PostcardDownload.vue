@@ -4,7 +4,7 @@
             <v-col>
                 <v-row align="center" class="loadingBox shady" no-gutters>
                     <v-col cols="auto" class="ma-1">
-                        <v-progress-circular class="loading" size="40" color="black" indeterminate></v-progress-circular>
+                        <v-progress-circular size="40" color="black" indeterminate></v-progress-circular>
                     </v-col>
                     <v-col cols="auto" class="ma-1">
                         {{ loadingText }}
