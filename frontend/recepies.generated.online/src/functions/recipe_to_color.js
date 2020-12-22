@@ -12,6 +12,7 @@ export default (id) => {
         "lightyellow",
         "lightseagreen",
     ]
-    let num = parseInt(id, 36) % colors.length;
+    // lightblue is default color
+    let num = (parseInt(id, 20) || 2) % colors.length;
     return colors[num];
 };
