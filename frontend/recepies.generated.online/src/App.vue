@@ -230,4 +230,8 @@
         background: rgba(0, 0, 0, 0.8);
         color: white;
     }
+
+    .noBoxShadow{
+      box-shadow: none !important;
+    }
 </style>

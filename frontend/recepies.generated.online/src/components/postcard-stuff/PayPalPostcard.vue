@@ -8,13 +8,22 @@
             <v-row no-gutters>
                 <v-col ref="postcardCol" cols="12" lg="6" md="6">
                     <!-- Postcards -->
-                    <div :style="'height: ' +postcardHeight+'px; overflow: hidden'" @click="downloadPostcard()">
+                    <div :style="'height: ' +postcardHeight+'px; overflow: hidden'" @click="showDialog=true">
                         <Postcard ref="postcard" :absender='absender' :country='country'
                                   :horizontal="$vuetify.breakpoint.smOnly"
                                   :name='name' :parent-width="postcardWidth" :recipe='recipe' :street='street'
                                   :zip='zipCode()'
                                   @height="postcardHeight=$event"/>
                     </div>
+                    <DownloadPopup v-if="showDialog" :query="{
+                    'absender': this.absender,
+                    'country': this.country,
+                    'name': this.name,
+                    'recipe': this.recipe,
+                    'street': this.street,
+                    'zip': this.zipCode()
+                    }" :show-dialog.sync="showDialog"
+                    ></DownloadPopup>
                 </v-col>
 
                 <v-col :style="{
@@ -95,9 +104,11 @@
 import Postcard from "@/components/postcard-stuff/Postcard"
 import Paypal from "@/components/postcard-stuff/Paypal"
 import MoneyBar from "@/components/postcard-stuff/MoneyBar";
+import DownloadPopup from "@/components/DownloadPopup";
 
 export default {
     components: {
+        DownloadPopup,
         MoneyBar,
         Postcard,
         Paypal,
@@ -121,7 +132,8 @@ export default {
             securedMoney: 0.5,
             showMore: false,
             postcardWidth: this.calculatePostcardWidth(),
-            postcardHeight: 100
+            postcardHeight: 100,
+            showDialog: false
         };
     },
     created() {
@@ -154,6 +166,8 @@ export default {
             }
         },
         downloadPostcard() {
+            console.log("hello")
+            this.showDialog = !true
             this.$router.push({
                 'name': 'postcard-download', 'query': {
                     'absender': this.absender,

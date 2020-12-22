@@ -34,11 +34,6 @@ const router = new Router({
             component: Recipe,
         },
         {
-            path: '/recipe/:id/download',
-            name: 'postcard-download',
-            component: PostcardDownload,
-        },
-        {
             path: '/recipe',
             name: 'random-recipe',
             component: GetRandomRecipe
