@@ -91,7 +91,6 @@ export default {
         this.url = window.location.href;
     },
     mounted() {
-        console.log(this.$route.params.name)
         window.addEventListener('resize', () => {
             this.backgroundPosition = (window.innerWidth % 90) / 2 + "px";
         })
