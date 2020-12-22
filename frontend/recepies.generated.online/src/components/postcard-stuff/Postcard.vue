@@ -1,7 +1,7 @@
 <template>
     <div
         :style="'transform: scale(' + scaling()+'); transform-origin: top left; width: '+(horizontal?'max-content':'min-content')+'; height: '+height+'px'">
-        <div class="postcard-body"
+        <div class="postcard-body" id="postcard-front"
             :style="{'margin-bottom': horizontal ? 0 : bottomMargin, 'margin-right': horizontal ? centerMargin : 0, 'float':'left'}">
             <EmojieBackground :recipe="recipe" :opacity="1" color="var(--bg-color)" class="background now-color"/>
             <div class="postcard-inner">
@@ -13,8 +13,7 @@
                 <span class="ad adPositionFront clip-text">recipes.generated.online</span>
             </div>
         </div>
-
-        <div class="postcard-body" :style="{'background':'white', 'float': horizontal?'right':'left'}">
+        <div class="postcard-body" id="postcard-back" :style="{'background':'white', 'float': horizontal?'right':'left'}">
             <div>
                 <div class="half-postcard" >
                     <h2>{{ recipe.title }}</h2>
