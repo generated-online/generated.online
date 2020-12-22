@@ -59,6 +59,7 @@ export default {
                     scrollX: 0,
                     scrollY: -window.scrollY,
                 }).then(canvas => {
+                    // document.body.appendChild(canvas);
                     this.saveAs(canvas.toDataURL(), selector_name + '_' + this.query.recipe.id + '_' + this.query.name + '.png');
                 });
             }
@@ -97,6 +98,7 @@ export default {
     left: 0;
     top: 0;
     margin: auto;
+    pointer-events: none;
 }
 
 </style>
