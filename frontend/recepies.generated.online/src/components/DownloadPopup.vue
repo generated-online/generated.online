@@ -32,6 +32,7 @@
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn
+                            :disabled="downloading"
                             class="boldy-red"
                             text
                             @click="updateShowDialog(false)"
@@ -39,6 +40,7 @@
                         <v-icon class="my-1">close</v-icon>
                     </v-btn>
                     <v-btn
+                            :disabled="downloading"
                             absolute
                             class="boldy-color"
                             left
