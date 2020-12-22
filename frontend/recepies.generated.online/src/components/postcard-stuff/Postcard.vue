@@ -1,16 +1,14 @@
 <template>
     <div
-        :style="'transform: scale(' + scaling()+'); transform-origin: top left; width: '+(horizontal?'max-content':'min-content')+'; height: '+height+'px'">
+        :style="'transform: scale(' + scaling()+'); transform-origin: top left; width: '+(horizontal?'max-content':'min-content')+'; height: '+height+'px'" id="postcard">
         <div class="postcard-body" id="postcard-front"
             :style="{'margin-bottom': horizontal ? 0 : bottomMargin, 'margin-right': horizontal ? centerMargin : 0, 'float':'left'}">
             <EmojieBackground :recipe="recipe" :opacity="1" color="var(--bg-color)" class="background now-color"/>
             <div class="postcard-inner">
-                <h1 :style="'line-height: 1.3em; font-size:' + titleSize">
-                    <span class="clip-text">
-                        {{ recipe.title }}
-                    </span>
-                </h1>
-                <span class="ad adPositionFront clip-text">recipes.generated.online</span>
+                <div :style="'line-height: 1.3em; font-size:' + titleSize" >
+                    <span v-for="titlePart in recipe.title.split(' ')" class="clip-text">{{titlePart}} </span>
+                </div>
+                <div class="ad adPositionFront clip-text mt-4 px-2"> recipes.generated.online </div>
             </div>
         </div>
         <div class="postcard-body" id="postcard-back" :style="{'background':'white', 'float': horizontal?'right':'left'}">
@@ -32,7 +30,7 @@
                         <input type="text" placeholder="Land" v-model="country" disabled>
                     </div>
                 </div>
-                <p class="ad adPositionBack clip-text" style="background: black">{{absender? 'gensendet von '+ absender + ' via ':''}}recipes.generated.online</p>
+                <p class="ad adPositionBack clip-text px-2" style="background: black">{{absender? 'gesendet von '+ absender + ' via ':''}}recipes.generated.online</p>
             </div>
         </div>
     </div>
@@ -41,42 +39,6 @@
 <script>
     import EmojieBackground from "@/components/EmojieBackground"
     export default {
-        created() {
-            if (this.recipe.title.length > 100) {
-                this.titleSize = "6em"
-            } else if (this.recipe.title.length > 70) {
-                this.titleSize = "7em"
-            }
-            // else standard applies
-
-            // get approximate line number, about 25 lines fit on the card
-            const lines = this.recipe.instructions.length / 100 + this.recipe.ingredients.length
-            if (lines > 33) {
-                this.instructionSize = "0.6em"
-            } else if (lines > 31) {
-                this.instructionSize = "0.7em"
-            } else if (lines > 29) {
-                this.instructionSize = "0.8em"
-            } else if (lines > 27) {
-                this.instructionSize = "0.9em"
-            } else if (lines > 25) {
-                this.instructionSize = "1em"
-            } else if (lines > 23) {
-                this.instructionSize = "1.1em"
-            } else if (lines > 21) {
-                this.instructionSize = "1.2em"
-            } else if (lines > 19) {
-                this.instructionSize = "1.3em"
-            } else if (lines > 17) {
-                this.instructionSize = "1.4em"
-            } else if (lines > 15) {
-                this.instructionSize = "1.5em"
-            } else if (lines <= 15) {
-                this.instructionSize = "1.6em"
-            }
-            // else standard applies
-
-        },
         props: {
             "recipe": {
                 type: Object,
@@ -123,6 +85,41 @@
         components: {
             EmojieBackground,
         },
+        created() {
+            if (this.recipe.title.length > 100) {
+                this.titleSize = "6em"
+            } else if (this.recipe.title.length > 70) {
+                this.titleSize = "7em"
+            }
+            // else standard applies
+
+            // get approximate line number, about 25 lines fit on the card
+            const lines = this.recipe.instructions.length / 100 + this.recipe.ingredients.length
+            if (lines > 33) {
+                this.instructionSize = "0.6em"
+            } else if (lines > 31) {
+                this.instructionSize = "0.7em"
+            } else if (lines > 29) {
+                this.instructionSize = "0.8em"
+            } else if (lines > 27) {
+                this.instructionSize = "0.9em"
+            } else if (lines > 25) {
+                this.instructionSize = "1em"
+            } else if (lines > 23) {
+                this.instructionSize = "1.1em"
+            } else if (lines > 21) {
+                this.instructionSize = "1.2em"
+            } else if (lines > 19) {
+                this.instructionSize = "1.3em"
+            } else if (lines > 17) {
+                this.instructionSize = "1.4em"
+            } else if (lines > 15) {
+                this.instructionSize = "1.5em"
+            } else if (lines <= 15) {
+                this.instructionSize = "1.6em"
+            }
+            // else standard applies
+        },
         methods: {
             scaling() {
                 let scaleFactor
@@ -159,10 +156,9 @@
 
     .clip-text {
         color: var(--bg-color);
-        box-shadow: 10px 0 0 $textBGColor, -10px 0 0 $textBGColor;
-        -moz-box-shadow: 10px 0 0 $textBGColor, -10px 0 0 $textBGColor;
-        -webkit-box-shadow: 10px 0 0 $textBGColor, -10px 0 0 $textBGColor;
         background: $textBGColor;
+        box-decoration-break: clone;
+        -webkit-box-decoration-break: clone;
     }
 
     .stamp {
@@ -215,7 +211,6 @@
 
     .postcard-body {
         position: relative;
-        box-shadow: 0px 0px 10px white;
         width: 1440px;
         height: 1040px;
     }
@@ -234,7 +229,8 @@
     }
 
     .adPositionFront {
-      line-height: 4em;
+      width: fit-content;
+      height: fit-content;
     }
 
     .adPositionBack {
