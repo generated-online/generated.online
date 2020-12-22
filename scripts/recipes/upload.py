@@ -5,9 +5,12 @@ from algoliasearch.configs import SearchConfig
 from algoliasearch.search_client import SearchClient
 import json
 
-with open('recipes/algolia_admin_key.json') as f:
+# with open('recipes/algolia_admin_key.json') as f:
+with open('recipes/algolia_admin_key_2.json') as f:
     keyfile = json.load(f)
-ALGOLIA_ID = '7KL69V3MEL'
+
+# ALGOLIA_ID = '7KL69V3MEL'
+ALGOLIA_ID = 'D6W68MPLE5'
 ALGOLIA_ADMIN_KEY = keyfile["key"]
 
 # FIREBASE
@@ -50,21 +53,19 @@ def saveIngredients(ingredients, id):
         except NotFound:
             ingredientRef.set({u'usedIn': firestoreCloud.ArrayUnion([id])})
 
-def uploadData(filename, start_idx=0, onlyNonExisting=False, algolia=True, firebase=True):
+def uploadData(filename, start_idx=0, algolia=True, firebase=True):
     with open(filename) as f:
         recipe_list = json.load(f)
     
     for idx, recipe in enumerate(tqdm.tqdm(recipe_list[start_idx:])):
-        if idx < start_idx:
-            try:
-                # Upload to firebase
+        if idx >= start_idx:
+            try:                # Upload to firebase
                 if firebase:
                     recipeRef = db.collection("recipes").document(recipe["id"])
                     doc = recipeRef.get()
                     if not doc.exists:
                         recipeRef.set(recipe["data"])
                         # saveIngredients(data_dict["ingredients"], data_dict["id"])
-
                 # upload to algolia
                 if algolia:
                     syncAlgoliaWith(recipe["data"], recipe["id"], recipe["ingredients"])
@@ -129,5 +130,5 @@ def analyzeData(filename):
 if __name__ == "__main__":
     filename = 'recipes/1_200.txt'
     # processRawFile(filename)
-    analyzeData(filename + "_filtered.json")
-    # uploadData(filename + "_filtered.json", onlyNonExisting=True, algolia=False, firebase=False)
+    # analyzeData(filename + "_filtered.json")
+    uploadData(filename + "_filtered.json", algolia=True, firebase=False)

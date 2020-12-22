@@ -50,9 +50,13 @@
   import recipeToColor from "@/functions/recipe_to_color";
   import generateRecipeButton from "@/components/generateRecipeButton";
 
-  const algoliaClient = algoliasearch(
-    '7KL69V3MEL', // Application ID
-    '6facf15b54148bc84e399e2994885c15' // Search-Only API Key
+  // const algoliaClient = algoliasearch(
+  //   '7KL69V3MEL', // Application ID
+  //   '6facf15b54148bc84e399e2994885c15' // Search-Only API Key
+  // )
+    const algoliaClient = algoliasearch(
+    'D6W68MPLE5', // Application ID
+    '84f604b3c2c1684ed632a6a9e46e1502' // Search-Only API Key
   )
 
   // this setup is required to prevent search on empty query
