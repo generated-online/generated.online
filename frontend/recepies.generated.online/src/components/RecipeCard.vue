@@ -11,13 +11,13 @@
                 <v-row class="mb-1 text-h6">
                     <img v-for="emoji in recipeToEmojis(recipe).map(getImgUrl)" :key="emoji" :src="emoji" class="emoji pr-2">
                 </v-row>
-<!--                todo: hover show ingredients-->
             </v-col>
         </v-row>
     </router-link>
 </template>
 <script>
 import {getImgUrl,recipeToEmojis} from "@/functions/emojiUtils"
+import {loadRecipe} from "@/functions/recipeUtils";
 
 export default {
     name: 'RecipeCard',
@@ -27,6 +27,11 @@ export default {
     methods: {
         getImgUrl,
         recipeToEmojis
+    },
+    mounted() {
+        if (this.recipe.votes === ""){
+            this.recipe.votes = loadRecipe(this.recipe.id)
+        }
     }
 }
 </script>

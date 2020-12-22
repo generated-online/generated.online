@@ -84,7 +84,7 @@
                             <v-row v-for="item in items"
                                    :style="{'color':(recipeToColor(item.objectID) +' !important')}">
                                 <RecipeCard
-                                        :recipe="{'id': item.objectID, 'votes':0, 'title':item.title, 'ingredients':item.ingredients}"/>
+                                        :recipe="{'id': item.objectID, 'votes':'', 'title':item.title, 'ingredients':item.ingredients}"/>
                             </v-row>
                             <!--automatically load next page-->
                             <!--somehow this does not work in mobile -> dont show-->
