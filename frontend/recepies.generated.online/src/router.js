@@ -5,7 +5,6 @@ import Home from '@/views/Home.vue'
 import Info from "@/views/Info.vue"
 import Highscore from "@/views/Highscore";
 import GetRandomRecipe from "@/views/RandomRecipe";
-import PostcardDownload from "@/views/PostcardDownload";
 
 import firebase from 'firebase'
 import qs from 'qs';
