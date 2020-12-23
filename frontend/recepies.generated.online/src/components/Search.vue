@@ -90,7 +90,7 @@
                             <!--automatically load next page-->
                             <!--somehow this does not work in mobile -> dont show-->
 
-                            <v-row :style="'visible: '+ (isLastPage?0:1)"
+                            <v-row :style="'opacity: '+ (isLastPage?0:1)"
                                    align="center" class="loadingBox shady"
                                    no-gutters>
                                 <v-progress-circular color="black" indeterminate size="40"></v-progress-circular>
