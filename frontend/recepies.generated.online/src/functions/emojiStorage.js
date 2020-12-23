@@ -47,7 +47,7 @@ export default {
             "fisch", "schaf", "samen", "hafer", "olive", "mango", "apfel", "birne",
             "chili", "gurke", "salat", "breze", "pizza", "sushi", "honig", "milch",
             "karotte", "wasser", "krabbe", "hummer", "melone", "banane", "tomate",
-            "burger", "pommes", "muffin", "kuchen", "ananas", "oktopus", "garnele", "schwein", "truthan",
+            "burger", "pommes", "muffin", "kuchen", "ananas", "oktopus", "garnele", "schwein", "truthahn",
             "weintrauben", "zwiebel",
             "paprika", "avocado", "zitrone", "kirsche", "avocado", "karotte", "steak",
             "burrito", "spiegelei", "popcorn",
