@@ -1,7 +1,9 @@
 <template>
     <v-app id="inspire" :style="cssVars">
         <v-main>
-            <EmojieBackground :class="{'background-animation': addBackgroundID}" :color="backgroundColor" :opacity="1" :recipe="recipe"
+            <EmojieBackground :class="{'background-animation': addBackgroundID}"
+                              :color="backgroundColor" :opacity="1"
+                              :recipe="recipe"
                               class="background prev-color"/>
             <v-container>
                 <router-view :key="$route.fullPath" @recipe="updateRecipe($event)"
@@ -268,7 +270,11 @@ $softPink: var(--bg-color);
   color: white;
 }
 
-    .noBoxShadow{
-      box-shadow: none !important;
-    }
+.noBoxShadow {
+  box-shadow: none !important;
+}
+.small-emoji {
+  vertical-align: middle;
+  height: 1em;
+}
 </style>

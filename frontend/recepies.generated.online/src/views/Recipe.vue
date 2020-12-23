@@ -24,7 +24,7 @@
                     <v-container class="pa-0 pb-6">
                         <v-row no-gutters>
                             <!-- ZUTATEN -->
-                            <v-col cols="12" lg="auto" md="auto">
+                            <v-col cols="12" lg="auto" md="auto" :class="{'mb-3':$vuetify.breakpoint.smAndDown}">
                                 <div :class="['text-sm-h6', 'text-md-h6', 'text-h6']"
                                      :style="{'margin':$vuetify.breakpoint.xs?'auto': '0'}">
                                     <v-container class="pa-0">
@@ -33,10 +33,7 @@
                                                :style="{'width': ($vuetify.breakpoint.smAndDown)? 'auto':'min-content'}"
                                                no-gutters>
                                             <template v-for="(ingredient, n) in recipe.ingredients">
-                                                <div :key="n" :class="['boldy','ma-1','py-1','px-4']"
-                                                     :style="{'width': 'max-content'}">
-                                                    {{ ingredient }}
-                                                </div>
+                                                <Ingredient class="boldy ma-1 py-1 px-4" :ingredient="ingredient" :key="n"/>
                                                 <v-responsive v-if="!$vuetify.breakpoint.smAndDown" :key="`width-${n}`"
                                                               width="100%"></v-responsive>
                                             </template>
@@ -47,7 +44,7 @@
                             <!--  Instructions -->
 
                             <v-col class=" ml-md-6">
-                                <span class="instruction text-span mt-3">
+                                <span class="instruction text-span">
                                     {{ recipe.instructions }}
                                 </span>
                             </v-col>
@@ -72,10 +69,12 @@ import Voting from "@/components/Voting"
 import EmojieBackground from "@/components/EmojieBackground"
 import PayPalPostcard from "@/components/postcard-stuff/PayPalPostcard"
 import {loadRecipe} from "@/functions/recipeUtils";
+import Ingredient from "@/components/Ingredient";
 
 export default {
     name: "Recipe",
     components: {
+        Ingredient,
         Voting,
         EmojieBackground,
         PayPalPostcard

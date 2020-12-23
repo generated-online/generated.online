@@ -7,7 +7,7 @@ let allPossibleEmos = EmojiStorage.allEmos.concat(emoMapKeys).sort(function (a, 
     return b.length - a.length;
 });
 
-function _wordToEmoji(word, matchingEmos) {
+function _wordToEmoji(word, matchingEmos, replacedString=[]) {
     if (word !== "") {
         const lowercasedWord = word.toLowerCase()
         let matchingEmojie = ''
@@ -26,8 +26,9 @@ function _wordToEmoji(word, matchingEmos) {
             }
         }
         if (matchingEmojie !== '') {
-            if (Object.keys(EmojiStorage.emoMap).includes(matchingEmojie)) matchingEmojie = EmojiStorage.emoMap[
-                matchingEmojie]
+            replacedString.push(matchingEmojie)
+            if (Object.keys(EmojiStorage.emoMap).includes(matchingEmojie))
+                matchingEmojie = EmojiStorage.emoMap[matchingEmojie]
             matchingEmos.push(matchingEmojie)
         }
     }
@@ -90,9 +91,14 @@ export function getImgUrl(emojie) {
 
 export function wordToEmoji(word){
     let emoji = [];
-    _wordToEmoji(word, emoji)
+    let subString = [];
+    _wordToEmoji(word, emoji, subString)
     if (emoji.length > 0){
-        return getImgUrl(emoji)
+        let z = word.toLowerCase().split(subString[0]).map(i=>i.length)
+        let a = z[0]
+        let b= z[1]
+        // this is prev string, emji url, and post string
+        return [word.slice(0, a), getImgUrl(emoji), word.slice(a+subString[0].length, a+subString[0].length+b)]
     }
     return false
 }

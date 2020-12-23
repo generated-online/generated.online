@@ -29,10 +29,7 @@
                                cols="auto"
                                @click.prevent="refine(item.value)"
                         >
-                            {{ item.count.toLocaleString() }} x <img v-if="item.emoji" :alt="item.label"
-                                                                     :src="item.emoji"
-                                                                     class="emoji"/>
-                            <ais-highlight v-if="!item.emoji" :hit="item" attribute="item"/>
+                            <Ingredient :ingredient="item.count+' x '+item.label"/>
                         </v-col>
                     </v-row>
                     <!-- this row contains just buttons for showing/hiding/clearing refinements-->
@@ -135,6 +132,7 @@ import RecipeCard from "@/components/RecipeCard";
 import recipeToColor from "@/functions/recipe_to_color";
 import generateRecipeButton from "@/components/generateRecipeButton";
 import {wordToEmoji} from "@/functions/emojiUtils";
+import Ingredient from "@/components/Ingredient";
 
 // const algoliaClient = algoliasearch(
 //    '7KL69V3MEL', // Application ID
@@ -185,6 +183,7 @@ export default {
         }
     },
     components: {
+        Ingredient,
         generateRecipeButton,
         RecipeCard
     },
@@ -286,11 +285,6 @@ path {
   margin-top: 0;
   width: 100%;
   box-shadow: none;
-}
-
-.emoji {
-  vertical-align: middle;
-  height: 1em;
 }
 
 .loadingBox {

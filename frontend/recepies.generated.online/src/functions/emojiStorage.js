@@ -26,7 +26,6 @@ export default {
             "clementine": "orange",
             "schwammerl": "pilz",
             "champignons": "pilz",
-            "eigelb": "ei",
             "eiweiß": "ei",
             "filet": "steak",
             "braten": "steak",
@@ -36,7 +35,6 @@ export default {
             "plätzchen": "keks",
             "gebäck": 'keks',
             "getreide": "hafer",
-            "erdnüsse": "erdnuss",
             "kalb": "kuh"
 
         },

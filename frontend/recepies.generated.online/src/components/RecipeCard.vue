@@ -1,40 +1,64 @@
 <template>
-    <router-link :to="'/recipe/' + internalRecipe.id" class="boldyNoColor px-4 py-1 mb-4" style="width:100%">
-        <v-row align="center" cols="12" no-gutters>
-            <v-col align="center" class="text-h3" cols="auto" style="min-width: 1.75em">
-                <img v-if="!internalRecipe.votes" class="emoji" src="/robokoch.gif">
-                <span v-else> {{ internalRecipe.votes }}</span>
-            </v-col>
-            <v-col class="ml-2">
-                <v-row class="text-h6">
-                    {{ internalRecipe.title }}
-                </v-row>
-                <v-row class="mb-1 text-h6">
-                    <img v-for="emoji in recipeToEmojis(internalRecipe).map(getImgUrl)" :key="emoji" :src="emoji"
-                         class="emoji pr-2">
-                </v-row>
-            </v-col>
-        </v-row>
-    </router-link>
+    <v-hover v-slot="{ hover }">
+        <router-link :to="'/recipe/' + internalRecipe.id"
+                     class="boldyNoColor px-4 py-1 mb-4"
+                     style="width:100%">
+            <v-row :style="'color: '+ recipeColor"
+                    align="center"
+                    cols="12" no-gutters>
+                <v-col align="center" class="text-h3" cols="auto" style="min-width: 1.75em">
+                    <img v-if="!internalRecipe.votes" class="small-emoji" src="/robokoch.gif">
+                    <span v-else> {{ internalRecipe.votes }}</span>
+                </v-col>
+                <v-col class="ml-2">
+                    <v-row class="text-h6 font-weight-bold">
+                        {{ internalRecipe.title }}
+                    </v-row>
+                    <v-row v-if="!hover" class="mb-1 text-h6">
+                        <img v-for="emoji in recipeToEmojis(internalRecipe).map(getImgUrl)" :key="emoji" :src="emoji"
+                             class="small-emoji pr-2">
+                    </v-row>
+                    <v-row v-else class="mb-1">
+                        <v-col v-for="ingredient in internalRecipe.ingredients"
+                               align="center"
+                               class="pa-0 ma-0 ingredient--hovered"
+                               cols="auto"
+                               justify="center"
+                        >
+                            <Ingredient :class="['boldy','ma-1','py-0','px-2']"
+                                        :ingredient="ingredient"
+                                        :style="'background-color:'+recipeColor"
+                                        style="color:black !important; height:fit-content" />
+                        </v-col>
+                    </v-row>
+                </v-col>
+            </v-row>
+        </router-link>
+    </v-hover>
 </template>
 <script>
-import {getImgUrl, recipeToEmojis} from "@/functions/emojiUtils"
+import {getImgUrl, recipeToEmojis, wordToEmoji} from "@/functions/emojiUtils"
 import {loadRecipe} from "@/functions/recipeUtils";
+import recipe_to_color from "@/functions/recipe_to_color";
+import Ingredient from "@/components/Ingredient";
 
 
 export default {
     name: 'RecipeCard',
+    components: {Ingredient},
     props: {
         recipe: {},
     },
     data() {
         return {
-            internalRecipe: this.recipe
+            internalRecipe: this.recipe,
+            recipeColor: recipe_to_color(this.recipe.id)
         }
     },
     methods: {
         getImgUrl,
-        recipeToEmojis
+        recipeToEmojis,
+        wordToEmoji
     },
     mounted() {
         if (this.recipe.votes === "") {
@@ -49,10 +73,5 @@ export default {
 a {
     text-decoration: none;
     color: inherit !important;
-}
-
-.emoji {
-    vertical-align: middle;
-    height: 1em;
 }
 </style>
