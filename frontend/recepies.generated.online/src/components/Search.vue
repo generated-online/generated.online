@@ -29,7 +29,8 @@
                                cols="auto"
                                @click.prevent="refine(item.value)"
                         >
-                            {{ item.count.toLocaleString() }} x <img v-if="item.emoji" :alt="item.label" :src="item.emoji"
+                            {{ item.count.toLocaleString() }} x <img v-if="item.emoji" :alt="item.label"
+                                                                     :src="item.emoji"
                                                                      class="emoji"/>
                             <ais-highlight v-if="!item.emoji" :hit="item" attribute="item"/>
                         </v-col>
@@ -77,10 +78,10 @@
             </ais-refinement-list>
 
             <ais-state-results>
-                <template slot-scope="{ state: { query }, results: { hits, nbPages } }">
+                <template slot-scope="{ state: { query }, results: { hits, page, nbPages } }">
 
                     <ais-infinite-hits v-if="query && hits.length !== 0" :cache="cache">
-                        <v-col slot-scope="{ items, filteredItems,isLastPage, refineNext  }">
+                        <v-col slot-scope="{ items, filteredItems,refineNext,isLastPage }">
                             <v-row v-for="item in items"
                                    :style="{'color':(recipeToColor(item.objectID) +' !important')}">
                                 <RecipeCard
@@ -88,14 +89,17 @@
                             </v-row>
                             <!--automatically load next page-->
                             <!--somehow this does not work in mobile -> dont show-->
-                            <v-row v-if="!$vuetify.breakpoint.xsOnly" :style="'opacity: '+ (isLastPage?0:1)"
+
+                            <v-row :style="'visible: '+ (isLastPage?0:1)"
                                    align="center" class="loadingBox shady"
                                    no-gutters>
                                 <v-progress-circular color="black" indeterminate size="40"></v-progress-circular>
-                                <div v-if="!isLastPage && scrolledToBottom">{{ refineNext() }}</div>
+                                <div v-if="!isLastPage && scrolledToBottom">{{
+                                        loadNextResults(refineNext, scrollPos())
+                                    }}
+                                </div>
                             </v-row>
                         </v-col>
-
 
                     </ais-infinite-hits>
 
@@ -113,6 +117,8 @@
                     </v-row>
                 </template>
             </ais-state-results>
+
+
         </ais-instant-search>
 
     </div>
@@ -137,7 +143,7 @@ import {wordToEmoji} from "@/functions/emojiUtils";
 const algoliaClient = algoliasearch(
     'D6W68MPLE5', // Application ID
     '84f604b3c2c1684ed632a6a9e46e1502' // Search-Only API Key
-  )
+)
 
 // this setup is required to prevent search on empty query
 const searchClient = {
@@ -174,17 +180,8 @@ export default {
                 stateMapping: simple(),
             },
             cache: createInfiniteHitsSessionStorageCache(),
-            scrolledToBottom: false
-        }
-    },
-    methods: {
-        recipeToColor,
-        wordToEmoji,
-        transformIngredient(ingredients) {
-            ingredients.map((ingredient) => {
-                ingredient.emoji = wordToEmoji(ingredient.label)
-            })
-            return ingredients
+            scrolledToBottom: false,
+            lastScrollPosition: -1,
         }
     },
     components: {
@@ -211,11 +208,27 @@ export default {
         let whitelist = ['setScroll'];
         this.$store.subscribe((mutation, state) => {
             if (whitelist.includes(mutation.type)) {
-            console.log(state, state.scrolledToBottom)
                 this.scrolledToBottom = state.scrolledToBottom
             }
         });
-
+    },
+    methods: {
+        recipeToColor,
+        wordToEmoji,
+        transformIngredient(ingredients) {
+            ingredients.map((ingredient) => {
+                ingredient.emoji = wordToEmoji(ingredient.label)
+            })
+            return ingredients
+        },
+        loadNextResults(refineNext, currScrollPosition) {
+            if (Math.abs(this.lastScrollPosition - currScrollPosition) < 20) return
+            this.lastScrollPosition = currScrollPosition
+            refineNext()
+        },
+        scrollPos(){
+            return window.pageYOffset || e.target.scrollTop || 0
+        }
     }
 };
 </script>

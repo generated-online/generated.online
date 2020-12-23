@@ -15,7 +15,7 @@
             <div>
                 <div class="half-postcard" >
                     <h2>{{ recipe.title }}</h2>
-                    <p v-for="ingredient in recipe.ingredients" v-bind:key="ingredient"
+                    <p v-for="(ingredient, n) in recipe.ingredients" :key="n"
                         :style="'font-size:'+ instructionSize">{{ ingredient }}</p>
                     <br>
                     <p :style="'text-align: justify;font-size:'+ instructionSize">{{ recipe.instructions }}</p>
