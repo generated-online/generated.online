@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import {getRandomRecipeID} from "@/functions/getRandomRecipe";
+import {getRandomRecipeID} from "@/functions/recipeUtils";
 
 export default {
     name: "GetRandomRecipe",

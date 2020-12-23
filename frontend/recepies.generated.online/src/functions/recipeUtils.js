@@ -28,3 +28,21 @@ export async function getRandomRecipeID() {
             console.error(err)
         })
 }
+
+export function loadRecipe(id) {
+    let db = firebase.firestore();
+    const ref = db.collection("recipes")
+
+    return ref
+        .doc(id)
+        .get()
+        .then((doc) => {
+            return {
+                id: doc.id,
+                ingredients: doc.data().ingredients,
+                title: doc.data().title,
+                instructions: doc.data().instructions,
+                votes: doc.data().votes || 0,
+            }
+        });
+}
