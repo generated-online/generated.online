@@ -81,7 +81,7 @@
                         <v-col slot-scope="{ items, filteredItems,refineNext,isLastPage }">
                             <v-row v-for="item in items"
                                    :style="{'color':(recipeToColor(item.objectID) +' !important')}">
-                                <RecipeCard
+                                <RecipeCard :key="item.objectID"
                                         :recipe="{'id': item.objectID, 'votes':'', 'title':item.title, 'ingredients':item.ingredients}"/>
                             </v-row>
                             <!--automatically load next page-->
@@ -226,7 +226,7 @@ export default {
             refineNext()
         },
         scrollPos(){
-            return window.pageYOffset || e.target.scrollTop || 0
+            return window.pageYOffset ||  0
         }
     }
 };
