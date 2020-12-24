@@ -15,14 +15,12 @@
                         {{ internalRecipe.title }}
                     </v-row>
 
-                    <v-expand-transition :duration="4000" >
+                    <v-expand-transition appear >
                         <v-row v-if="!hover" key="emojis" class="mb-1 text-h6">
                             <img v-for="emoji in recipeToEmojis(internalRecipe).map(getImgUrl)" :key="emoji"
                                  :src="emoji"
                                  class="small-emoji pr-2">
                         </v-row>
-<!--                    </v-expand-transition>-->
-<!--                    <v-expand-transition :duration="2000">-->
                         <v-row v-else key="ingredients" class="mb-1 ">
                             <v-col v-for="ingredient in internalRecipe.ingredients"
                                    align="center"
