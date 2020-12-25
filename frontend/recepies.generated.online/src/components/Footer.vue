@@ -13,7 +13,7 @@
                 </v-btn>
 
                 <v-btn class="mx-1 my-1 boldy" icon to="/highscore">
-                    <img src="../assets/robokoch.png" class="color-adapt vue-icon">
+                    <img src="/robokoch.gif" class="color-adapt vue-icon">
                 </v-btn>
                 <v-btn class="mx-2 my-1 boldy" icon to="/info">
                     <v-icon class="vue-icon" size="30">mdi-information-outline</v-icon>

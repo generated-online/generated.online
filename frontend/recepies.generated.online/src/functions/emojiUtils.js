@@ -7,7 +7,7 @@ let allPossibleEmos = EmojiStorage.allEmos.concat(emoMapKeys).sort(function (a, 
     return b.length - a.length;
 });
 
-function wordToEmoji(word, matchingEmos) {
+function _wordToEmoji(word, matchingEmos) {
     if (word !== "") {
         const lowercasedWord = word.toLowerCase()
         let matchingEmojie = ''
@@ -54,7 +54,7 @@ export function recipeToEmojis(recipe) {
 
         words = recipe.ingredients.toString().replaceAll(",", " ").split(" ")
         words.forEach((word) => {
-            wordToEmoji(word, matchingEmos)
+            _wordToEmoji(word, matchingEmos)
         })
 
         // if we dit not find any emojis
@@ -86,4 +86,13 @@ export function getImgUrl(emojie) {
 
     var images = require.context('@/assets/emojies/', false, /\.png$/)
     return images('./' + emojie + ".png")
+}
+
+export function wordToEmoji(word){
+    let emoji = [];
+    _wordToEmoji(word, emoji)
+    if (emoji.length > 0){
+        return getImgUrl(emoji)
+    }
+    return false
 }
