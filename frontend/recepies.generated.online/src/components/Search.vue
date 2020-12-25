@@ -5,7 +5,7 @@
       <ais-search-box placeholder="Suche nach Rezepten..." attribute="title" submit-title="Suche"
         reset-title="Lösche alles" show-loading-indicator />
 
-      <ais-refinement-list class="bg-color" attribute="filtered_ingredients" operator="and" :limit="5" :show-more="true"
+      <ais-refinement-list class="bg-color" attribute="filtered_cd " operator="and" :limit="5" :show-more="true"
         :searchable="false" searchable-placeholder="Suche nach Zutaten..." :sort-by="['count:desc']" :class-names="{
           'ais-RefinementList-showMore': 'showMore-button',
           'ais-RefinementList-showMore--disabled': 'showMore-button--disbaled',
@@ -54,9 +54,13 @@
   //   '7KL69V3MEL', // Application ID
   //   '6facf15b54148bc84e399e2994885c15' // Search-Only API Key
   // )
-    const algoliaClient = algoliasearch(
-    'D6W68MPLE5', // Application ID
-    '84f604b3c2c1684ed632a6a9e46e1502' // Search-Only API Key
+  //   const algoliaClient = algoliasearch(
+  //   'D6W68MPLE5', // Application ID
+  //   '84f604b3c2c1684ed632a6a9e46e1502' // Search-Only API Key
+  // )
+      const algoliaClient = algoliasearch(
+    'IFRMJQG34A', // Application ID
+    '4273c69871b444a3e008225d42016938' // Search-Only API Key
   )
 
   // this setup is required to prevent search on empty query
