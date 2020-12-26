@@ -15,7 +15,7 @@
                         {{ internalRecipe.title }}
                     </v-row>
 
-                    <v-expand-transition appear class="transition-item" >
+                    <v-expand-transition appear>
                         <v-row v-if="!hover" key="emojis" class="mb-1 text-h6">
                             <img v-for="emoji in recipeToEmojis(internalRecipe).map(getImgUrl)" :key="emoji"
                                  :src="emoji"
@@ -35,10 +35,8 @@
                             </v-col>
                         </v-row>
                     </v-expand-transition>
-
                 </v-col>
             </v-row>
-
         </router-link>
     </v-hover>
 </template>
@@ -81,7 +79,20 @@ a {
     color: inherit !important;
 }
 
-.transition-item{
-    transition: all 0.5s;
+/*add opacity to animation*/
+/*enter and leave are start points of transition; both *-to are endpoint of transition*/
+.expand-transition-enter,  .expand-transition-leave-to{
+    opacity: 0;
 }
+
+.expand-transition-enter-to, .expand-transition-leave {
+    opacity: 1;
+}
+
+/* control animation duration with this: */
+/*.expand-transition-enter-active,*/
+/*.expand-transition-leave-active{*/
+/*    transition-duration: 2s !important;*/
+/*}*/
+
 </style>
