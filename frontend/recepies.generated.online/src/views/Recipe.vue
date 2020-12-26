@@ -7,7 +7,7 @@
                     <v-container :class="['pb-6', 'pa-0']">
                         <v-row no-gutters>
                             <v-col>
-                                <div :class="['text-sm-h3', 'text-md-h2', 'text-h4', {'text-center': $vuetify.breakpoint.xs}, 'boldy']"
+                                <div :class="['text-sm-h3', 'text-md-h2', 'text-h4', {'text-center': $vuetify.breakpoint.xs}, 'boldyAppearing']"
                                      style="word-break: break-word">
                                     {{ recipe.title }}
                                 </div>
@@ -33,7 +33,7 @@
                                                :style="{'width': ($vuetify.breakpoint.smAndDown)? 'auto':'min-content'}"
                                                no-gutters>
                                             <template v-for="(ingredient, n) in recipe.ingredients">
-                                                <Ingredient class="boldy ma-1 py-1 px-4" :ingredient="ingredient" :key="n"/>
+                                                <Ingredient class="boldyAppearing ma-1 py-1 px-4" :ingredient="ingredient" :key="n"/>
                                                 <v-responsive v-if="!$vuetify.breakpoint.smAndDown" :key="`width-${n}`"
                                                               width="100%"></v-responsive>
                                             </template>

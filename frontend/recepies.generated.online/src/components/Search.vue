@@ -48,7 +48,7 @@
                                 </v-btn>
                                 <!-- this is only used here because outside this tag i can not use the canRefine variable-->
                                 <v-btn v-if="canToggleShowMore && isShowingMore && !canRefine"
-                                       class="boldy ma-2"
+                                       class="boldyAppearing ma-2"
                                        dark
                                        @click.prevent="toggleShowMore"
                                 >
@@ -61,7 +61,7 @@
                              can not use it to hide this button when a refinement is active-->
                         <v-btn
                                 v-if="canToggleShowMore && !isShowingMore"
-                                class="boldy ma-2"
+                                class="boldyAppearing ma-2"
                                 dark
                                 @click="toggleShowMore"
                         >

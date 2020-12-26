@@ -1,6 +1,6 @@
 <template>
     <v-card class="info-container py-4 px-2 mt-16 mb-8">
-        <v-card class="boldy text-sm-h2 text-md-h1 text-h4 mb-16 text-center ma-auto" style="background-color: black; width:fit-content "
+        <v-card class="boldyAppearing text-sm-h2 text-md-h1 text-h4 mb-16 text-center ma-auto" style="background-color: black; width:fit-content "
                 to="/">
             <b>
                 <img alt="cooking robot" src="/robokoch.gif" style="vertical-align:middle; height: 8vw">

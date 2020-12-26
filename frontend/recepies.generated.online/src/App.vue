@@ -17,7 +17,7 @@
                     :right="$vuetify.breakpoint.mdAndUp"
                     :style="($vuetify.breakpoint.smAndDown?'left: 50%; transform: translateX(-50%)':'')"
                     bottom
-                    class="boldy"
+                    class="boldyAppearing"
                     dark
                     fab
                     fixed
@@ -191,7 +191,7 @@ $softPink: var(--bg-color);
   background-color: rgb(0, 0, 0);
 }
 
-.boldy {
+.boldyAppearing {
   background: black;
   padding: 20px !important;
   border-radius: 30px !important;
@@ -199,6 +199,13 @@ $softPink: var(--bg-color);
   animation: fade-in 1s forwards;
   -webkit-animation: fade-in 1s forwards;
   opacity: 0;
+}
+
+.boldy {
+  background: black;
+  padding: 20px !important;
+  border-radius: 30px !important;
+  color: var(--bg-color) !important;
 }
 
 .boldyNoColor {
