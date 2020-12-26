@@ -15,7 +15,7 @@
                         {{ internalRecipe.title }}
                     </v-row>
 
-                    <v-expand-transition appear >
+                    <v-expand-transition appear class="transition-item" >
                         <v-row v-if="!hover" key="emojis" class="mb-1 text-h6">
                             <img v-for="emoji in recipeToEmojis(internalRecipe).map(getImgUrl)" :key="emoji"
                                  :src="emoji"
@@ -79,5 +79,9 @@ export default {
 a {
     text-decoration: none;
     color: inherit !important;
+}
+
+.transition-item{
+    transition: all 0.5s;
 }
 </style>
