@@ -1,30 +1,30 @@
 <template>
-    <div
-         :style="{'width': 'max-content'}">
-        <div v-if="ingredientSplit">
-            <span>{{ ingredientSplit[0] }}</span>
-            <img class="small-emoji" :src="ingredientSplit[1]" >
-            <span>{{ ingredientSplit[2] }}</span>
-        </div>
-        <span v-else>
+    <div :style="{'width': 'max-content'}">
+        <span v-if="placeEmojiLeft" v-for="emoji in emojis">
+            <img class="small-emoji mr-1" :src="emoji" >
+        </span>
+        <span >
             {{ingredient}}
+        </span>
+        <span  v-if="!placeEmojiLeft" v-for="emoji in emojis">
+            <img class="small-emoji ml-1" :src="emoji" >
         </span>
     </div>
 </template>
 
 <script>
-import {wordToEmoji} from "@/functions/emojiUtils";
+import {sentenceToEmoji} from "@/functions/emojiUtils";
 
 export default {
     name: "Ingredient",
-    props: ["ingredient"],
+    props: {"ingredient": String, "placeEmojiLeft": {type: Boolean, default: true}},
     data() {
         return {
-            ingredientSplit: false
+            emojis: []
         }
     },
     created() {
-        this.ingredientSplit = wordToEmoji(this.ingredient)
+        this.emojis = sentenceToEmoji(this.ingredient)
     }
 }
 </script>

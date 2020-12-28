@@ -17,7 +17,7 @@
 
                     <v-expand-transition appear>
                         <v-row v-if="!hover" key="emojis" class="mb-1 text-h6">
-                            <img v-for="emoji in recipeToEmojis(internalRecipe).map(getImgUrl)" :key="emoji"
+                            <img v-for="(emoji, idx) in recipeToEmojis(internalRecipe).map(getImgUrl)" :key="idx"
                                  :src="emoji"
                                  class="small-emoji pr-2">
                         </v-row>
@@ -41,7 +41,7 @@
     </v-hover>
 </template>
 <script>
-import {getImgUrl, recipeToEmojis, wordToEmoji} from "@/functions/emojiUtils"
+import {getImgUrl, recipeToEmojis} from "@/functions/emojiUtils"
 import {loadRecipe} from "@/functions/recipeUtils";
 import recipe_to_color from "@/functions/recipe_to_color";
 import Ingredient from "@/components/Ingredient";
@@ -61,8 +61,7 @@ export default {
     },
     methods: {
         getImgUrl,
-        recipeToEmojis,
-        wordToEmoji
+        recipeToEmojis
     },
     mounted() {
         if (this.recipe.votes === "") {

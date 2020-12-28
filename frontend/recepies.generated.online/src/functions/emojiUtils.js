@@ -7,29 +7,43 @@ let allPossibleEmos = EmojiStorage.allEmos.concat(emoMapKeys).sort(function (a, 
     return b.length - a.length;
 });
 
+const images = require.context('@/assets/emojies/', false, /\.png$/);
+
+
 function _wordToEmoji(word, matchingEmos, replacedString=[]) {
     if (word !== "") {
         const lowercasedWord = word.toLowerCase()
-        let matchingEmojie = ''
+        let matchingEmojie = []
+
         // direct search
-        if (lowercasedWord in allPossibleEmos) {
+        if (allPossibleEmos.includes(lowercasedWord)) {
             // there is a identical name in the images
-            matchingEmojie = lowercasedWord
+            matchingEmojie.push(lowercasedWord)
         } else {
             // try to search substrings
-            if (word.length > 3) {
-                allPossibleEmos.forEach(emo => {
-                    if (lowercasedWord.includes(emo) || emo.includes(lowercasedWord)) {
-                        matchingEmojie = emo
-                    }
-                })
-            }
+            allPossibleEmos.forEach(emo => {
+                if ((lowercasedWord.includes(emo) && emo.length > 3) || (lowercasedWord.length > 3 && emo.includes(lowercasedWord))) {
+                    matchingEmojie.push(emo)
+                }
+            })
+
+            // if one match is part of another (i.e. wein and schWein), take the longer one
+            let sum = (c1, c2) => c1+c2
+            // [wein, schwein] => [2, 1] => [false, true]
+            matchingEmojie=matchingEmojie.filter(emo => Number(matchingEmojie.map(emo2 => emo2.includes(emo)).reduce(sum))===1)
+
         }
-        if (matchingEmojie !== '') {
-            replacedString.push(matchingEmojie)
-            if (Object.keys(EmojiStorage.emoMap).includes(matchingEmojie))
-                matchingEmojie = EmojiStorage.emoMap[matchingEmojie]
-            matchingEmos.push(matchingEmojie)
+        if (matchingEmojie.length>0) {
+            replacedString.push(...matchingEmojie)
+
+            matchingEmojie = matchingEmojie.map((m,_) => {
+                if(Object.keys(EmojiStorage.emoMap).includes(m)){
+                    return EmojiStorage.emoMap[m]
+                }
+                return m
+            })
+
+            matchingEmos.push(...new Set(matchingEmojie))
         }
     }
 }
@@ -82,23 +96,17 @@ export function getEmojiLines(recipe, elementsInRow) {
     let reverseLine = [...line].reverse()
     return [line, reverseLine]
 }
-export function getImgUrl(emojie) {
-    if (emojie === undefined) emojie = "knoblauch"
-
-    var images = require.context('@/assets/emojies/', false, /\.png$/)
-    return images('./' + emojie + ".png")
+export function getImgUrl(emoji) {
+    if (emoji === undefined) emoji = "knoblauch"
+    return images('./' + emoji + ".png")
 }
 
 export function wordToEmoji(word){
-    let emoji = [];
-    let subString = [];
-    _wordToEmoji(word, emoji, subString)
-    if (emoji.length > 0){
-        let z = word.toLowerCase().split(subString[0]).map(i=>i.length)
-        let a = z[0]
-        let b= z[1]
-        // this is prev string, emji url, and post string
-        return [word.slice(0, a), getImgUrl(emoji), word.slice(a+subString[0].length, a+subString[0].length+b)]
-    }
-    return false
+    let emojis = []
+    _wordToEmoji(word, emojis)
+    return emojis.map(getImgUrl)
+}
+
+export function sentenceToEmoji(word){
+    return [].concat(...word.split(" ").map(wordToEmoji))
 }

@@ -46,7 +46,7 @@ export default {
             "chili", "gurke", "salat", "breze", "pizza", "sushi", "honig", "milch",
             "karotte", "wasser", "krabbe", "hummer", "melone", "banane", "tomate",
             "burger", "pommes", "muffin", "kuchen", "ananas", "oktopus", "garnele", "schwein", "truthahn",
-            "weintrauben", "zwiebel",
+            "weintrauben", "zwiebel","kräuter",
             "paprika", "avocado", "zitrone", "kirsche", "avocado", "karotte", "steak",
             "burrito", "spiegelei", "popcorn",
             "schinken", "karotte", "aubergine", "erdbeere", "pfirsich", "brokkoli",
