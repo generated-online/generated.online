@@ -8,6 +8,8 @@ import GetRandomRecipe from "@/views/RandomRecipe";
 
 import firebase from 'firebase'
 import qs from 'qs';
+import Login from "@/components/dashboard/Login";
+import Dashboard from "@/components/dashboard/Dashboard";
 
 
 Vue.use(Router);
@@ -46,6 +48,16 @@ const router = new Router({
             path: "/highscore",
             name: "highscore",
             component: Highscore
+        },
+        {
+            path: "/login",
+            name: "login",
+            component: Login
+        },
+        {
+            path: "/dashboard",
+            name: "dashboard",
+            component: Dashboard
         },
         {
             path: "*",

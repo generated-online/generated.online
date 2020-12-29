@@ -36,6 +36,9 @@ Vue.config.productionTip = false;
 
 Vue.prototype.$analytics = firebase.default.analytics();
 
+firebase.default.auth().onAuthStateChanged(user => {
+    store.dispatch("fetchUser", user);
+});
 
 // vue dev plugin
 Vue.config.devtools = process.env.NODE_ENV === 'development'
