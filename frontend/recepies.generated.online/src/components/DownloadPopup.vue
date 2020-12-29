@@ -7,7 +7,7 @@
                 width="600px"
                 @input="updateShowDialog"
         >
-            <v-card class="boldy" dark>
+            <v-card class="boldyAppearing" dark>
                 <v-card-title>
                     <span class="headline">Willst du die Postkarten als Bilder downloaden?</span>
                 </v-card-title>

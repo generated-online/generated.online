@@ -1,5 +1,5 @@
 <template>
-    <v-container class="boldy text-sm-subtitle-1 text-md-h5 text-subtitle-2 text-center">
+    <v-container class="boldyAppearing text-sm-subtitle-1 text-md-h5 text-subtitle-2 text-center">
         <b>Bewertungen</b>
         <div style="width:max-content; display:flex; margin: auto">
             <h1 class="verticalCenter"> {{ recipe.votes }}

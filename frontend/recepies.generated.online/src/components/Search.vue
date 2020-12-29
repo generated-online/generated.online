@@ -7,7 +7,6 @@
 
             <ais-refinement-list :limit="0" :searchable="false" :show-more="true"
                                  :sort-by="['count:desc']"
-                                 :transform-items="transformIngredient"
                                  attribute="filtered_ingredients" operator="and"
                                  searchable-placeholder="Suche nach Zutaten...">
 
@@ -24,15 +23,12 @@
                     <!--here we have one centered flex row filled with refinements/ingredients -->
                     <v-row cols="auto" justify="center">
                         <v-col v-for="item in items"
-                               :class="[ 'ma-1' ,'py-1', 'px-2',{'boldy':!item.isRefined, 'boldy-red':item.isRefined}]"
+                               :class="[ 'ma-1' ,'py-0', 'px-2',{'boldy':!item.isRefined, 'boldy-red':item.isRefined}]"
                                :href="createURL(item.value)"
                                cols="auto"
                                @click.prevent="refine(item.value)"
                         >
-                            {{ item.count.toLocaleString() }} x <img v-if="item.emoji" :alt="item.label"
-                                                                     :src="item.emoji"
-                                                                     class="emoji"/>
-                            <ais-highlight v-if="!item.emoji" :hit="item" attribute="item"/>
+                            <Ingredient :ingredient="item.count+' x '+item.label" :place-emoji-left="false"/>
                         </v-col>
                     </v-row>
                     <!-- this row contains just buttons for showing/hiding/clearing refinements-->
@@ -51,7 +47,7 @@
                                 </v-btn>
                                 <!-- this is only used here because outside this tag i can not use the canRefine variable-->
                                 <v-btn v-if="canToggleShowMore && isShowingMore && !canRefine"
-                                       class="boldy ma-2"
+                                       class="boldyAppearing ma-2"
                                        dark
                                        @click.prevent="toggleShowMore"
                                 >
@@ -64,7 +60,7 @@
                              can not use it to hide this button when a refinement is active-->
                         <v-btn
                                 v-if="canToggleShowMore && !isShowingMore"
-                                class="boldy ma-2"
+                                class="boldyAppearing ma-2"
                                 dark
                                 @click="toggleShowMore"
                         >
@@ -134,7 +130,7 @@ import {createInfiniteHitsSessionStorageCache} from 'instantsearch.js/es/lib/inf
 import RecipeCard from "@/components/RecipeCard";
 import recipeToColor from "@/functions/recipe_to_color";
 import generateRecipeButton from "@/components/generateRecipeButton";
-import {wordToEmoji} from "@/functions/emojiUtils";
+import Ingredient from "@/components/Ingredient";
 
 // const algoliaClient = algoliasearch(
 //    '7KL69V3MEL', // Application ID
@@ -190,6 +186,7 @@ export default {
         }
     },
     components: {
+        Ingredient,
         generateRecipeButton,
         RecipeCard
     },
@@ -219,13 +216,6 @@ export default {
     },
     methods: {
         recipeToColor,
-        wordToEmoji,
-        transformIngredient(ingredients) {
-            ingredients.map((ingredient) => {
-                ingredient.emoji = wordToEmoji(ingredient.label)
-            })
-            return ingredients
-        },
         loadNextResults(refineNext, currScrollPosition) {
             if (Math.abs(this.lastScrollPosition - currScrollPosition) < 20) return
             this.lastScrollPosition = currScrollPosition
@@ -291,11 +281,6 @@ path {
   margin-top: 0;
   width: 100%;
   box-shadow: none;
-}
-
-.emoji {
-  vertical-align: middle;
-  height: 1em;
 }
 
 .loadingBox {

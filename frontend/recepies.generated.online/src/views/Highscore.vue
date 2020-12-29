@@ -1,10 +1,10 @@
 <template>
     <v-container>
-        <v-row align="center" class="text-h2 boldy mb-8 text-center" justify="center" style="font-weight:bold;">
+        <v-row align="center" class="text-h2 boldyAppearing mb-8 text-center" justify="center" style="font-weight:bold;">
             <img class="emoji" src="/robokoch.gif">
             Beschde Rezepte
         </v-row>
-        <v-row v-for="recipe in recipes" :key="recipe.id" :style="{'color':(recipeToColor(recipe.id) +' !important')}"
+        <v-row v-for="recipe in recipes" :key="recipe.id"
                class="row"
                no-gutters>
             <RecipeCard :recipe="recipe"/>

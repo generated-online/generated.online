@@ -1,7 +1,9 @@
 <template>
     <v-app id="inspire" :style="cssVars">
         <v-main>
-            <EmojieBackground :class="{'background-animation': addBackgroundID}" :color="backgroundColor" :opacity="1" :recipe="recipe"
+            <EmojieBackground :class="{'background-animation': addBackgroundID}"
+                              :color="backgroundColor" :opacity="1"
+                              :recipe="recipe"
                               class="background prev-color"/>
             <v-container>
                 <router-view :key="$route.fullPath" @recipe="updateRecipe($event)"
@@ -15,7 +17,7 @@
                     :right="$vuetify.breakpoint.mdAndUp"
                     :style="($vuetify.breakpoint.smAndDown?'left: 50%; transform: translateX(-50%)':'')"
                     bottom
-                    class="boldy"
+                    class="boldyAppearing"
                     dark
                     fab
                     fixed
@@ -189,7 +191,7 @@ $softPink: var(--bg-color);
   background-color: rgb(0, 0, 0);
 }
 
-.boldy {
+.boldyAppearing {
   background: black;
   padding: 20px !important;
   border-radius: 30px !important;
@@ -197,6 +199,13 @@ $softPink: var(--bg-color);
   animation: fade-in 1s forwards;
   -webkit-animation: fade-in 1s forwards;
   opacity: 0;
+}
+
+.boldy {
+  background: black;
+  padding: 20px !important;
+  border-radius: 30px !important;
+  color: var(--bg-color) !important;
 }
 
 .boldyNoColor {
@@ -268,7 +277,11 @@ $softPink: var(--bg-color);
   color: white;
 }
 
-    .noBoxShadow{
-      box-shadow: none !important;
-    }
+.noBoxShadow {
+  box-shadow: none !important;
+}
+.small-emoji {
+  vertical-align: middle;
+  height: 1em;
+}
 </style>

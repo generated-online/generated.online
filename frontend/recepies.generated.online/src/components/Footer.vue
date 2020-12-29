@@ -4,22 +4,22 @@
             <v-card-text :style="{'margin-right': $vuetify.breakpoint.smAndDown? '0.3em':'auto',
             'width': $vuetify.breakpoint.smAndDown? 'min-content':'max-content'}"
                          class="py-1 px-0 text center allIcons" :class="{'background-animation': addBackgroundID}">
-                <v-btn class="mx-2 my-1 boldy remove-acive" icon to="/">
+                <v-btn class="mx-2 my-1 boldyAppearing remove-acive" icon to="/">
                     <v-icon class="vue-icon" size="30">search</v-icon>
                 </v-btn>
 
-                <v-btn class="mx-1 my-1 boldy" icon to="/recipe">
+                <v-btn class="mx-1 my-1 boldyAppearing" icon to="/recipe">
                     <v-icon class="vue-icon">shuffle</v-icon>
                 </v-btn>
 
-                <v-btn class="mx-1 my-1 boldy" icon to="/highscore">
+                <v-btn class="mx-1 my-1 boldyAppearing" icon to="/highscore">
                     <img src="/robokoch.gif" class="color-adapt vue-icon">
                 </v-btn>
-                <v-btn class="mx-2 my-1 boldy" icon to="/info">
+                <v-btn class="mx-2 my-1 boldyAppearing" icon to="/info">
                     <v-icon class="vue-icon" size="30">mdi-information-outline</v-icon>
                 </v-btn>
 
-                <v-btn class="mx-2 my-1 boldy" icon>
+                <v-btn class="mx-2 my-1 boldyAppearing" icon>
                     <!-- show whatsapp share button, when not loaded yet just an empty button -->
                     <ShareNetwork :title="shareText" :url="url" class="inline-block" network="whatsapp"
                                   style="text-decoration: unset">
