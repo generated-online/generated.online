@@ -1,11 +1,21 @@
 <template>
     <v-container>
         <DashboardNavBar/>
-        <v-card dark class="boldyAppearing text-center heading my-5 text-h4 py-2 ma-auto" style="width: fit-content">
-            Orders
-        </v-card>
-        <Order v-for="(order, idx) in orders" :order="order" :key="idx" class="mb-3"/>
+        <v-col v-if="user.loggedIn">
+            <v-card class="boldyAppearing text-center heading my-5 text-h4 py-2 ma-auto" dark
+                    style="width: fit-content">
+                Orders
+            </v-card>
+            <v-row v-for="(order, idx) in orders">
 
+                <Order :key="idx" :order="order" class="mb-3"/>
+            </v-row>
+        </v-col>
+
+        <v-alert v-else color="red"
+                 dense
+                 type="error"
+                 class="ma-10">Please log in to view orders.</v-alert>
     </v-container>
 </template>
 <script>
@@ -31,7 +41,6 @@ export default {
         if (this.user && this.user.loggedIn) {
             this.getOrders()
         }
-
     },
     methods: {
         getOrders() {
