@@ -7,7 +7,6 @@
                 Orders
             </v-card>
             <v-row v-for="(order, idx) in orders">
-
                 <Order :key="idx" :order="order" class="mb-3"/>
             </v-row>
         </v-col>
@@ -38,9 +37,7 @@ export default {
         }
     },
     created() {
-        if (this.user && this.user.loggedIn) {
-            this.getOrders()
-        }
+        this.getOrders()
     },
     mounted() {
         this.$emit('recipe', null);
