@@ -4,8 +4,8 @@
             <span class="headline">{{ order.all.payer.name.surname }} {{ order.all.payer.name.given_name }}</span>
         </v-card-title>
         <v-spacer></v-spacer>
-        <v-card-text v-if="recipes.length" v-for="(purchase, idx) in order.all.purchase_units" :key="idx">
-            <v-row >
+        <v-card-text v-for="(purchase, idx) in order.all.purchase_units" v-if="recipes.length" :key="idx">
+            <v-row>
                 <v-col cols="auto">
                     {{ purchase.shipping.name.full_name }}
                     <br>
@@ -19,7 +19,7 @@
                     {{ purchase.amount.value }} {{ purchase.amount.currency_code }}
                 </v-col>
                 <v-col cols="auto">
-                    id: {{ purchase.description.split(" ")[0] }}
+                    id: <router-link :to="'/recipe/'+purchase.description.split(' ')[0]">{{purchase.description.split(" ")[0]}}</router-link>
                     <br>
                     an: {{ purchase.description.split("von").slice(-1)[0] }}
                     <br>
@@ -43,8 +43,18 @@
                     </v-row>
 
                 </v-col>
-                <v-col>
+                <v-col cols="auto">
                     {{ purchase.payee.email_address }}
+                </v-col>
+                <v-col cols="auto">
+                    Curr cewe url:
+                    <a :href="'https://www.cewe.de/service/auftragsstatus.html?orderID='+order.ceweId">
+                        {{ order.ceweId || "undefined" }}
+                    </a>
+                    <br>
+                    <v-form @submit.prevent="submitCeweId">
+                        <v-text-field v-model="order.ceweId" dark label="Cewe Id"></v-text-field>
+                    </v-form>
                 </v-col>
             </v-row>
         </v-card-text>
@@ -55,6 +65,7 @@
 import DownloadPopup from "@/components/DownloadPopup";
 import {loadRecipe} from "@/functions/recipeUtils";
 import Postcard from "@/components/postcard-stuff/Postcard";
+import firebase from "firebase";
 
 export default {
     name: "Order",
@@ -71,11 +82,20 @@ export default {
         }
     },
     mounted() {
+        console.log(this.order)
         this.order.all.purchase_units.forEach((purchase, idx) => {
             loadRecipe(purchase.description.split(" ")[0]).then((recipe) => {
                 this.recipes.push(recipe)
             });
         })
+    },
+    methods: {
+        submitCeweId() {
+
+            let db = firebase.firestore();
+            const ref = db.collection("orders")
+            ref.doc(this.order.id).set({"ceweId": this.order.ceweId}, {"merge":true})
+        }
     }
 }
 </script>

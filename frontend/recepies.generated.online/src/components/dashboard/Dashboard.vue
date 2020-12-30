@@ -48,7 +48,9 @@ export default {
             const ref = db.collection("orders")
             return ref.get().then(snap => {
                 for (let doc of snap.docs) {
-                    this.orders.push(doc.data())
+                    let data = doc.data()
+                    data.id = doc.id
+                    this.orders.push(data)
                 }
             })
         }
