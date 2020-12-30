@@ -55,13 +55,16 @@ export default {
             showPassword: false,
         };
     },
+    created() {
+        this.$emit('recipe', null);
+    },
     methods: {
         submit() {
             firebase
                 .auth()
                 .signInWithEmailAndPassword(this.form.email, this.form.password)
                 .then(data => {
-                    this.$router.replace({name: "dashboard"});
+                    this.$router.replace("/dashboard");
                 })
                 .catch(err => {
                     this.error = err.message;

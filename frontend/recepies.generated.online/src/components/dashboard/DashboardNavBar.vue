@@ -8,7 +8,7 @@
             <v-btn v-if="user.loggedIn" icon @click.prevent="signOut">
                 <v-icon>logout</v-icon>
             </v-btn>
-            <v-btn v-else icon to="login">
+            <v-btn v-else icon to="/login">
                 <v-icon>login</v-icon>
             </v-btn>
         </v-app-bar>
@@ -30,9 +30,7 @@ export default {
                 .auth()
                 .signOut()
                 .then(() => {
-                    this.$router.replace({
-                        name: "login"
-                    });
+                    this.$router.replace("/login");
                 });
         }
     }

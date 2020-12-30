@@ -42,6 +42,9 @@ export default {
             this.getOrders()
         }
     },
+    mounted() {
+        this.$emit('recipe', null);
+    },
     methods: {
         getOrders() {
             let db = firebase.firestore();

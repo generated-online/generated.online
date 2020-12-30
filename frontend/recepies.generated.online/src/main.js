@@ -36,20 +36,22 @@ Vue.config.productionTip = false;
 
 Vue.prototype.$analytics = firebase.default.analytics();
 
-firebase.default.auth().onAuthStateChanged(user => {
-    store.dispatch("fetchUser", user);
-});
-
 // vue dev plugin
 Vue.config.devtools = process.env.NODE_ENV === 'development'
 
-firebase.default.auth().onAuthStateChanged(() => {
-    new Vue({
-        router,
-        store,
-        render: h => h(App),
-        vuetify
-    }).$mount('#app')
+let app
+firebase.default.auth().onAuthStateChanged((user) => {
+    if (!app) {
+        app = new Vue({
+            router,
+            store,
+            render: h => h(App),
+            vuetify
+        }).$mount('#app')
+    }
+    if (user){
+        store.dispatch("fetchUser", user);
+    }
 })
 
 // vue dev plugin
