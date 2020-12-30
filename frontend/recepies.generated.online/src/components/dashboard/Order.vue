@@ -1,7 +1,13 @@
 <template>
-    <v-card class="boldyAppearing" dark style="width: 100%">
+    <v-card :class="{'green':done}" class="boldyAppearing" dark style="width: 100%">
         <v-card-title>
             <span class="headline">{{ order.all.payer.name.surname }} {{ order.all.payer.name.given_name }}</span>
+            <v-spacer></v-spacer>
+            <v-btn
+                    label="Done"
+                    @click="submitDone"
+            >Done
+            </v-btn>
         </v-card-title>
         <v-spacer></v-spacer>
         <v-card-text v-for="(purchase, idx) in order.all.purchase_units" v-if="recipes.length" :key="idx">
@@ -19,7 +25,10 @@
                     {{ purchase.amount.value }} {{ purchase.amount.currency_code }}
                 </v-col>
                 <v-col cols="auto">
-                    id: <router-link :to="'/recipe/'+purchase.description.split(' ')[0]">{{purchase.description.split(" ")[0]}}</router-link>
+                    id:
+                    <router-link :to="'/recipe/'+purchase.description.split(' ')[0]">
+                        {{ purchase.description.split(" ")[0] }}
+                    </router-link>
                     <br>
                     an: {{ purchase.description.split("von").slice(-1)[0] }}
                     <br>
@@ -44,9 +53,6 @@
 
                 </v-col>
                 <v-col cols="auto">
-                    {{ purchase.payee.email_address }}
-                </v-col>
-                <v-col cols="auto">
                     Curr cewe url:
                     <a :href="'https://www.cewe.de/service/auftragsstatus.html?orderID='+order.ceweId">
                         {{ order.ceweId || "undefined" }}
@@ -55,6 +61,9 @@
                     <v-form @submit.prevent="submitCeweId">
                         <v-text-field v-model="order.ceweId" dark label="Cewe Id"></v-text-field>
                     </v-form>
+                </v-col>
+                <v-col cols="auto">
+                    {{ purchase.payee.email_address }}
                 </v-col>
             </v-row>
         </v-card-text>
@@ -78,11 +87,10 @@ export default {
         return {
             showDialog: false,
             recipes: [],
-            loaded_all_recipes: false
+            done: this.order.done
         }
     },
     mounted() {
-        console.log(this.order)
         this.order.all.purchase_units.forEach((purchase, idx) => {
             loadRecipe(purchase.description.split(" ")[0]).then((recipe) => {
                 this.recipes.push(recipe)
@@ -91,14 +99,23 @@ export default {
     },
     methods: {
         submitCeweId() {
-
             let db = firebase.firestore();
             const ref = db.collection("orders")
-            ref.doc(this.order.id).set({"ceweId": this.order.ceweId}, {"merge":true})
+            ref.doc(this.order.id).set({"ceweId": this.order.ceweId}, {"merge": true})
+        },
+        submitDone() {
+            this.order.done = !this.order.done
+            this.done = this.order.done
+            let db = firebase.firestore();
+            const ref = db.collection("orders")
+            ref.doc(this.order.id).set({"done": this.order.done}, {"merge":true}).then(this.done = this.order.done)
         }
     }
 }
 </script>
 
 <style scoped>
+.done {
+    background-color: green;
+}
 </style>

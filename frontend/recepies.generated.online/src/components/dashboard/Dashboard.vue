@@ -6,7 +6,11 @@
                     style="width: fit-content">
                 Orders
             </v-card>
-            <v-row v-for="(order, idx) in orders">
+            <v-row v-for="(order, idx) in filterOrders(orders, done=false)">
+                <Order :key="idx" :order="order" class="mb-3"/>
+            </v-row>
+            <v-row class="pa-1 ma-2 black"></v-row>
+            <v-row v-for="(order, idx) in filterOrders(orders, done=true)">
                 <Order :key="idx" :order="order" class="mb-3"/>
             </v-row>
         </v-col>
@@ -53,6 +57,9 @@ export default {
                     this.orders.push(data)
                 }
             })
+        },
+        filterOrders(orders, done=false){
+            return orders.filter(order => (order.done || false) === done)
         }
     }
 };
