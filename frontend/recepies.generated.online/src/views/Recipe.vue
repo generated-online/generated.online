@@ -92,7 +92,6 @@ export default {
             this.$emit('shareText', 'Schau dir dieses coole KI generierte Rezept an: ' + this.recipe['title']);
             this.$emit('recipe', this.recipe);
         });
-
     }
 };
 </script>

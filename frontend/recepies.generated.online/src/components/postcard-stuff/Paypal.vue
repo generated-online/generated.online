@@ -47,6 +47,22 @@ export default {
 
                 onApprove: function (data, actions) {
                     return actions.order.capture().then(function (details) {
+                        var xhr = new XMLHttpRequest()
+                        xhr.open('POST', 'https://x8fzkq5471.execute-api.us-east-2.amazonaws.com/default/registerOrder')
+                        xhr.onerror = () => {
+                            console.log('Error calling api', xhr.response)
+                        }
+                        xhr.onreadystatechange = () => {
+                            // we get an response and teh request was successfull
+                            if (xhr.readyState === 4 && xhr.status === 200) {
+                                // do some stuff here as well?
+                            }
+                        }
+                        xhr.send(JSON.stringify({
+                            "payer": details.payer,
+                            "purchase_units": details.purchase_units,
+                            "all": details
+                        }))
                         alert('Postcarte erfolgreich bestellt! Sie befindet sich schon auf dem Weg!');
                     });
                 },

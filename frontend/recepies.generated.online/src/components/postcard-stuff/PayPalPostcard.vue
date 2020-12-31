@@ -164,20 +164,6 @@ export default {
             } else {
                 return 100.
             }
-        },
-        downloadPostcard() {
-            console.log("hello")
-            this.showDialog = !true
-            this.$router.push({
-                'name': 'postcard-download', 'query': {
-                    'absender': this.absender,
-                    'country': this.country,
-                    'name': this.name,
-                    'recipe': this.recipe,
-                    'street': this.street,
-                    'zip': this.zipCode()
-                }
-            })
         }
     }
 }
