@@ -86,6 +86,7 @@ export default {
         };
     },
     created() {
+        this.$analytics.logEvent("recipe_visited");
         loadRecipe(this.$route.params.id).then((recipe) => {
             this.recipe = recipe;
             this.loaded = true;

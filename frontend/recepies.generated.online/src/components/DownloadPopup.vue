@@ -72,6 +72,9 @@ export default {
             downloading: false
         }
     },
+    created() {
+        this.$analytics.logEvent('show_download')
+    },
     methods: {
         updateShowDialog(isVisible) {
             if (isVisible) return false;
@@ -80,6 +83,7 @@ export default {
         startDownload() {
             this.downloading = true
             this.$refs.postcardDownload.saveImages().then(() => this.updateShowDialog(false))
+            this.$analytics.logEvent('download_started')
         }
     },
 }

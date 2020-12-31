@@ -45,6 +45,7 @@
                             this.$cookies.set(this.recipe.id)
                             this.recipe.votes += 1
                             this.possibleToVote = false
+                            this.$analytics.logEvent('voted')
                         }
 
                         // and enable the button again

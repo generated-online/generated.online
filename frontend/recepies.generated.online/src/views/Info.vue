@@ -363,6 +363,7 @@
         created() {
             this.$emit('shareText', "Schau dir diese coolen von einer KI generierten Rezepte an!");
             this.$emit('recipe', null);
+            this.$analytics.logEvent('visited_info_page')
         }
     };
 </script>
