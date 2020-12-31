@@ -10,6 +10,7 @@ export default {
     props: ['recipeID', 'sendTo', 'amount'],
     methods: {
         initPayPalButton() {
+            let _this = this
             paypal.Buttons({
                 style: {
                     shape: 'rect',
@@ -19,6 +20,7 @@ export default {
                     tagline: false
                 },
                 createOrder: (data, actions) => {
+                    this.$analytics.logEvent("paypal_created_order");
                     return actions.order.create({
                         //intent: 'CAPTURE', // DEV ONLY
                         "application_context": {
@@ -46,6 +48,7 @@ export default {
                 },
 
                 onApprove: function (data, actions) {
+                    _this.$analytics.logEvent("paypal_order_worked");
                     return actions.order.capture().then(function (details) {
                         var xhr = new XMLHttpRequest()
                         xhr.open('POST', 'https://x8fzkq5471.execute-api.us-east-2.amazonaws.com/default/registerOrder')
@@ -56,6 +59,7 @@ export default {
                             // we get an response and teh request was successfull
                             if (xhr.readyState === 4 && xhr.status === 200) {
                                 // do some stuff here as well?
+                                _this.$analytics.logEvent("paypal_order_registered");
                             }
                         }
                         xhr.send(JSON.stringify({
@@ -70,6 +74,7 @@ export default {
                 onError: function (err) {
                     // Error Handeling
                     alert("Fehler, bitte versuche es erneut, oder sende eine e-mail an contact@moritzwolf.com", err)
+                    _this.$analytics.logEvent("paypal_error_happened");
                 }
             }).render('#paypal-button-container');
         }

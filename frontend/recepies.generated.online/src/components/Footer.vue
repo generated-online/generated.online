@@ -21,7 +21,7 @@
 
                 <v-btn class="mx-2 my-1 boldyAppearing" icon>
                     <!-- show whatsapp share button, when not loaded yet just an empty button -->
-                    <ShareNetwork :title="shareText" :url="url" class="inline-block" network="whatsapp"
+                    <ShareNetwork @open="logAnalytics" :title="shareText" :url="url" class="inline-block" network="whatsapp"
                                   style="text-decoration: unset">
                         <v-icon class="vue-icon" size="30">mdi-whatsapp</v-icon>
                     </ShareNetwork>
@@ -76,6 +76,9 @@ export default {
     },
     methods: {
         getImgUrl,
+        logAnalytics(){
+            this.$analytics.logEvent('shared_on_whatsapp')
+        }
     }
 }
 </script>

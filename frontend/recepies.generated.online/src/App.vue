@@ -57,7 +57,6 @@ export default {
     methods: {
         updateTitle(shareText) {
             this.shareText = shareText;
-            this.$analytics.logEvent("notification_received");
         },
         updateRecipe(recipe) {
             this.recipe = recipe;

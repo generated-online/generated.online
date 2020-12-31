@@ -41,14 +41,14 @@
                         <div class="address boldy-border mb-5">
                             <h2>Die Karte geht an:</h2>
                             <div class="pt-3">
-                                <input v-model="name" class="shady" maxlength="16" placeholder="❌ Name" type="text">
-                                <input v-model="street" class="shady" placeholder="❌ Straße" type="text">
+                                <input v-model="name" @input="log_analytics('name')" class="shady" maxlength="16" placeholder="❌ Name" type="text">
+                                <input v-model="street" @input="log_analytics('street')" class="shady" placeholder="❌ Straße" type="text">
                                 <br>
-                                <input v-model.number="plz" class="shady" placeholder="❌ Postleitzahl" type="number">
-                                <input v-model="city" class="shady" placeholder="❌ Ort" type="text">
+                                <input v-model.number="plz" @input="log_analytics('plz')" class="shady" placeholder="❌ Postleitzahl" type="number">
+                                <input v-model="city" @input="log_analytics('city')" class="shady" placeholder="❌ Ort" type="text">
                                 <div class="countrySelect shady">
                                     <label for="countries">Land: </label>
-                                    <select id="countries" v-model="country" name="countries">
+                                    <select id="countries" v-model="country" @input="log_analytics('country')" name="countries">
                                         <option value="DE">Deutschland</option>
                                         <option value="AT">Österreich</option>
                                         <option value="CH">Schweiz</option>
@@ -61,7 +61,7 @@
                                 <h2>Gesendet von: </h2>
                             </v-col>
                             <v-col class="pa-0">
-                                <input v-model="absender" class="shady nameInput ma-0" maxlength="16"
+                                <input v-model="absender" @input="log_analytics('absender')" class="shady nameInput ma-0" maxlength="16"
                                        placeholder="❌ Absender"
                                        type="text">
                             </v-col>
@@ -72,7 +72,7 @@
                             <div class="moneySpan mb-4">
                                 <div>{{ price.toFixed(2) }} € +</div>
                                 <div class="mx-1" style="width: min-content">
-                                    <input v-model.number="money" :min='0' :step='0.5'
+                                    <input v-model.number="money" @input="log_analytics('money')" :min='0' :step='0.5'
                                            class="moneyInput ma-0 boldy-color" placeholder='0' type="number">
                                 </div>
                                 <div>€ = {{ (money > 0) ? (price + money).toFixed(2) : price.toFixed(2) }} €</div>
@@ -133,7 +133,8 @@ export default {
             showMore: false,
             postcardWidth: this.calculatePostcardWidth(),
             postcardHeight: 100,
-            showDialog: false
+            showDialog: false,
+            analyticsLogged: []
         };
     },
     created() {
@@ -163,6 +164,12 @@ export default {
                 return this.$refs.postcardCol.clientWidth
             } else {
                 return 100.
+            }
+        },
+        log_analytics(name) {
+            if (!(this.analyticsLogged.includes(name))) {
+                this.analyticsLogged.push(name)
+                this.$analytics.logEvent("input_entered_"+name);
             }
         }
     }
