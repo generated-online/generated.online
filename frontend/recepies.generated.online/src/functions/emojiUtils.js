@@ -98,7 +98,7 @@ export function getEmojiLines(recipe, elementsInRow) {
 }
 export function getImgUrl(emoji) {
     if (emoji === undefined) emoji = "knoblauch"
-    return images('./' + emoji + ".png")
+    return 'https://raw.githubusercontent.com/generated-online/generated.online/master/frontend/recepies.generated.online/src/assets/emojies/' + emoji + ".png"
 }
 
 export function wordToEmoji(word){
