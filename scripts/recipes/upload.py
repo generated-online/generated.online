@@ -58,7 +58,7 @@ def uploadData(filename, start_idx=0, algolia=True, firebase=True):
     with open(filename) as f:
         recipe_list = json.load(f)
     print(len(recipe_list))
-    for idx, recipe in enumerate(tqdm.tqdm(recipe_list[start_idx:])):
+    for idx, recipe in enumerate(tqdm.tqdm(recipe_list[start_idx:3000])):
         try:                # Upload to firebase
             if firebase:
                 recipeRef = db.collection("recipes").document(recipe["id"])
@@ -129,4 +129,4 @@ if __name__ == "__main__":
     filename = 'recipes/1_200.txt'
     # processRawFile(filename)
     # analyzeData(filename + "_filtered.json")
-    uploadData(filename + "_filtered.json", start_idx=3000, algolia=True, firebase=False)
+    uploadData(filename + "_filtered.json", start_idx=0, algolia=True, firebase=False)

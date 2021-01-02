@@ -18,7 +18,7 @@
                     Der Download kann einen Moment dauern.
                 </v-card-text>
                 <v-card-text class="text-justify">
-                    <b>Übrigens:</b> Die Daten die du auf unserer Website eingibts werden auch auf den Bildern mit
+                    <b>Übrigens:</b> Die Daten, die du auf unserer Website eingibts, werden auch auf den Bildern mit
                     angezeigt.
                     Wie zum Beispiel Anschrift des Empfängers, oder dein Name (Absender).
                 </v-card-text>
