@@ -10,7 +10,7 @@
             </v-btn>
         </v-card-title>
         <v-spacer></v-spacer>
-        <div v-if="recipes.length">
+        
         <v-card-text v-for="(purchase, idx) in order.all.purchase_units" :key="idx">
             <v-row>
                 <v-col cols="auto">
@@ -68,7 +68,7 @@
                 </v-col>
             </v-row>
         </v-card-text>
-        </div>
+        
     </v-card>
 </template>
 

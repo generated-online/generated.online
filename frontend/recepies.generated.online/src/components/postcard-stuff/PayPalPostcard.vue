@@ -65,7 +65,7 @@
                                 </v-col>
                                 <v-col class="pa-0">
                                     <input v-model="absender" @input="log_analytics('absender')"
-                                        class="shady nameInput ma-0" maxlength="16" placeholder="❌ Absender"
+                                        class="shady nameInput ma-0" maxlength="16" placeholder="Absender"
                                         type="text">
                                 </v-col>
                         </v-row>
@@ -76,7 +76,7 @@
                                 </v-col>
                                 <v-col class="pa-0">
                                     <input v-model="grussZeile" @input="log_analytics('grussZeile')" class="shady nameInput ma-0"
-                                        placeholder="❌ Gruß" type="text">
+                                        placeholder="Gruß" type="text">
                                 </v-col>
                         </v-row>
 
