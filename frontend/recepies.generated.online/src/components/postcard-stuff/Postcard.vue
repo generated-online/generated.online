@@ -6,7 +6,7 @@
             <EmojieBackground :recipe="recipe" :opacity="1" color="var(--bg-color)" class="background now-color"/>
             <div class="postcard-inner">
                 <div :style="'line-height: 1.3em; font-size:' + titleSize" >
-                    <span v-for="titlePart in recipe.title.split(' ')" class="clip-text">{{titlePart}} </span>
+                    <span v-for="titlePart in recipe.title.split(' ')" class="clip-text" :key="titlePart">{{titlePart}} </span>
                 </div>
                 <div class="ad adPositionFront clip-text mt-4 px-2"> recipes.generated.online </div>
             </div>
@@ -20,6 +20,9 @@
                     <br>
                     <p :style="'text-align: justify;font-size:'+ instructionSize">{{ recipe.instructions }}</p>
                     <br>
+                    
+                    <p v-show="grussZeile" class="ad">{{grussZeile}}</p>
+
                 </div>
                 <div class="half-postcard">
                     <div class="stamp"></div>
@@ -57,6 +60,10 @@
                 default: ""
             },
             "absender":{
+              type:String,
+              default: ""
+            },
+            "grussZeile":{
               type:String,
               default: ""
             },

@@ -6,11 +6,11 @@
                     style="width: fit-content">
                 Orders
             </v-card>
-            <v-row v-for="(order, idx) in filterOrders(orders, done=false)">
+            <v-row v-for="(order, idx) in filterOrders(orders, done=false)" :key="idx">
                 <Order :key="idx" :order="order" class="mb-3"/>
             </v-row>
             <v-row class="pa-1 ma-2 black"></v-row>
-            <v-row v-for="(order, idx) in filterOrders(orders, done=true)">
+            <v-row v-for="(order, idx) in filterOrders(orders, done=true)" :key="idx">
                 <Order :key="idx" :order="order" class="mb-3"/>
             </v-row>
         </v-col>
