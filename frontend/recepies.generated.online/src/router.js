@@ -78,19 +78,17 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-    let verified = false;
     let validated = false;
 
     if (firebase.auth().currentUser) {
-        verified = firebase.auth().currentUser.emailVerified;
+        // verified = firebase.auth().currentUser.emailVerified;
         validated = true
     }
 
     const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 
-    if (requiresAuth && !verified) next('login');
-    else if (requiresAuth && validated && !verified) next('verify');
-    else if (verified && ((to.path === '/signup') || (to.path === '/login') || (to.path === '/verify'))) next('dashboard');
+    if (requiresAuth) next('login');
+    else if (to.path === '/login') next('dashboard');
     else if (!validated && ((to.path === '/verify'))) next('login');
     else next()
 });
