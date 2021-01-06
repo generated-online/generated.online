@@ -52,7 +52,7 @@
 
                             let db = firebase.firestore();
                             db.collection("orders").doc().set({
-                               "sendTo": _this.sendTo,
+                               "sendTo": this.sendTo,
                                 "all": details
                             })
                             _this.$analytics.logEvent("paypal_order_registered");
